@@ -10,6 +10,17 @@ const userSchema = new Schema({
     trim: true,
     minlength: 3
   },
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  avatar: {
+    type: String
+  },
 }, {
     timestamps: true,
   });
