@@ -1,19 +1,19 @@
 const router = require('express').Router();
-let Entry = require('../models/entry');
+let Post = require('../models/post');
 
 router.route('/').get((req, res) => {
-  Entry.find().sort({ createdAt: 'desc' }).limit(10)
+  Post.find().sort({ createdAt: 'desc' }).limit(10)
     .then(req => res.json(req))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/add').post((req, res) => {
-  const username = req.body.username;
+  const author = req.body.author;
   const content = req.body.content;
-  const newEntry = new Entry({ username, content });
+  const newPost = new Post({ author, content });
 
-  newEntry.save()
-    .then(() => res.json('Entry added!'))
+  newPost.save()
+    .then(() => res.json('Post added!'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 

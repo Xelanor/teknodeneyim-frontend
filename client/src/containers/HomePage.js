@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 
-import Entries from '../components/Entries/Entries'
+import Posts from '../components/Posts/Posts'
 import Spinner from '../components/UI/Spinner/Spinner'
 
 class HomePage extends Component {
   state = {
     username: "",
     content: "",
+    posts: null,
     data: null
   }
 
   componentDidMount() {
-    axios.get('entries')
-      .then(res => { this.setState({ data: res.data }) })
+    axios.get('posts')
+      .then(res => { this.setState({ posts: res.data }) })
       .catch(err => { console.log(err) })
   }
 
@@ -23,31 +24,18 @@ class HomePage extends Component {
 
   onFormSubmitHandler = async e => {
     e.preventDefault()
-
-    const entry = {
-      username: this.state.username,
-      content: this.state.content
-    }
-
-    await axios.post('entries/add', entry)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err));
-
-    axios.get('entries')
-      .then(res => { this.setState({ data: res.data }) })
-      .catch(err => { console.log(err) })
   }
 
   render() {
-    let entries = <Spinner />
-    if (this.state.data) {
-      entries = <Entries data={this.state.data} />
+    let posts = <Spinner />
+    if (this.state.posts) {
+      posts = <Posts posts={this.state.posts} />
     }
     return (
       <div style={{ width: '100%', }}>
         <div style={{ width: '25%', float: 'left' }}>
           <h3>Konular</h3>
-          {entries}
+          {posts}
         </div>
         <div style={{ width: '75%', float: 'right' }}>
           <div style={{ width: '50%', margin: '0 auto' }}>
