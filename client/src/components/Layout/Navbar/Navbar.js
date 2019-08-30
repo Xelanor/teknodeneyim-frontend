@@ -13,7 +13,7 @@ class Navbar extends Component {
   render() {
     return (
       <div class="navBar" id="mainNavBar">
-        <Link to="/" className="Logo">Tekno Sözlük</Link>
+        <Link to="/" className="Logo">Tekno Deneyim</Link>
         <Link to="/" className="Item">Konu Yarat</Link>
         <Link to="/" className="Item">Kayıt Ol</Link>
         <Link to="/" className="Item">Giriş</Link>

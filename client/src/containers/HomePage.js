@@ -21,7 +21,7 @@ class HomePage extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  onFormSubmitHandler = e => {
+  onFormSubmitHandler = async e => {
     e.preventDefault()
 
     const entry = {
@@ -29,7 +29,7 @@ class HomePage extends Component {
       content: this.state.content
     }
 
-    axios.post('entries/add', entry)
+    await axios.post('entries/add', entry)
       .then(res => console.log(res.data))
       .catch(err => console.log(err));
 
@@ -44,16 +44,22 @@ class HomePage extends Component {
       entries = <Entries data={this.state.data} />
     }
     return (
-      <div style={{ width: '50%', margin: '0 auto' }}>
-        <h1>Hello World!</h1>
-        <form onSubmit={this.onFormSubmitHandler}>
-          <label for="name">Name</label>
-          <input className="u-full-width" type="text" id="name" name="username" onChange={this.handleChange}></input>
-          <label for="content">Content</label>
-          <textarea className="u-full-width" type="text" id="content" name="content" onChange={this.handleChange}></textarea>
-          <button className="button-primary">Konu Yarat</button>
-        </form>
-        {entries}
+      <div style={{ width: '100%', }}>
+        <div style={{ width: '25%', float: 'left' }}>
+          <h3>Konular</h3>
+          {entries}
+        </div>
+        <div style={{ width: '75%', float: 'right' }}>
+          <div style={{ width: '50%', margin: '0 auto' }}>
+            <form onSubmit={this.onFormSubmitHandler}>
+              <label for="name">Yazar</label>
+              <input className="u-full-width" type="text" id="name" name="username" onChange={this.handleChange}></input>
+              <label for="content">Konu İsmi</label>
+              <textarea className="u-full-width" type="text" id="content" name="content" onChange={this.handleChange}></textarea>
+              <button className="button-primary">Konu Yarat</button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
