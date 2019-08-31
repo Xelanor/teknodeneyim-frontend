@@ -13,6 +13,7 @@ import './App.css'
 import jwt_decode from "jwt-decode";
 import setAuthToken from './utils/setAuthToken'
 import { setCurrentUser, logoutUser } from './store/actions/authentication'
+import Sidebar from './containers/Sidebar/Sidebar';
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -40,6 +41,7 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
+            <Sidebar />
             <Route path="/" exact component={HomePage} />
             <Route path="/register" exact component={Register} />
             <Route path="/login" exact component={Login} />

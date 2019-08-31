@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { connect } from "react-redux";
 import ReactPaginate from 'react-paginate'
+import { withRouter } from 'react-router-dom'
 
 import Spinner from '../../components/UI/Spinner/Spinner'
 import NewComment from '../../components/Comments/Comment/NewComment'
@@ -19,6 +20,12 @@ class PostDetail extends Component {
     currentPage: 0,
     offset: 0,
     elements: []
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.match.params.id != this.props.match.params.id) {
+      this.getData()
+    }
   }
 
   getData = () => {
@@ -141,7 +148,7 @@ class PostDetail extends Component {
     }
     return (
       <>
-        <div>
+        <div style={{ width: '75%', float: 'right' }}>
           {page}
           {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} /> : "Hi"}
           {paginationElement}
@@ -156,4 +163,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(PostDetail);
+export default withRouter(connect(mapStateToProps)(PostDetail));
