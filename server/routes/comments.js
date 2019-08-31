@@ -1,8 +1,8 @@
 const router = require('express').Router();
-let Post = require('../models/post');
+let Comment = require('../models/comment');
 
 router.route('/').get((req, res) => {
-  Post.find().sort({ createdAt: 'desc' }).limit(10)
+  Comment.find().sort({ createdAt: 'desc' })
     .then(req => res.json(req))
     .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -10,10 +10,11 @@ router.route('/').get((req, res) => {
 router.route('/add').post((req, res) => {
   const username = req.body.username;
   const content = req.body.content;
-  const newPost = new Post({ username, content });
+  const target = req.body.target;
+  const newComment = new Comment({ username, content, target });
 
-  newPost.save()
-    .then(() => res.json('Post added!'))
+  newComment.save()
+    .then(comment => res.json(comment._id))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -22,11 +23,5 @@ router.route('/:id').get((req, res) => {
     .then(post => res.json(post))
     .catch(err => res.status(400).json('Error: ' + err));
 });
-
-router.route('/add-comment-to-post').post((req, res) => {
-  Post.findByIdAndUpdate(req.body.id, { $push: { comments: req.body.comment } })
-    .then(() => res.json('Comment added to Post!'))
-    .catch(err => res.status(400).json('Error: ' + err))
-})
 
 module.exports = router;

@@ -13,6 +13,11 @@ const commentSchema = new Schema({
     trim: true,
     required: true
   },
+  target: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Post'
+  },
   likes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
