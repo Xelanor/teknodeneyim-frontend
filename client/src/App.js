@@ -7,6 +7,7 @@ import HomePage from './containers/HomePage'
 import Navbar from './components/Layout/Navbar/Navbar'
 import Register from './containers/Auth/Register'
 import Login from './containers/Auth/Login'
+import PostDetail from './containers/Post/PostDetail'
 import './App.css'
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
             <Route path="/" exact component={HomePage} />
             <Route path="/register" exact component={Register} />
             <Route path="/login" exact component={Login} />
+            <Route path='/posts/:id' component={PostDetail} />
           </div>
         </Router>
       </Provider>
