@@ -26,6 +26,20 @@ const commentSchema = new Schema({
     timestamps: true,
   });
 
+commentSchema.methods.toggleLike = async function (userId) {
+  let comment = this
+  let index = comment.likes.findIndex(item => item.toString() === userId.toString())
+
+  if (index === -1) {
+    comment.likes.push(userId)
+  } else {
+    comment.likes.splice(index, 1)
+  }
+
+  await comment.save()
+  return comment
+}
+
 const Comment = mongoose.model('Comment', commentSchema);
 
 module.exports = Comment;

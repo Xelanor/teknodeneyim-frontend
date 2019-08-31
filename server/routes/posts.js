@@ -19,6 +19,15 @@ router.route('/add').post((req, res) => {
 
 router.route('/:id').get((req, res) => {
   Post.findById(req.params.id)
+    .populate("username")
+    .populate({
+      path: "comments",
+      options: { sort: '-createdAt' },
+      populate: {
+        path: "username",
+      }
+    })
+    .exec()
     .then(post => res.json(post))
     .catch(err => res.status(400).json('Error: ' + err));
 });

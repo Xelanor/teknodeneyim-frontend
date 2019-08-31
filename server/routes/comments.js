@@ -18,10 +18,49 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').get((req, res) => {
-  Post.findById(req.params.id)
-    .then(post => res.json(post))
-    .catch(err => res.status(400).json('Error: ' + err));
+// like or unlike comment
+router.post('/:id/like', async (req, res) => {
+  try {
+    let comment = await Comment.findById(req.params.id)
+      .catch(e => {
+        throw new Error('No comment')
+      })
+
+    if (!comment) {
+      throw new Error('No comment')
+    }
+    if (!req.body.userId) {
+      throw new Error('No comment')
+    }
+    await comment.toggleLike(req.body.userId)
+    res.json({
+      result: true,
+      likes: comment.likes
+    })
+  } catch (e) {
+    let errMsgArray = []
+    let errMsg = ''
+    if (e.errors) {
+      Object.keys(e.errors).forEach(key => {
+        errMsgArray.push(e.errors[key].message)
+      })
+
+      errMsg = errMsgArray.join(', ')
+    }
+
+    if (e.message) {
+      !!errMsg && (errMsg += ', ')
+      errMsg += e.message
+    }
+
+    !errMsg && (errMsg = 'Error')
+
+    res.json({
+      result: false,
+      errMsg,
+      err: e
+    })
+  }
 });
 
 module.exports = router;

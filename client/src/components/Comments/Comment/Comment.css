@@ -1,0 +1,15 @@
+p {
+  margin-bottom: 0;
+}
+
+.Btn {
+  padding: 9px 12px;
+  border-bottom: 1px solid #e6ecf0;
+  cursor: pointer;
+  background-color: white;
+}
+
+.LikeBtn:hover,
+.LikeBtn[isLiked="true"] {
+  color: #e0245e;
+}

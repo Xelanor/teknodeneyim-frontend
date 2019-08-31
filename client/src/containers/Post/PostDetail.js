@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import Spinner from '../../components/UI/Spinner/Spinner'
 import NewComment from '../../components/Comments/Comment/NewComment'
+import Comments from '../../components/Comments/Comments'
 
 class PostDetail extends Component {
   state = {
@@ -21,7 +22,6 @@ class PostDetail extends Component {
   }
 
   onSubmitComment = async (e) => {
-    console.log("Submitted")
     e.preventDefault()
     let comment = {
       username: this.props.auth.user.id,
@@ -37,14 +37,32 @@ class PostDetail extends Component {
       id: this.state.postId,
       comment: commentId
     }
-    console.log(commentToPost)
     await axios.post('/posts/add-comment-to-post', commentToPost)
       .then(res => console.log(res))
       .catch((error) => { console.log(error); })
+
+    await axios.get('/posts/' + this.state.postId)
+      .then(res => { this.setState({ post: res.data }) })
+      .catch(err => { console.log(err) })
   }
 
   onCommentChange = (e) => {
     this.setState({ comment: e.target.value })
+  }
+
+  onCommentLiked = async (commentId) => {
+    if (this.props.auth.isAuthenticated) {
+      let like = {
+        userId: this.props.auth.user.id,
+      }
+      await axios.post('/comments/' + commentId + '/like', like)
+        .then(res => console.log(res))
+        .catch((error) => { console.log(error); })
+
+      await axios.get('/posts/' + this.state.postId)
+        .then(res => { this.setState({ post: res.data }) })
+        .catch(err => { console.log(err) })
+    }
   }
 
   render() {
@@ -57,15 +75,20 @@ class PostDetail extends Component {
 
       page = (
         <>
-          <h1>
-            {content}
-          </h1>
           <h3>
-            {username}
+            {content}
           </h3>
+          <h4>
+            <strong>{username.username}</strong>
+          </h4>
           <h6>
             {createdAt}
           </h6>
+          <Comments 
+            comments={this.state.post.comments} 
+            commentLike={this.onCommentLiked} 
+            user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""} 
+            />
         </>
       )
     } else {
