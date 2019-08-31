@@ -1,24 +1,57 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { connect } from "react-redux";
+import ReactPaginate from 'react-paginate'
 
 import Spinner from '../../components/UI/Spinner/Spinner'
 import NewComment from '../../components/Comments/Comment/NewComment'
 import Comments from '../../components/Comments/Comments'
 
+import './PostDetail.css'
+
 class PostDetail extends Component {
   state = {
     postId: "",
     post: null,
-    comment: ""
+    comments: null,
+    comment: "",
+    commentPerPage: 10,
+    currentPage: 0,
+    offset: 0,
+    elements: []
   }
 
-  componentDidMount() {
+  getData = () => {
     const postId = this.props.match.params.id
     this.setState({ postId })
     axios.get('/posts/' + postId)
-      .then(res => { this.setState({ post: res.data }) })
+      .then(res => {
+        this.setState({
+          post: res.data,
+          comments: res.data.comments,
+          pageCount: Math.ceil(res.data.comments.length / this.state.commentPerPage)
+        })
+        this.setElementsForCurrentPage()
+      })
       .catch(err => { console.log(err) })
+  }
+
+  componentDidMount() {
+    this.getData()
+  }
+
+  setElementsForCurrentPage() {
+    let elements = this.state.comments
+      .slice(this.state.offset, this.state.offset + this.state.commentPerPage)
+    this.setState({ elements: elements });
+  }
+
+  handlePageClick = (data) => {
+    const selectedPage = data.selected;
+    const offset = selectedPage * this.state.commentPerPage;
+    this.setState({ currentPage: selectedPage, offset: offset }, () => {
+      this.setElementsForCurrentPage();
+    });
   }
 
   onSubmitComment = async (e) => {
@@ -41,9 +74,7 @@ class PostDetail extends Component {
       .then(res => console.log(res))
       .catch((error) => { console.log(error); })
 
-    await axios.get('/posts/' + this.state.postId)
-      .then(res => { this.setState({ post: res.data }) })
-      .catch(err => { console.log(err) })
+    this.getData()
   }
 
   onCommentChange = (e) => {
@@ -59,16 +90,30 @@ class PostDetail extends Component {
         .then(res => console.log(res))
         .catch((error) => { console.log(error); })
 
-      await axios.get('/posts/' + this.state.postId)
-        .then(res => { this.setState({ post: res.data }) })
-        .catch(err => { console.log(err) })
+      this.getData()
     }
   }
 
   render() {
-    const { user } = this.props.auth
-    let username, content, createdAt, page
+    let username, content, createdAt, page, paginationElement
     if (this.state.post) {
+      if (this.state.pageCount > 1) {
+        paginationElement = (
+          <ReactPaginate
+            previousLabel={"← Previous"}
+            nextLabel={"Next →"}
+            breakLabel={<span className="gap">...</span>}
+            pageCount={this.state.pageCount}
+            onPageChange={this.handlePageClick}
+            forcePage={this.state.currentPage}
+            containerClassName={"pagination"}
+            previousLinkClassName={"previous_page"}
+            nextLinkClassName={"next_page"}
+            disabledClassName={"disabled"}
+            activeClassName={"active"}
+          />
+        );
+      }
       username = this.state.post.username
       content = this.state.post.content
       createdAt = this.state.post.createdAt
@@ -84,11 +129,11 @@ class PostDetail extends Component {
           <h6>
             {createdAt}
           </h6>
-          <Comments 
-            comments={this.state.post.comments} 
-            commentLike={this.onCommentLiked} 
-            user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""} 
-            />
+          <Comments
+            comments={this.state.elements}
+            commentLike={this.onCommentLiked}
+            user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""}
+          />
         </>
       )
     } else {
@@ -99,6 +144,7 @@ class PostDetail extends Component {
         <div>
           {page}
           {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} /> : "Hi"}
+          {paginationElement}
         </div>
       </>
     );
