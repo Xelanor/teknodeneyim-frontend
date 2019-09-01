@@ -39,7 +39,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div className="App">
+          <div className="App container">
             <Navbar />
             <Sidebar />
             <Route path="/" exact component={HomePage} />

@@ -54,6 +54,7 @@ class PostDetail extends Component {
   }
 
   handlePageClick = (data) => {
+    window.scrollTo(0, 0)
     const selectedPage = data.selected;
     const offset = selectedPage * this.state.commentPerPage;
     this.setState({ currentPage: selectedPage, offset: offset }, () => {

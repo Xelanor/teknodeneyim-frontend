@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
+import axios from 'axios'
+
+import HomepagePosts from '../components/PostsList/HomepagePosts'
+import Spinner from '../components/UI/Spinner/Spinner'
+import Axios from 'axios';
 
 class HomePage extends Component {
   state = {
-    username: "",
-    content: "",
     posts: null,
-    data: null
+  }
+
+  componentDidMount() {
+    axios.get('/posts/homepage')
+      .then(res => { this.setState({ posts: res.data }) })
+      .catch(err => { console.log(err) })
   }
 
   handleChange = e => {
@@ -17,19 +25,13 @@ class HomePage extends Component {
   }
 
   render() {
+    let posts = <Spinner />
+    if (this.state.posts) {
+      posts = <HomepagePosts posts={this.state.posts} />
+    }
     return (
-      <div style={{ width: '100%', }}>
-        <div style={{ width: '75%', float: 'right' }}>
-          <div style={{ width: '50%', margin: '0 auto' }}>
-            <form onSubmit={this.onFormSubmitHandler}>
-              <label htmlFor="name">Yazar</label>
-              <input className="u-full-width" type="text" id="name" name="username" onChange={this.handleChange}></input>
-              <label htmlFor="content">Konu İsmi</label>
-              <textarea className="u-full-width" type="text" id="content" name="content" onChange={this.handleChange}></textarea>
-              <button className="button-primary">Konu Yarat</button>
-            </form>
-          </div>
-        </div>
+      <div style={{ width: '75%', float: 'right' }}>
+        {posts}
       </div>
     );
   }
