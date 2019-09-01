@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 import { logoutUser } from '../../../store/actions/authentication';
 
-import logo from '../../../assets/logo.png'
+import logo from '../../../assets/logo1.png'
 import './Navbar.css'
 
 class Navbar extends Component {
@@ -51,7 +51,7 @@ class Navbar extends Component {
     return (
       <div className="navBar" id="mainNavBar">
         {isAuthenticated ? authLinks : guestLinks}
-        <Link to="/" className="Logo"><img src={logo} alt="Logo" height="57" /></Link>
+        <Link to="/" className="Logo"><img src={logo} alt="Logo" width="130" /></Link>
         <form onSubmit={this.onSearchSubmit}>
           <input type="text" placeholder="Search.." value={this.state.searchText} onChange={this.onSearchChange}></input>
           <button type="submit"><i className="fa fa-search"></i></button>
