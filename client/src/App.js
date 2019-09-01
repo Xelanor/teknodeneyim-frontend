@@ -8,6 +8,7 @@ import Navbar from './components/Layout/Navbar/Navbar'
 import Register from './containers/Auth/Register'
 import Login from './containers/Auth/Login'
 import PostDetail from './containers/Post/PostDetail'
+import Search from './containers/Search/Search'
 import './App.css'
 
 import jwt_decode from "jwt-decode";
@@ -46,6 +47,7 @@ class App extends Component {
             <Route path="/register" exact component={Register} />
             <Route path="/login" exact component={Login} />
             <Route path='/posts/:id' component={PostDetail} />
+            <Route path='/search/:search' component={Search} />
           </div>
         </Router>
       </Provider>

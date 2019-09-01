@@ -35,6 +35,28 @@ router.route('/homepage').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Get X posts in descending order for Hompage with Y comments
+router.route('/search/:content').get((req, res) => {
+  var nameRegex = new RegExp(req.params.content.toLowerCase(), 'i')
+  Post.find({ $or: [{ "content": nameRegex }, { "subject": nameRegex }] })
+    .sort({ createdAt: 'desc' })
+    .limit(10)
+    .populate({
+      path: 'username',
+      select: 'username' // Just get the username field
+    })
+    .populate({
+      path: "comments",
+      options: { sort: '-createdAt', limit: 3 },
+      populate: {
+        path: "username",
+        select: 'username' // Just get the username field
+      }
+    })
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 // Add new post 
 // params: username and content
 router.route('/add').post((req, res) => {

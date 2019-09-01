@@ -10,11 +10,27 @@ import logo from '../../../assets/logo.png'
 import './Navbar.css'
 
 class Navbar extends Component {
+  state = {
+    searchText: ""
+  }
 
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser(this.props.history);
   };
+
+  onSearchSubmit = e => {
+    e.preventDefault()
+    let searchText = this.state.searchText
+    this.setState({ searchText: "" })
+    if (searchText.length !== 0) {
+      this.props.history.push("/search/" + searchText)
+    }
+  }
+
+  onSearchChange = e => {
+    this.setState({ searchText: e.target.value })
+  }
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
@@ -37,6 +53,10 @@ class Navbar extends Component {
         <Link to="/" className="Item">Konu Yarat</Link>
         {isAuthenticated ? authLinks : guestLinks}
         <Link to="/" className="Logo"><img src={logo} alt="Logo" height="57" /></Link>
+        <form onSubmit={this.onSearchSubmit}>
+          <input type="text" placeholder="Search.." value={this.state.searchText} onChange={this.onSearchChange}></input>
+          <button type="submit"><i className="fa fa-search"></i></button>
+        </form>
       </div>
     );
   }
