@@ -9,6 +9,7 @@ import Register from './containers/Auth/Register'
 import Login from './containers/Auth/Login'
 import PostDetail from './containers/Post/PostDetail'
 import Search from './containers/Search/Search'
+import ProfilePage from './containers/ProfilePage/ProfilePage'
 import './App.css'
 
 import jwt_decode from "jwt-decode";
@@ -48,6 +49,7 @@ class App extends Component {
             <Route path="/login" exact component={Login} />
             <Route path='/posts/:id' component={PostDetail} />
             <Route path='/search/:search' component={Search} />
+            <Route path='/profil' exact component={ProfilePage} />
           </div>
         </Router>
       </Provider>

@@ -37,9 +37,9 @@ class Navbar extends Component {
     const authLinks = (
       <>
         <Link to="#" className="Item" onClick={this.onLogoutClick}>Çıkış Yap</Link>
-        <img src={user.avatar} alt={user.name} title={user.name}
+        <Link to='/profil' ><img src={user.avatar} alt={user.name} title={user.name}
           className="Image"
-          style={{ width: '60px', marginRight: '5px' }} />
+          style={{ width: '60px', marginRight: '5px' }} /></Link>
       </>
     )
     const guestLinks = (
