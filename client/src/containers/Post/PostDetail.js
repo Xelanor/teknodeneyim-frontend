@@ -23,7 +23,7 @@ class PostDetail extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.match.params.id != this.props.match.params.id) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
       this.getData()
     }
   }
@@ -81,7 +81,7 @@ class PostDetail extends Component {
     await axios.post('/posts/add-comment-to-post', commentToPost)
       .then(res => console.log(res))
       .catch((error) => { console.log(error); })
-
+    this.setState({ comment: "" })
     this.getData()
     window.scrollTo(0, 0)
   }
@@ -152,7 +152,7 @@ class PostDetail extends Component {
       <>
         <div style={{ width: '75%', float: 'right' }}>
           {page}
-          {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} /> : "Hi"}
+          {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} comment={this.state.comment} /> : "Hi"}
           {paginationElement}
         </div>
       </>

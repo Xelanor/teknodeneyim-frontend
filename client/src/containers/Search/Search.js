@@ -11,7 +11,7 @@ class Search extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.match.params.search != this.props.match.params.search) {
+    if (prevProps.match.params.search !== this.props.match.params.search) {
       this.getData()
     }
   }
