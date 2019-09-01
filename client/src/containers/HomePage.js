@@ -3,7 +3,6 @@ import axios from 'axios'
 
 import HomepagePosts from '../components/PostsList/HomepagePosts'
 import Spinner from '../components/UI/Spinner/Spinner'
-import Axios from 'axios';
 
 class HomePage extends Component {
   state = {

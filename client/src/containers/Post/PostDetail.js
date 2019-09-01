@@ -83,6 +83,7 @@ class PostDetail extends Component {
       .catch((error) => { console.log(error); })
 
     this.getData()
+    window.scrollTo(0, 0)
   }
 
   onCommentChange = (e) => {

@@ -11,14 +11,14 @@ const homepagePost = (props) => {
     )
   })
   return (
-    // <Link to={`/posts/${props.id}`}>
     <div className="border1" style={{ backgroundColor: '#E5F0FF' }}>
-      <h6>{props.content}</h6>
-      <p>{props.username.username}</p>
+      <Link to={`/posts/${props.id}`}>
+        <h6>{props.content}</h6>
+      </Link>
+      <p>Konuyu başlatan: {props.username.username}</p>
       <h6>{props.createdAt}</h6>
       {comments}
     </div>
-    // </Link>
   );
 }
 
