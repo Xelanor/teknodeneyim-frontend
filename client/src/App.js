@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Provider } from 'react-redux';
 import store from './store/store'
 
+import './App.css'
 import HomePage from './containers/HomePage'
 import Navbar from './components/Layout/Navbar/Navbar'
 import Register from './containers/Auth/Register'
@@ -10,7 +11,10 @@ import Login from './containers/Auth/Login'
 import PostDetail from './containers/Post/PostDetail'
 import Search from './containers/Search/Search'
 import ProfilePage from './containers/ProfilePage/ProfilePage'
-import './App.css'
+import AdminPage from './containers/Admin/AdminPage'
+
+import RegisteredRoute from './components/PrivateRoutes/RegisteredRoute'
+import AdminRoute from './components/PrivateRoutes/AdminRoute'
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from './utils/setAuthToken'
@@ -49,7 +53,8 @@ class App extends Component {
             <Route path="/login" exact component={Login} />
             <Route path='/posts/:id' component={PostDetail} />
             <Route path='/search/:search' component={Search} />
-            <Route path='/profil' exact component={ProfilePage} />
+            <RegisteredRoute path='/profil' exact component={ProfilePage} />
+            <AdminRoute path='/admin' exact component={AdminPage} />
           </div>
         </Router>
       </Provider>

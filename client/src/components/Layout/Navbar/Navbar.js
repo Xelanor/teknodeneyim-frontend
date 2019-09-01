@@ -50,7 +50,6 @@ class Navbar extends Component {
     )
     return (
       <div className="navBar" id="mainNavBar">
-        <Link to="/" className="Item">Konu Yarat</Link>
         {isAuthenticated ? authLinks : guestLinks}
         <Link to="/" className="Logo"><img src={logo} alt="Logo" height="57" /></Link>
         <form onSubmit={this.onSearchSubmit}>

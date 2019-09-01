@@ -25,6 +25,10 @@ const userSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post'
   }],
+  role: {
+    type: String,
+    default: 'member'
+  }
 }, {
     timestamps: true,
   });
