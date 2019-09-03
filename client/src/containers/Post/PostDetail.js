@@ -128,34 +128,47 @@ class PostDetail extends Component {
       createdAt = this.state.post.createdAt
 
       page = (
-        <>
-          <h3>
-            {content}
-          </h3>
-          <h4>
-            <strong>{username.username}</strong>
-          </h4>
-          <h6>
-            {createdAt}
-          </h6>
+        <div className="">
+          <div className="flex">
+            <div class="font-semibold text-2xl text-tekno">
+              {content}
+            </div>
+          </div>
+          <div class="flex mt-2">
+            <div class="font-normal text-md text-gray-600">
+              İster dışarıda parlak güneşin altında, ister karanlıkta
+              sinematik izleme deneyiminin keyfini çıkarın. Dinamik Ton
+              Haritalama teknolojisi ile HDR10+ sertifikalıdır, videoları
+              gerçek renk ve kontrastla oynatır, böylece YouTube'da HDR10+
+              içerikleri izlemek canlı ve heyecanlı hale gelir.
+            </div>
+          </div>
+          <div class="flex items-center float-right">
+            <div class="font-bold text-sm text-purple-900">
+              {createdAt}
+            </div>
+            <div class="ml-4 font-normal text-sm text-black">
+              {username.username}
+            </div>
+            <img class="w-10 h-10 rounded-full mx-4" src="https://tailwindcss.com/img/jonathan.jpg"
+              alt="Avatar of Jonathan Reinink" />
+          </div>
           <Comments
             comments={this.state.elements}
             commentLike={this.onCommentLiked}
             user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""}
           />
-        </>
+        </div>
       )
     } else {
       page = <Spinner />
     }
     return (
-      <>
-        <div style={{ width: '75%', float: 'right' }}>
-          {page}
-          {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} comment={this.state.comment} /> : "Hi"}
-          {paginationElement}
-        </div>
-      </>
+      <div className="flex-1 px-4 mb-16 mt-12 items-center">
+        {page}
+        {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} comment={this.state.comment} /> : "Hi"}
+        {paginationElement}
+      </div>
     );
   }
 }

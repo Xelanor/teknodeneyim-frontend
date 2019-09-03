@@ -11,12 +11,23 @@ const homepagePost = (props) => {
     )
   })
   return (
-    <div className="border1" style={{ backgroundColor: '#E5F0FF' }}>
-      <Link to={`/posts/${props.id}`}>
-        <h3>Konu: {props.content}</h3>
-      </Link>
-      <p>Konuyu başlatan: {props.username.username}</p>
-      <h6>{props.createdAt}</h6>
+    <div className="mb-16">
+      <div className="flex">
+        <Link to={`/posts/${props.id}`}>
+          <div class="font-semibold text-2xl text-tekno">
+            {props.content}
+          </div>
+        </Link>
+      </div>
+      <div class="flex mt-2">
+        <div class="font-normal text-md text-gray-600">
+          İster dışarıda parlak güneşin altında, ister karanlıkta
+          sinematik izleme deneyiminin keyfini çıkarın. Dinamik Ton
+          Haritalama teknolojisi ile HDR10+ sertifikalıdır, videoları
+          gerçek renk ve kontrastla oynatır, böylece YouTube'da HDR10+
+          içerikleri izlemek canlı ve heyecanlı hale gelir.
+        </div>
+      </div>
       {comments}
     </div>
   );

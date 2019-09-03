@@ -1,7 +1,6 @@
 import React from 'react';
 
 import HomepagePost from './PostSummary/HomepagePost'
-import './PostsList.css'
 
 const homepagePosts = (props) => {
   let data = props.posts
@@ -16,8 +15,15 @@ const homepagePosts = (props) => {
     />
   })
   return (
-    <div>
-      {posts}
+    <div className="flex-1 px-4 py-10">
+      <div class="flex mb-4">
+        <div class="font-bold text-3xl text-purple-900">
+          En Güncel Deneyimler
+        </div>
+      </div>
+      <div>
+        {posts}
+      </div>
     </div>
   );
 }

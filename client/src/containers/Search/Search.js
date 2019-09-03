@@ -32,7 +32,11 @@ class Search extends Component {
     let posts = <Spinner />
     if (this.state.posts) {
       if (this.state.posts.length === 0) {
-        posts = <h1>Aradığınız sonuca ulaşılamadı. Lütfen tekrar deneyiniz.</h1>
+        posts = <div class="flex px-4 py-10">
+        <div class="font-bold text-3xl text-purple-900">
+        Aradığınız sonuca ulaşılamadı. Lütfen tekrar deneyiniz.
+        </div>
+      </div>
       } else {
         posts = <HomepagePosts posts={this.state.posts} />
       }

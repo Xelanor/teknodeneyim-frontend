@@ -1,7 +1,6 @@
 import React from 'react';
 
 import PostSummary from './PostSummary/PostSummary'
-import './PostsList.css'
 
 const postsList = (props) => {
   let data = props.posts
@@ -9,17 +8,14 @@ const postsList = (props) => {
     return <PostSummary
       key={post._id}
       id={post._id}
-      username={post.username}
       content={post.content}
-      createdAt={post.createdAt}
+      comments={post.comments.length}
     />
   })
   return (
-    <div id="index-section">
-      <div id="leftCol">
-        {posts}
-      </div>
-    </div>
+    <>
+      {posts}
+    </>
   );
 }
 

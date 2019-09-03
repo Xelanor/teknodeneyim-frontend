@@ -21,11 +21,18 @@ class Sidebar extends Component {
       posts = <PostsList posts={this.state.posts} />
     }
     return (
-      <div>
-        <div style={{ width: '25%', float: 'left' }}>
-          <h3>Konular</h3>
-          {posts}
+      <div className="md:w-3/12 p-4 border-r-2 border-gray-200">
+        <div className="flex justify-between">
+          <div class="font-semibold text-base text-gray-900">
+            #Gündem
+            </div>
+          <div class="font-semibold text-base text-gray-900">
+            #Popüler
+            </div>
         </div>
+        <>
+          {posts}
+        </>
       </div>
     );
   }

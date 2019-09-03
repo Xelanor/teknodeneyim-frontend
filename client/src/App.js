@@ -45,8 +45,8 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div className="App container">
-            <Navbar />
+          <Navbar />
+          <div className="md:flex h-full">
             <Sidebar />
             <Route path="/" exact component={HomePage} />
             <Route path="/register" exact component={Register} />

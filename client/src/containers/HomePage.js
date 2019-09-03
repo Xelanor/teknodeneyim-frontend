@@ -29,7 +29,7 @@ class HomePage extends Component {
       posts = <HomepagePosts posts={this.state.posts} />
     }
     return (
-      <div style={{ width: '75%', float: 'right' }}>
+      <div className="flex-1">
         {posts}
       </div>
     );
