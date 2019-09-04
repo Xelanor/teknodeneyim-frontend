@@ -1,0 +1,7 @@
+{
+  "name": "teknodeneyim",
+  "version": "0.1.0",
+  "scripts": {
+    "postinstall": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  }
+}
