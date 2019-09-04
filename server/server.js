@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const path = require('path')
 
 require('dotenv').config();
 
@@ -33,6 +34,16 @@ const commentsRouter = require('./routes/comments')
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
+
+// Serve static assets if in PROD
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static('/../client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
+  })
+}
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
