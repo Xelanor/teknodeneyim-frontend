@@ -1,0 +1,11 @@
+.pagination {
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.pagination li {
+  padding: 3px;
+  display: inline-block;
+  cursor: pointer;
+}
