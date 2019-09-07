@@ -50,8 +50,8 @@ class Navbar extends Component {
     return (
       <div className="border-b-2 border-gray-200" id="mainNavBar">
         <div className="mb-2">
-          <nav class="flex items-center justify-between flex-wrap bg-transparent p-1">
-            <div class="flex items-center flex-shrink-0 text-white mr-8">
+          <nav className="flex items-center justify-between flex-wrap bg-transparent p-1">
+            <div className="flex items-center flex-shrink-0 text-white mr-8">
               <Link to="/">
                 <img
                   src={logo}
@@ -61,12 +61,12 @@ class Navbar extends Component {
                 />
               </Link>
             </div>
-            <div class="block md:hidden">
+            <div className="block md:hidden">
               <button
-                class="flex items-center px-3 py-2 border rounded text-tekno border-tekno hover:text-white hover:bg-tekno"
+                className="flex items-center px-3 py-2 border rounded text-tekno border-tekno hover:text-white hover:bg-tekno"
               >
                 <svg
-                  class="fill-current h-3 w-3"
+                  className="fill-current h-3 w-3"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -89,26 +89,26 @@ class Navbar extends Component {
                 </form>
               </div>
             </div>
-            <div class="inline-flex">
+            <div className="inline-flex">
               <div>
                 {isAuthenticated ? authLinks : guestLinks}
               </div>
             </div>
           </nav>
-          <nav id="headers" class="container mx-auto w-5/6 mt-3">
-            <ul class="flex items-stretch justify-between w-full m-0 p-0">
-              <il>
+          <nav id="headers" className="container mx-auto w-5/6 mt-3">
+            <ul className="flex items-stretch justify-between w-full m-0 p-0">
+              <li>
                 <a href="/basliklar/gundem" title="dünyamızda neler olup bitiyor">Huawei</a>
-              </il>
-              <il>
+              </li>
+              <li>
                 <a href="/basliklar/gundem" title="dünyamızda neler olup bitiyor">#iPhone</a>
-              </il>
-              <il>
+              </li>
+              <li>
                 <a href="/basliklar/gundem" title="dünyamızda neler olup bitiyor">#OPPO</a>
-              </il>
-              <il>
+              </li>
+              <li>
                 <a href="/basliklar/gundem" title="dünyamızda neler olup bitiyor">#Nokia</a>
-              </il>
+              </li>
             </ul>
           </nav>
         </div>

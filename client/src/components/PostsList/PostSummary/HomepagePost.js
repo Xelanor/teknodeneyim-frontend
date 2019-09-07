@@ -14,13 +14,13 @@ const homepagePost = (props) => {
     <div className="mb-16">
       <div className="flex">
         <Link to={`/posts/${props.id}`}>
-          <div class="font-semibold text-2xl text-tekno">
+          <div className="font-semibold text-2xl text-tekno">
             {props.content}
           </div>
         </Link>
       </div>
-      <div class="flex mt-2">
-        <div class="font-normal text-md text-gray-600">
+      <div className="flex mt-2">
+        <div className="font-normal text-md text-gray-600">
           İster dışarıda parlak güneşin altında, ister karanlıkta
           sinematik izleme deneyiminin keyfini çıkarın. Dinamik Ton
           Haritalama teknolojisi ile HDR10+ sertifikalıdır, videoları

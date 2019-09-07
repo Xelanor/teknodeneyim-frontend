@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "npm --prefix ../server run server",
+    "server": "npm --prefix ../ run server",
     "buildcss": "postcss css/tailwind.css -o public/build/tailwind.css",
     "dev": "concurrently \"npm run server\" \"npm run start\""
   },

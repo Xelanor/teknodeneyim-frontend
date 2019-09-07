@@ -16,8 +16,8 @@ const homepagePosts = (props) => {
   })
   return (
     <div className="flex-1 px-4 py-10">
-      <div class="flex mb-4">
-        <div class="font-bold text-3xl text-purple-900">
+      <div className="flex mb-4">
+        <div className="font-bold text-3xl text-purple-900">
           En Güncel Deneyimler
         </div>
       </div>

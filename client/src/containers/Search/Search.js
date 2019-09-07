@@ -32,8 +32,8 @@ class Search extends Component {
     let posts = <Spinner />
     if (this.state.posts) {
       if (this.state.posts.length === 0) {
-        posts = <div class="flex px-4 py-10">
-        <div class="font-bold text-3xl text-purple-900">
+        posts = <div className="flex px-4 py-10">
+        <div className="font-bold text-3xl text-purple-900">
         Aradığınız sonuca ulaşılamadı. Lütfen tekrar deneyiniz.
         </div>
       </div>
