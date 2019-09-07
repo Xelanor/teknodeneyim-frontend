@@ -7,15 +7,15 @@ module.exports = function validateLoginInput(data) {
   data.password = !isEmpty(data.password) ? data.password : '';
 
   if (Validator.isEmpty(data.username)) {
-    errors.username = 'Email is required';
+    errors.username = 'Kullanıcı adı gereklidir';
   }
 
   if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = 'Password must have 6 chars';
+    errors.password = 'Şifre en az 6 haneli olmalıdır';
   }
 
   if (Validator.isEmpty(data.password)) {
-    errors.password = 'Password is required';
+    errors.password = 'Lütfen şifre girin';
   }
 
   return {

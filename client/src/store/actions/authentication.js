@@ -21,7 +21,7 @@ export const registerUser = (user, history) => dispatch => {
     });
 }
 
-export const loginUser = (user) => dispatch => {
+export const loginUser = (user, history) => dispatch => {
   axios.post('/users/login', user)
     .then(res => {
       const { token } = res.data;
@@ -29,6 +29,7 @@ export const loginUser = (user) => dispatch => {
       setAuthToken(token);
       const decoded = jwt_decode(token);
       dispatch(setCurrentUser(decoded));
+      history.push('/');
     })
     .catch(err => {
       dispatch({

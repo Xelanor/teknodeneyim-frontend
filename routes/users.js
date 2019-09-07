@@ -86,7 +86,7 @@ router.post('/login', (req, res) => {
   User.findOne({ username })
     .then(user => {
       if (!user) {
-        errors.username = 'User not found'
+        errors.username = 'Kullanıcı Bulunamadı'
         return res.status(404).json(errors);
       }
       bcrypt.compare(password, user.password)
@@ -111,7 +111,7 @@ router.post('/login', (req, res) => {
             });
           }
           else {
-            errors.password = 'Incorrect Password';
+            errors.password = 'Hatalı Şifre';
             return res.status(400).json(errors);
           }
         });

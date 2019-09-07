@@ -8,40 +8,40 @@ module.exports = function validateRegisterInput(data) {
   data.password = !isEmpty(data.password) ? data.password : '';
   data.password_confirm = !isEmpty(data.password_confirm) ? data.password_confirm : '';
 
-  if (!Validator.isLength(data.username, { min: 2, max: 30 })) {
-    errors.username = 'Name must be between 2 to 30 chars';
+  if (!Validator.isLength(data.username, { min: 5, max: 30 })) {
+    errors.username = 'Kullanıcı adınız 5 ile 30 karakter arasında olmalıdır';
   }
 
   if (Validator.isEmpty(data.username)) {
-    errors.username = 'Name field is required';
+    errors.username = 'Kullanıcı adı gereklidir';
   }
 
   if (!Validator.isEmail(data.email)) {
-    errors.email = 'Email is invalid';
+    errors.email = 'E-mail adresi geçersizdir';
   }
 
   if (Validator.isEmpty(data.email)) {
-    errors.email = 'Email is required';
+    errors.email = 'E-mail adresi gereklidir';
   }
 
   if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = 'Password must have 6 chars';
+    errors.password = 'Şifre en az 6 karakter uzunluğunda olmalıdır';
   }
 
   if (Validator.isEmpty(data.password)) {
-    errors.password = 'Password is required';
+    errors.password = 'Şifre gereklidir';
   }
 
   if (!Validator.isLength(data.password_confirm, { min: 6, max: 30 })) {
-    errors.password_confirm = 'Password must have 6 chars';
+    errors.password_confirm = 'Şifre en az 6 karakter uzunluğunda olmalıdır';
   }
 
   if (!Validator.equals(data.password, data.password_confirm)) {
-    errors.password_confirm = 'Password and Confirm Password must match';
+    errors.password_confirm = 'Şifreler uyuşmuyor';
   }
 
   if (Validator.isEmpty(data.password_confirm)) {
-    errors.password_confirm = 'Password is required';
+    errors.password_confirm = 'Şifre gereklidir';
   }
 
   return {
