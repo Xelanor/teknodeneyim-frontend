@@ -19,7 +19,7 @@ class PostDetail extends Component {
     commentPerPage: 10,
     currentPage: 0,
     offset: 0,
-    elements: []
+    elements: [],
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -92,14 +92,25 @@ class PostDetail extends Component {
 
   onCommentLiked = async (commentId) => {
     if (this.props.auth.isAuthenticated) {
+      const userId = this.props.auth.user.id
+      let likeSuccessful = false
       let like = {
-        userId: this.props.auth.user.id,
-      }
+          userId: userId,
+        }
       await axios.post('/comments/' + commentId + '/like', like)
-        .then(res => console.log(res))
+        .then(res => {
+          if(res.status===200) {likeSuccessful = true}
+        })
         .catch((error) => { console.log(error); })
-
-      this.getData()
+      if (likeSuccessful) {
+        let comments = {...this.state.comments}
+        Object.keys(comments).forEach(key => {
+          if(comments[key]._id === commentId) {
+            comments[key].likes.includes(userId) ? comments[key].likes.splice( comments[key].likes.indexOf(userId), 1 ) : comments[key].likes.push(userId)
+          }
+        })
+        this.setState({comments})
+      }
     }
   }
 
@@ -130,12 +141,12 @@ class PostDetail extends Component {
       page = (
         <div className="">
           <div className="flex">
-            <div class="font-semibold text-2xl text-tekno">
+            <div className="font-semibold text-2xl text-tekno">
               {content}
             </div>
           </div>
-          <div class="flex mt-2">
-            <div class="font-normal text-md text-gray-600">
+          <div className="flex mt-2">
+            <div className="font-normal text-md text-gray-600">
               İster dışarıda parlak güneşin altında, ister karanlıkta
               sinematik izleme deneyiminin keyfini çıkarın. Dinamik Ton
               Haritalama teknolojisi ile HDR10+ sertifikalıdır, videoları
@@ -143,14 +154,14 @@ class PostDetail extends Component {
               içerikleri izlemek canlı ve heyecanlı hale gelir.
             </div>
           </div>
-          <div class="flex items-center float-right">
-            <div class="font-bold text-sm text-purple-900">
+          <div className="flex items-center float-right">
+            <div className="font-bold text-sm text-purple-900">
               {createdAt}
             </div>
-            <div class="ml-4 font-normal text-sm text-black">
+            <div className="ml-4 font-normal text-sm text-black">
               {username.username}
             </div>
-            <img class="w-10 h-10 rounded-full mx-4" src="https://tailwindcss.com/img/jonathan.jpg"
+            <img className="w-10 h-10 rounded-full mx-4" src="https://tailwindcss.com/img/jonathan.jpg"
               alt="Avatar of Jonathan Reinink" />
           </div>
           <Comments
