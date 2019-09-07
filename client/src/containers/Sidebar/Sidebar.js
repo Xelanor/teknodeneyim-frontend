@@ -7,7 +7,6 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 class Sidebar extends Component {
   state = {
     posts: null,
-
   }
   componentDidMount() {
     axios.get('/posts')
@@ -16,7 +15,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    let posts = <Spinner />
+    let posts
     if (this.state.posts) {
       posts = <PostsList posts={this.state.posts} />
     }

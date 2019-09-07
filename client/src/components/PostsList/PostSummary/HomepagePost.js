@@ -1,13 +1,21 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-import HomepageComment from '../../Comments/Comment/HomepageComment'
+import Comment from '../../Comments/Comment/Comment'
 
 const homepagePost = (props) => {
-  console.log(props.comments)
   let comments = props.comments.map(comment => {
     return (
-      <HomepageComment comment={comment} />
+      <Comment 
+        key={comment._id} 
+        id={comment._id} 
+        username={comment.username.username} 
+        content={comment.content} 
+        createdAt={comment.createdAt} 
+        likes={comment.likes}
+        commentLike={props.commentLike} 
+        user={props.user}
+        />
     )
   })
   return (

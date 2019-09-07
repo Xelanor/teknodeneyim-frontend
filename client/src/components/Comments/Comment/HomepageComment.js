@@ -2,7 +2,7 @@ import React from 'react';
 
 const homepageComment = (props) => {
   return (
-    <comment>
+    <>
       <div className="flex mt-12">
         <div className="flex font-normal text-md text-black">
           {props.comment.content}
@@ -18,7 +18,7 @@ const homepageComment = (props) => {
         <img className="w-10 h-10 rounded-full mx-4" src="https://tailwindcss.com/img/jonathan.jpg"
           alt="Avatar of Jonathan Reinink" />
       </div>
-    </comment>
+    </>
   );
 }
 
