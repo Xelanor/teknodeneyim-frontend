@@ -10,7 +10,7 @@ const homepageComment = (props) => {
       </div>
       <div className="flex items-center float-right">
         <div className="font-bold text-sm text-purple-900">
-          {props.comment.createdAt}
+          {new Date(props.createdAt).toLocaleString()}          
         </div>
         <div className="ml-4 font-normal text-sm text-black">
           {props.comment.username.username}

@@ -156,7 +156,7 @@ class PostDetail extends Component {
           </div>
           <div className="flex items-center float-right">
             <div className="font-bold text-sm text-purple-900">
-              {createdAt}
+              {new Date(createdAt).toLocaleString()}          
             </div>
             <div className="ml-4 font-normal text-sm text-black">
               {username.username}

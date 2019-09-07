@@ -16,7 +16,7 @@ const comment = (props) => {
           </span>
         </div>
         <div className="font-bold text-sm text-purple-900">
-          {props.createdAt}
+          {new Date(props.createdAt).toLocaleString()}
         </div>
         <div className="ml-4 font-normal text-sm text-black">
           {props.username}
