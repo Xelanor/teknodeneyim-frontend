@@ -34,12 +34,17 @@ class Navbar extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
-      <>
+      <div className="flex flex-row-reverse">
         <Link to="#" className="inline-block text-base px-4 py-2 leading-none border rounded-lg bg-tekno text-white border-white hover:border-tekno hover:text-tekno hover:bg-transparent mt-2 lg:mt-0" onClick={this.onLogoutClick}>Çıkış Yap</Link>
-        {/* <Link to='/profil' ><img src={user.avatar} alt={user.name} title={user.name}
-          className="Image"
-          style={{ width: '60px', marginRight: '5px' }} /></Link> */}
-      </>
+        <Link to={{ pathname: "/profil/" + user.username }} >
+          <img
+            src={user.avatar}
+            alt={user.name}
+            title={user.name}
+            className="w-10 h-10 rounded-full mx-4"
+          />
+        </Link>
+      </div>
     )
     const guestLinks = (
       <>

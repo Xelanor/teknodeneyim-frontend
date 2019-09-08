@@ -126,6 +126,13 @@ router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) =
   });
 });
 
+router.route('/:userName').get((req, res) => {
+  const username = req.params.userName
+  User.findOne({ username })
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
 module.exports = router;
 
 // router.route('/').get((req, res) => {
