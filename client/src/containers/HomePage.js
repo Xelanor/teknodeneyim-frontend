@@ -6,19 +6,13 @@ import { withRouter } from 'react-router-dom'
 import HomepagePosts from '../components/PostsList/HomepagePosts'
 import Spinner from '../components/UI/Spinner/Spinner'
 
-class HomePage extends Component {
-  state = {
-    posts: null,
-  }
+import { fetchPosts } from '../store/actions/fetchActions'
 
-  getData = () => {
-    axios.get('/posts/homepage')
-    .then(res => { this.setState({ posts: res.data }) })
-    .catch(err => { console.log(err) })
-  }
+class HomePage extends Component {
+  state = {}
 
   componentDidMount() {
-    this.getData()
+    this.props.fetchPosts()
   }
 
   onCommentLiked = async (commentId) => {
@@ -26,10 +20,10 @@ class HomePage extends Component {
       const userId = this.props.auth.user.id
       let likeSuccessful = false
       let like = {
-          userId: userId,
-        }
+        userId: userId,
+      }
       await axios.post('/comments/' + commentId + '/like', like)
-        .then(res => {})
+        .then(res => { })
         .catch((error) => { console.log(error); })
     }
     this.getData()
@@ -37,12 +31,12 @@ class HomePage extends Component {
 
   render() {
     let posts
-    if (this.state.posts) {
-      posts = <HomepagePosts 
-                  posts={this.state.posts} 
-                  commentLike={this.onCommentLiked}
-                  user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""}
-                  />
+    if (this.props.posts) {
+      posts = <HomepagePosts
+        posts={this.props.posts}
+        commentLike={this.onCommentLiked}
+        user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""}
+      />
     }
     return (
       <div className="flex-1">
@@ -53,7 +47,8 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  posts: state.posts.posts
 });
 
-export default withRouter(connect(mapStateToProps)(HomePage));
+export default withRouter(connect(mapStateToProps, { fetchPosts })(HomePage));
