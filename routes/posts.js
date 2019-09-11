@@ -62,7 +62,9 @@ router.route('/search/:content').get((req, res) => {
 router.route('/add').post((req, res) => {
   const username = req.body.username;
   const content = req.body.content;
-  const newPost = new Post({ username, content });
+  const description = req.body.description;
+  const subjects = req.body.subjects;
+  const newPost = new Post({ username, content, description, subjects });
 
   newPost.save()
     .then(() => res.json('Post added!'))

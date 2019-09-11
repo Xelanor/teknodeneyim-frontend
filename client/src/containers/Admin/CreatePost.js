@@ -7,7 +7,8 @@ import { fetchPosts, createPost } from '../../store/actions/fetchActions'
 class CreatePost extends Component {
   state = {
     content: "",
-    description: ""
+    description: "",
+    subjects: ""
   }
 
   handleInputChange = e => {
@@ -19,10 +20,11 @@ class CreatePost extends Component {
     let post = {
       username: this.props.auth.user.id,
       content: this.state.content,
-      description: this.state.description
+      description: this.state.description,
+      subjects: this.state.subjects.split(',')
     }
     this.props.createPost(post)
-    this.setState({ content: "", description: "" })
+    this.setState({ content: "", description: "", subjects: "" })
     this.props.fetchPosts()
   }
 
@@ -59,6 +61,20 @@ class CreatePost extends Component {
               placeholder="Konu Açıklaması"
               onChange={this.handleInputChange}
               value={this.state.description}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+              Hashtagler (Virgül ile ayır)
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="subjects"
+              name="subjects"
+              type="text"
+              placeholder="Konu Açıklaması"
+              onChange={this.handleInputChange}
+              value={this.state.subjects}
             />
           </div>
           <button className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline" type="submit">

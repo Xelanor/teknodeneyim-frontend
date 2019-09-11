@@ -85,7 +85,7 @@ class PostDetail extends Component {
   }
 
   render() {
-    let username, content, createdAt, page, paginationElement
+    let page, paginationElement
     if (this.state.elements) {
       if (this.props.post.pageCount > 1) {
         paginationElement = (
@@ -104,9 +104,7 @@ class PostDetail extends Component {
           />
         );
       }
-      username = this.props.post.post.username
-      content = this.props.post.post.content
-      createdAt = this.props.post.post.createdAt
+      let { username, content, createdAt, description } = this.props.post.post
 
       page = (
         <div className="">
@@ -117,11 +115,7 @@ class PostDetail extends Component {
           </div>
           <div className="flex mt-2">
             <div className="font-normal text-md text-gray-600">
-              İster dışarıda parlak güneşin altında, ister karanlıkta
-              sinematik izleme deneyiminin keyfini çıkarın. Dinamik Ton
-              Haritalama teknolojisi ile HDR10+ sertifikalıdır, videoları
-              gerçek renk ve kontrastla oynatır, böylece YouTube'da HDR10+
-              içerikleri izlemek canlı ve heyecanlı hale gelir.
+              {description}
             </div>
           </div>
           <div className="flex items-center float-right">

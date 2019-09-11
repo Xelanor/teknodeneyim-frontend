@@ -23,10 +23,11 @@ const postSchema = new Schema({
   comments: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment'
-  }]
+  }],
+  subjects: [String]
 }, {
-    timestamps: true,
-  });
+  timestamps: true,
+});
 
 const Post = mongoose.model('Post', postSchema);
 

@@ -6,15 +6,17 @@ const homepagePosts = (props) => {
   let data = props.posts
   let posts = data.map(post => {
     return <HomepagePost
-              key={post._id}
-              id={post._id}
-              username={post.username}
-              content={post.content}
-              createdAt={post.createdAt}
-              comments={post.comments}
-              commentLike={props.commentLike} 
-              user={props.user}
-            />
+      key={post._id}
+      id={post._id}
+      username={post.username}
+      content={post.content}
+      description={post.description}
+      subjects={post.subjects}
+      createdAt={post.createdAt}
+      comments={post.comments}
+      commentLike={props.commentLike}
+      user={props.user}
+    />
   })
   return (
     <div className="flex-1 px-4 py-10">
