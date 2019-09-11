@@ -6,9 +6,10 @@ class AdminPage extends Component {
   state = {}
   render() {
     return (
-      <div>
-        <h1>Konu Oluştur</h1>
-        <CreatePost />
+      <div className="w-full justify-center flex-1 px-4 py-10">
+        <div className="w-full max-w-sm items-center mx-auto">
+          <CreatePost />
+        </div>
       </div>
     );
   }

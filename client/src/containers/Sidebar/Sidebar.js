@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 import { connect } from 'react-redux'
 
 import PostsList from '../../components/PostsList/PostsList'
-import Spinner from '../../components/UI/Spinner/Spinner'
 
 import { fetchPosts } from '../../store/actions/fetchActions'
 

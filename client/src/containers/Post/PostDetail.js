@@ -8,55 +8,43 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import NewComment from '../../components/Comments/Comment/NewComment'
 import Comments from '../../components/Comments/Comments'
 
+import { likeComment } from '../../store/actions/likeAction'
+import { fetchComments } from '../../store/actions/fetchActions'
+import { COMMENT_PER_PAGE } from '../../store/actions/types'
+
 import './PostDetail.css'
 
 class PostDetail extends Component {
   state = {
-    postId: "",
-    post: null,
-    comments: null,
     comment: "",
-    commentPerPage: 10,
     currentPage: 0,
     offset: 0,
-    elements: [],
+    elements: null,
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.props.post !== prevProps.post) {
+      this.setElementsForCurrentPage()
+    }
     if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.getData()
+      this.props.fetchComments(this.props.match.params.id)
     }
   }
 
-  getData = () => {
-    const postId = this.props.match.params.id
-    this.setState({ postId })
-    axios.get('/posts/' + postId)
-      .then(res => {
-        this.setState({
-          post: res.data,
-          comments: res.data.comments,
-          pageCount: Math.ceil(res.data.comments.length / this.state.commentPerPage)
-        })
-        this.setElementsForCurrentPage()
-      })
-      .catch(err => { console.log(err) })
-  }
-
   componentDidMount() {
-    this.getData()
+    this.props.fetchComments(this.props.match.params.id)
   }
 
   setElementsForCurrentPage() {
-    let elements = this.state.comments
-      .slice(this.state.offset, this.state.offset + this.state.commentPerPage)
+    let elements = this.props.post.post.comments
+      .slice(this.state.offset, this.state.offset + COMMENT_PER_PAGE)
     this.setState({ elements: elements });
   }
 
   handlePageClick = (data) => {
     window.scrollTo(0, 0)
     const selectedPage = data.selected;
-    const offset = selectedPage * this.state.commentPerPage;
+    const offset = selectedPage * COMMENT_PER_PAGE;
     this.setState({ currentPage: selectedPage, offset: offset }, () => {
       this.setElementsForCurrentPage();
     });
@@ -90,40 +78,22 @@ class PostDetail extends Component {
     this.setState({ comment: e.target.value })
   }
 
-  onCommentLiked = async (commentId) => {
+  onCommentLiked = (commentId) => {
     if (this.props.auth.isAuthenticated) {
-      const userId = this.props.auth.user.id
-      let likeSuccessful = false
-      let like = {
-          userId: userId,
-        }
-      await axios.post('/comments/' + commentId + '/like', like)
-        .then(res => {
-          if(res.status===200) {likeSuccessful = true}
-        })
-        .catch((error) => { console.log(error); })
-      if (likeSuccessful) {
-        let comments = {...this.state.comments}
-        Object.keys(comments).forEach(key => {
-          if(comments[key]._id === commentId) {
-            comments[key].likes.includes(userId) ? comments[key].likes.splice( comments[key].likes.indexOf(userId), 1 ) : comments[key].likes.push(userId)
-          }
-        })
-        this.setState({comments})
-      }
+      this.props.likeComment(commentId, this.props.auth.user.id)
     }
   }
 
   render() {
     let username, content, createdAt, page, paginationElement
-    if (this.state.post) {
-      if (this.state.pageCount > 1) {
+    if (this.state.elements) {
+      if (this.props.post.pageCount > 1) {
         paginationElement = (
           <ReactPaginate
             previousLabel={"← Previous"}
             nextLabel={"Next →"}
             breakLabel={<span className="gap">...</span>}
-            pageCount={this.state.pageCount}
+            pageCount={this.props.post.pageCount}
             onPageChange={this.handlePageClick}
             forcePage={this.state.currentPage}
             containerClassName={"pagination"}
@@ -134,9 +104,9 @@ class PostDetail extends Component {
           />
         );
       }
-      username = this.state.post.username
-      content = this.state.post.content
-      createdAt = this.state.post.createdAt
+      username = this.props.post.post.username
+      content = this.props.post.post.content
+      createdAt = this.props.post.post.createdAt
 
       page = (
         <div className="">
@@ -156,7 +126,7 @@ class PostDetail extends Component {
           </div>
           <div className="flex items-center float-right">
             <div className="font-bold text-sm text-purple-900">
-              {new Date(createdAt).toLocaleString()}          
+              {new Date(createdAt).toLocaleString()}
             </div>
             <div className="ml-4 font-normal text-sm text-black">
               {username.username}
@@ -186,7 +156,8 @@ class PostDetail extends Component {
 
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  post: state.posts.post,
 });
 
-export default withRouter(connect(mapStateToProps)(PostDetail));
+export default withRouter(connect(mapStateToProps, { likeComment, fetchComments })(PostDetail));

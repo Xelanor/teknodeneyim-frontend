@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import HomepagePosts from '../components/PostsList/HomepagePosts'
 import Spinner from '../components/UI/Spinner/Spinner'
 
+import { likeComment } from '../store/actions/likeAction'
 import { fetchPosts } from '../store/actions/fetchActions'
 
 class HomePage extends Component {
@@ -15,18 +16,11 @@ class HomePage extends Component {
     this.props.fetchPosts()
   }
 
-  onCommentLiked = async (commentId) => {
+  onCommentLiked = (commentId) => {
     if (this.props.auth.isAuthenticated) {
-      const userId = this.props.auth.user.id
-      let likeSuccessful = false
-      let like = {
-        userId: userId,
-      }
-      await axios.post('/comments/' + commentId + '/like', like)
-        .then(res => { })
-        .catch((error) => { console.log(error); })
+      this.props.likeComment(commentId, this.props.auth.user.id)
+      this.props.fetchPosts()
     }
-    this.getData()
   }
 
   render() {
@@ -51,4 +45,4 @@ const mapStateToProps = state => ({
   posts: state.posts.posts
 });
 
-export default withRouter(connect(mapStateToProps, { fetchPosts })(HomePage));
+export default withRouter(connect(mapStateToProps, { fetchPosts, likeComment })(HomePage));

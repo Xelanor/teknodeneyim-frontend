@@ -2,35 +2,68 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from "react-redux";
 
+import { fetchPosts, createPost } from '../../store/actions/fetchActions'
+
 class CreatePost extends Component {
   state = {
-    content: ""
+    content: "",
+    description: ""
   }
 
-  handleChange = e => {
-    this.setState({ content: e.target.value })
+  handleInputChange = e => {
+    this.setState({ [e.target.name]: e.target.value })
   }
 
-  onFormSubmitHandler = async e => {
+  onFormSubmitHandler = e => {
     e.preventDefault()
     let post = {
       username: this.props.auth.user.id,
       content: this.state.content,
+      description: this.state.description
     }
-    console.log(post)
-    await axios.post('/posts/add', post)
-      .then(res => console.log(res))
-      .catch((error) => { console.log(error); })
-    this.setState({ content: "" })
+    this.props.createPost(post)
+    this.setState({ content: "", description: "" })
+    this.props.fetchPosts()
   }
 
   render() {
     return (
-      <div style={{ width: '50%', margin: '0 auto' }}>
+      <div>
         <form onSubmit={this.onFormSubmitHandler}>
-          <label htmlFor="name">Konu Adı</label>
-          <input className="u-full-width" type="text" id="content" name="content" value={this.state.content} onChange={this.handleChange}></input>
-          <button className="button-primary">Konu Yarat</button>
+          <div className="font-semibold text-xl text-gray-900 my-8">
+            Konu Oluştur
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+              Konu Adı
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="content"
+              name="content"
+              type="text"
+              placeholder="Konu Adı"
+              onChange={this.handleInputChange}
+              value={this.state.content}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+              Konu Açıklaması
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="description"
+              name="description"
+              type="text"
+              placeholder="Konu Açıklaması"
+              onChange={this.handleInputChange}
+              value={this.state.description}
+            />
+          </div>
+          <button className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Konu Yarat
+          </button>
         </form>
       </div>
     );
@@ -41,4 +74,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(CreatePost);
+export default connect(mapStateToProps, { fetchPosts, createPost })(CreatePost);
