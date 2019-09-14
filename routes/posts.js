@@ -25,7 +25,7 @@ router.route('/homepage').get((req, res) => {
     })
     .populate({
       path: "comments",
-      options: { sort: '-createdAt', limit: 3 },
+      options: { sort: '-createdAt', limit: 2 },
       populate: {
         path: "username",
         select: 'username' // Just get the username field
@@ -38,7 +38,7 @@ router.route('/homepage').get((req, res) => {
 // Get X posts in descending order for Hompage with Y comments
 router.route('/search/:content').get((req, res) => {
   var nameRegex = new RegExp(req.params.content.toLowerCase(), 'i')
-  Post.find({ $or: [{ "content": nameRegex }, { "subject": nameRegex }] })
+  Post.find({ $or: [{ "content": nameRegex }, { "description": nameRegex }, { "subjects": nameRegex }] })
     .sort({ createdAt: 'desc' })
     .limit(10)
     .populate({

@@ -21,7 +21,10 @@ app.use(bodyParser.json());
 
 const uri = process.env.ATLAS_URI
 
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true })
+  .catch(err => {
+    console.log(err);
+  });
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully");

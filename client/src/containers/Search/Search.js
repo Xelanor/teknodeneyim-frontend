@@ -7,7 +7,8 @@ import HomepagePosts from '../../components/PostsList/HomepagePosts'
 class Search extends Component {
   state = {
     searchText: "",
-    posts: null
+    posts: null,
+    loading: false
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -20,12 +21,14 @@ class Search extends Component {
     this.getData()
   }
 
-  getData() {
+  async getData() {
+    this.setState({ loading: true })
     let searchText = this.props.match.params.search
     this.setState({ searchText: this.props.match.params.search })
-    axios.get('/posts/search/' + searchText)
+    await axios.get('/posts/search/' + searchText)
       .then(res => { this.setState({ posts: res.data }) })
       .catch(err => { console.log(err) })
+    this.setState({ loading: false })
   }
 
   render() {
@@ -33,17 +36,25 @@ class Search extends Component {
     if (this.state.posts) {
       if (this.state.posts.length === 0) {
         posts = <div className="flex px-4 py-10">
-        <div className="font-bold text-3xl text-purple-900">
-        Aradığınız sonuca ulaşılamadı. Lütfen tekrar deneyiniz.
+          <div className="font-bold text-3xl text-purple-900">
+            Aradığınız sonuca ulaşılamadı. Lütfen tekrar deneyiniz.
         </div>
-      </div>
+        </div>
       } else {
         posts = <HomepagePosts posts={this.state.posts} />
       }
     }
+    if (this.state.loading) {
+      posts = <Spinner />
+    }
     return (
-      <div style={{ width: '75%', float: 'right' }}>
-        {posts}
+      <div className="flex-1 px-4 pt-3">
+        <div className="font-bold text-3xl text-purple-900">
+          {this.state.searchText} için Arama Sonuçları
+          </div>
+        <div className="flex mb-4">
+          {posts}
+        </div>
       </div>
     );
   }
