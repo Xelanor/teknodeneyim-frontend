@@ -25,13 +25,31 @@ const userSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post'
   }],
+  saved: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post'
+  }],
   role: {
     type: String,
     default: 'member'
   }
 }, {
-    timestamps: true,
-  });
+  timestamps: true,
+});
+
+userSchema.methods.toggleSave = async function (postId) {
+  let user = this
+  let index = user.saved.findIndex(item => item.toString() === postId.toString())
+
+  if (index === -1) {
+    user.saved.push(postId)
+  } else {
+    user.saved.splice(index, 1)
+  }
+
+  await user.save()
+  return user
+}
 
 const User = mongoose.model('User', userSchema);
 

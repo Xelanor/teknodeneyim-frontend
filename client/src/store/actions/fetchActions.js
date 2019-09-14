@@ -6,7 +6,6 @@ export const submitComment = (comment) => async dispatch => {
   await axios.post('/comments/add', comment)
     .then(res => dispatch(addCommentToPost({ id: comment.target, comment: res.data })))
     .catch((error) => { console.log(error); })
-  return true
 }
 
 export const addCommentToPost = (commentToPost) => async dispatch => {

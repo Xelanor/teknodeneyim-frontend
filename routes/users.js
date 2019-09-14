@@ -133,6 +133,51 @@ router.route('/:userName').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
+// Save or unsave post to User
+router.post('/user-save-post', async (req, res) => {
+  try {
+    let user = await User.findById(req.body.userId)
+      .catch(e => {
+        throw new Error('No user')
+      })
+
+    if (!user) {
+      throw new Error('No user')
+    }
+    if (!req.body.userId) {
+      throw new Error('No user')
+    }
+    await user.toggleSave(req.body.postId)
+    res.json({
+      result: true,
+      saved: user.saved
+    })
+  } catch (e) {
+    let errMsgArray = []
+    let errMsg = ''
+    if (e.errors) {
+      Object.keys(e.errors).forEach(key => {
+        errMsgArray.push(e.errors[key].message)
+      })
+
+      errMsg = errMsgArray.join(', ')
+    }
+
+    if (e.message) {
+      !!errMsg && (errMsg += ', ')
+      errMsg += e.message
+    }
+
+    !errMsg && (errMsg = 'Error')
+
+    res.json({
+      result: false,
+      errMsg,
+      err: e
+    })
+  }
+});
+
 module.exports = router;
 
 // router.route('/').get((req, res) => {

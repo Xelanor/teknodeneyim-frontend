@@ -20,7 +20,12 @@ export const setLikeState = (commentId, userId) => {
 export const savePost = (postId, userId) => dispatch => {
   axios.post(`/posts/${postId}/save`, { userId })
     .then(res => {
-      if (res.status === 200) { dispatch(setSaveState(postId, userId)) }
+      if (res.status === 200) {
+        dispatch(setSaveState(postId, userId))
+        axios.post(`/users/user-save-post`, { userId, postId })
+          .then(res => { })
+          .catch(err => { console.log(err) })
+      }
     })
     .catch(err => { console.log(err) })
 }
