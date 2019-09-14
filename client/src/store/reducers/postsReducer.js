@@ -1,4 +1,4 @@
-import { SET_SIDEBAR_POSTS, SET_POST_COMMENTS, LIKE_COMMENT } from '../actions/types';
+import { SET_SIDEBAR_POSTS, SET_POST_COMMENTS, LIKE_COMMENT, SAVE_POST } from '../actions/types';
 
 const initialState = {
   posts: null,
@@ -31,6 +31,19 @@ export default function (state = initialState, action) {
           post: {
             ...state.post.post,
             comments
+          }
+        }
+      }
+    case SAVE_POST:
+      let saved = state.post.post.saved
+      saved.includes(action.payload.userId) ? saved.splice(saved.indexOf(action.payload.userId), 1) : saved.push(action.payload.userId)
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          post: {
+            ...state.post.post,
+            saved
           }
         }
       }

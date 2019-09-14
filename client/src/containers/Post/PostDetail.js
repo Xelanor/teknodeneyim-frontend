@@ -8,7 +8,7 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import NewComment from '../../components/Comments/Comment/NewComment'
 import Comments from '../../components/Comments/Comments'
 
-import { likeComment } from '../../store/actions/likeAction'
+import { likeComment, savePost } from '../../store/actions/likeAction'
 import { fetchComments } from '../../store/actions/fetchActions'
 import { COMMENT_PER_PAGE } from '../../store/actions/types'
 
@@ -84,6 +84,12 @@ class PostDetail extends Component {
     }
   }
 
+  onPostSaved = (postId) => {
+    if (this.props.auth.isAuthenticated) {
+      this.props.savePost(postId, this.props.auth.user.id)
+    }
+  }
+
   render() {
     let page, paginationElement
     if (this.state.elements) {
@@ -104,13 +110,19 @@ class PostDetail extends Component {
           />
         );
       }
-      let { username, content, createdAt, description } = this.props.post.post
+      let { username, content, createdAt, description, _id, saved } = this.props.post.post
 
       page = (
         <div className="">
-          <div className="flex">
+          <div className="flex items-center">
             <div className="font-semibold text-2xl text-tekno">
               {content}
+            </div>
+            <div onClick={() => this.onPostSaved(_id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
+              <span className="BtnWrapper items-center">
+                {/* <span className="Count mr-1">{saved.length}</span> */}
+                {saved.includes(this.props.auth.user.id) ? <i style={{ color: "#e0245e" }} className="fas fa-star"></i> : <i className="far fa-star"></i>}
+              </span>
             </div>
           </div>
           <div className="flex mt-2">
@@ -154,4 +166,4 @@ const mapStateToProps = state => ({
   post: state.posts.post,
 });
 
-export default withRouter(connect(mapStateToProps, { likeComment, fetchComments })(PostDetail));
+export default withRouter(connect(mapStateToProps, { likeComment, savePost, fetchComments })(PostDetail));

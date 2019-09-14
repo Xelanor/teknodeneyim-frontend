@@ -98,4 +98,49 @@ router.route('/add-comment-to-post').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err))
 })
 
+// Save or unsave Post
+router.post('/:id/save', async (req, res) => {
+  try {
+    let post = await Post.findById(req.params.id)
+      .catch(e => {
+        throw new Error('No post')
+      })
+
+    if (!post) {
+      throw new Error('No post')
+    }
+    if (!req.body.userId) {
+      throw new Error('No post')
+    }
+    await post.toggleSave(req.body.userId)
+    res.json({
+      result: true,
+      saved: post.saved
+    })
+  } catch (e) {
+    let errMsgArray = []
+    let errMsg = ''
+    if (e.errors) {
+      Object.keys(e.errors).forEach(key => {
+        errMsgArray.push(e.errors[key].message)
+      })
+
+      errMsg = errMsgArray.join(', ')
+    }
+
+    if (e.message) {
+      !!errMsg && (errMsg += ', ')
+      errMsg += e.message
+    }
+
+    !errMsg && (errMsg = 'Error')
+
+    res.json({
+      result: false,
+      errMsg,
+      err: e
+    })
+  }
+});
+
 module.exports = router;
