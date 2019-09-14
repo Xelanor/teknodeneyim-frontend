@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 const comment = (props) => {
   return (
@@ -18,15 +19,19 @@ const comment = (props) => {
         <div className="font-bold text-sm text-purple-900">
           {new Date(props.createdAt).toLocaleString()}
         </div>
-        <div className="ml-4 font-normal text-sm text-black">
-          {props.username.username}
-        </div>
-        <img
-          src={props.username.avatar}
-          alt={props.username.username}
-          title={props.username.username}
-          className="w-10 h-10 rounded-full mx-4"
-        />
+        <Link to={`/profil/${props.username.username}`}>
+          <div className="ml-4 font-normal text-sm text-black">
+            {props.username.username}
+          </div>
+        </Link>
+        <Link to={`/profil/${props.username.username}`}>
+          <img
+            src={props.username.avatar}
+            alt={props.username.username}
+            title={props.username.username}
+            className="w-10 h-10 rounded-full mx-4"
+          />
+        </Link>
       </div>
     </>
   );
