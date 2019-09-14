@@ -129,6 +129,15 @@ router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) =
 router.route('/:userName').get((req, res) => {
   const username = req.params.userName
   User.findOne({ username })
+    .populate({
+      path: "saved",
+      options: { sort: '-createdAt' },
+      populate: {
+        path: "username",
+        select: 'username avatar' // Just get the username field
+      }
+    })
+    .exec()
     .then(req => res.json(req))
     .catch(err => res.status(400).json('Error: ' + err));
 })

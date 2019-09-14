@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import axios from 'axios'
 
+import SavedPosts from '../../components/PostsList/SavedPosts/SavedPosts'
+
+import { savePost } from '../../store/actions/likeAction'
+
 class ProfilePage extends Component {
   state = {
     userName: null,
@@ -16,6 +20,13 @@ class ProfilePage extends Component {
 
   componentDidMount() {
     this.getData()
+  }
+
+  onPostSaved = (postId) => {
+    if (this.props.auth.isAuthenticated) {
+      this.props.savePost(postId, this.props.auth.user.id)
+      this.getData()
+    }
   }
 
   getData = () => {
@@ -52,10 +63,15 @@ class ProfilePage extends Component {
               </div>
             </div>
           </div>
-          <div className="flex">
-            <div className="font-bold text-3xl text-tekno3 ml-8 mt-2">
+          <div className="flex-1 px-8">
+            <div className="font-bold text-3xl text-tekno3 mb-3">
               Favori Başlıkların
             </div>
+            <SavedPosts
+              posts={user.saved}
+              onPostSaved={this.onPostSaved}
+              user={user}
+            />
           </div>
         </div>
       )
@@ -72,4 +88,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(ProfilePage);
+export default connect(mapStateToProps, { savePost })(ProfilePage);

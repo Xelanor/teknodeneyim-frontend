@@ -17,13 +17,12 @@ export const setLikeState = (commentId, userId) => {
   }
 }
 
-export const savePost = (postId, userId) => dispatch => {
-  axios.post(`/posts/${postId}/save`, { userId })
-    .then(res => {
+export const savePost = (postId, userId) => async dispatch => {
+  await axios.post(`/posts/${postId}/save`, { userId })
+    .then(async res => {
       if (res.status === 200) {
-        dispatch(setSaveState(postId, userId))
-        axios.post(`/users/user-save-post`, { userId, postId })
-          .then(res => { })
+        await axios.post(`/users/user-save-post`, { userId, postId })
+          .then(res => { dispatch(setSaveState(postId, userId)) })
           .catch(err => { console.log(err) })
       }
     })

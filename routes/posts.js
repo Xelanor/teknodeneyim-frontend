@@ -8,7 +8,7 @@ router.route('/').get((req, res) => {
     .limit(10)
     .populate({
       path: 'username',
-      select: 'username' // Just get the username field
+      select: 'username avatar' // Just get the username field
     })
     .then(req => res.json(req))
     .catch(err => res.status(400).json('Error: ' + err));
@@ -21,14 +21,14 @@ router.route('/homepage').get((req, res) => {
     .limit(10)
     .populate({
       path: 'username',
-      select: 'username' // Just get the username field
+      select: 'username avatar' // Just get the username field
     })
     .populate({
       path: "comments",
       options: { sort: '-createdAt', limit: 2 },
       populate: {
         path: "username",
-        select: 'username' // Just get the username field
+        select: 'username avatar' // Just get the username field
       }
     })
     .then(req => res.json(req))
@@ -43,14 +43,14 @@ router.route('/search/:content').get((req, res) => {
     .limit(10)
     .populate({
       path: 'username',
-      select: 'username' // Just get the username field
+      select: 'username avatar' // Just get the username field
     })
     .populate({
       path: "comments",
       options: { sort: '-createdAt', limit: 3 },
       populate: {
         path: "username",
-        select: 'username' // Just get the username field
+        select: 'username avatar' // Just get the username field
       }
     })
     .then(req => res.json(req))
@@ -76,14 +76,14 @@ router.route('/:id').get((req, res) => {
   Post.findById(req.params.id)
     .populate({
       path: 'username',
-      select: 'username' // Just get the username field
+      select: 'username avatar' // Just get the username field
     })
     .populate({
       path: "comments",
       options: { sort: '-createdAt' },
       populate: {
         path: "username",
-        select: 'username' // Just get the username field
+        select: 'username avatar' // Just get the username field
       }
     })
     .exec()
