@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { logoutUser } from '../../../store/actions/authentication';
+import NavbarLinks from './NavbarLinks'
 
 import logo from '../../../assets/logo1.png'
 
@@ -12,6 +13,29 @@ class Navbar extends Component {
   state = {
     searchText: ""
   }
+
+  NavBarLinks = [
+    {
+      content: "Huawei",
+      to: "huawei",
+      title: "Huawei ürünleri"
+    },
+    {
+      content: "Apple",
+      to: "apple",
+      title: "Apple ürünleri"
+    },
+    {
+      content: "Samsung",
+      to: "Samsung",
+      title: "Samsung ürünleri"
+    },
+    {
+      content: "Lenovo",
+      to: "lenovo",
+      title: "Lenovo ürünleri"
+    }
+  ]
 
   onLogoutClick = e => {
     e.preventDefault();
@@ -102,18 +126,11 @@ class Navbar extends Component {
           </nav>
           <nav id="headers" className="container mx-auto w-5/6 mt-3">
             <ul className="flex items-stretch justify-between w-full m-0 p-0">
-              <li>
-                <a href="/basliklar/gundem" title="dünyamızda neler olup bitiyor">Huawei</a>
-              </li>
-              <li>
-                <a href="/basliklar/gundem" title="dünyamızda neler olup bitiyor">#iPhone</a>
-              </li>
-              <li>
-                <a href="/basliklar/gundem" title="dünyamızda neler olup bitiyor">#OPPO</a>
-              </li>
-              <li>
-                <a href="/basliklar/gundem" title="dünyamızda neler olup bitiyor">#Nokia</a>
-              </li>
+              {this.NavBarLinks.map(link => {
+                return (
+                  <NavbarLinks to={link.to} title={link.title} content={link.content} />
+                )
+              })}
             </ul>
           </nav>
         </div>
