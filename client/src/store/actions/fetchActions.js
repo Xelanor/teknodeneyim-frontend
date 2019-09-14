@@ -1,6 +1,19 @@
 import axios from 'axios'
 
-import { SET_SIDEBAR_POSTS, SET_POST_COMMENTS, COMMENT_PER_PAGE, CREATE_POST } from './types'
+import { SET_SIDEBAR_POSTS, SET_POST_COMMENTS, COMMENT_PER_PAGE } from './types'
+
+export const submitComment = (comment) => async dispatch => {
+  await axios.post('/comments/add', comment)
+    .then(res => dispatch(addCommentToPost({ id: comment.target, comment: res.data })))
+    .catch((error) => { console.log(error); })
+  return true
+}
+
+export const addCommentToPost = (commentToPost) => async dispatch => {
+  await axios.post('/posts/add-comment-to-post', commentToPost)
+    .then(res => console.log(res))
+    .catch((error) => { console.log(error); })
+}
 
 export const createPost = (post) => dispatch => {
   axios.post('/posts/add', post)

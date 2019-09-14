@@ -9,7 +9,7 @@ import NewComment from '../../components/Comments/Comment/NewComment'
 import Comments from '../../components/Comments/Comments'
 
 import { likeComment, savePost } from '../../store/actions/likeAction'
-import { fetchComments } from '../../store/actions/fetchActions'
+import { fetchComments, submitComment } from '../../store/actions/fetchActions'
 import { COMMENT_PER_PAGE } from '../../store/actions/types'
 
 import './PostDetail.css'
@@ -20,6 +20,7 @@ class PostDetail extends Component {
     currentPage: 0,
     offset: 0,
     elements: null,
+    loading: false
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -52,25 +53,16 @@ class PostDetail extends Component {
 
   onSubmitComment = async (e) => {
     e.preventDefault()
+    this.setState({ loading: true })
     let comment = {
       username: this.props.auth.user.id,
       content: this.state.comment,
-      target: this.state.postId
+      target: this.props.post.post._id
     }
-    let commentId
-    await axios.post('/comments/add', comment)
-      .then(res => commentId = res.data)
-      .catch((error) => { console.log(error); })
-
-    let commentToPost = {
-      id: this.state.postId,
-      comment: commentId
-    }
-    await axios.post('/posts/add-comment-to-post', commentToPost)
-      .then(res => console.log(res))
-      .catch((error) => { console.log(error); })
+    await this.props.submitComment(comment)
     this.setState({ comment: "" })
-    this.getData()
+    this.props.fetchComments(this.props.match.params.id)
+    this.setState({ loading: false })
     window.scrollTo(0, 0)
   }
 
@@ -153,7 +145,7 @@ class PostDetail extends Component {
     return (
       <div className="flex-1 px-4 mb-16 mt-12 items-center">
         {page}
-        {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} comment={this.state.comment} /> : "Hi"}
+        {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} comment={this.state.comment} loading={this.state.loading} /> : null}
         {paginationElement}
       </div>
     );
@@ -166,4 +158,4 @@ const mapStateToProps = state => ({
   post: state.posts.post,
 });
 
-export default withRouter(connect(mapStateToProps, { likeComment, savePost, fetchComments })(PostDetail));
+export default withRouter(connect(mapStateToProps, { likeComment, savePost, fetchComments, submitComment })(PostDetail));
