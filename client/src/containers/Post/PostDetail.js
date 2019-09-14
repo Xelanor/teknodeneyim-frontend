@@ -96,7 +96,7 @@ class PostDetail extends Component {
             forcePage={this.state.currentPage}
             containerClassName={"pagination"}
             previousLinkClassName={"previous_page"}
-            nextLinkClassName={"next_page"}
+            nextLinkClassName={"font-normal text-md text-gray-600"}
             disabledClassName={"disabled"}
             activeClassName={"active"}
           />
@@ -150,7 +150,9 @@ class PostDetail extends Component {
       <div className="flex-1 px-4 mb-16 mt-12 items-center">
         {page}
         {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} comment={this.state.comment} loading={this.state.loading} /> : null}
-        {paginationElement}
+        <div className="flex-1 mb-16 mt-6 text-center">
+          {paginationElement}
+        </div>
       </div>
     );
   }
