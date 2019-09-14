@@ -9,7 +9,7 @@ const homepagePost = (props) => {
       <Comment
         key={comment._id}
         id={comment._id}
-        username={comment.username.username}
+        username={comment.username}
         content={comment.content}
         createdAt={comment.createdAt}
         likes={comment.likes}

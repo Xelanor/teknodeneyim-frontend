@@ -129,8 +129,12 @@ class PostDetail extends Component {
             <div className="ml-4 font-normal text-sm text-black">
               {username.username}
             </div>
-            <img className="w-10 h-10 rounded-full mx-4" src="https://tailwindcss.com/img/jonathan.jpg"
-              alt="Avatar of Jonathan Reinink" />
+            <img
+              src={username.avatar}
+              alt={username.username}
+              title={username.username}
+              className="w-10 h-10 rounded-full mx-4"
+            />
           </div>
           <Comments
             comments={this.state.elements}

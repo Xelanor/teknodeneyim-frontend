@@ -19,10 +19,14 @@ const comment = (props) => {
           {new Date(props.createdAt).toLocaleString()}
         </div>
         <div className="ml-4 font-normal text-sm text-black">
-          {props.username}
+          {props.username.username}
         </div>
-        <img className="w-10 h-10 rounded-full mx-4" src="https://tailwindcss.com/img/jonathan.jpg"
-          alt="Avatar of Jonathan Reinink" />
+        <img
+          src={props.username.avatar}
+          alt={props.username.username}
+          title={props.username.username}
+          className="w-10 h-10 rounded-full mx-4"
+        />
       </div>
     </>
   );
