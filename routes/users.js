@@ -9,6 +9,8 @@ const validateLoginInput = require('../validation/login');
 
 let User = require('../models/user');
 
+const avatars = ["https://cleak-s3.s3.amazonaws.com/media/profilephotos/1.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/2.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/3.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/4.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/5.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/6.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/7.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/8.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/9.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/10.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/11.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/12.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/13.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/14.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/15.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/16.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/17.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/18.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/19.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/20.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/21.png", "https://cleak-s3.s3.amazonaws.com/media/profilephotos/22.png"]
+
 router.post('/register', function (req, res) {
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -24,11 +26,7 @@ router.post('/register', function (req, res) {
       });
     }
     else {
-      const avatar = gravatar.url(req.body.email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      });
+      const avatar = avatars[Math.floor(Math.random() * avatars.length)]
       const newUser = new User({
         username: req.body.username,
         email: req.body.email,
