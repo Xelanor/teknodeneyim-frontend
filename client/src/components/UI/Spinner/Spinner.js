@@ -1,9 +1,10 @@
 import React from 'react';
 
 import './Spinner.css';
+import logo from '../../../assets/231.gif'
 
 const spinner = () => (
-    <div className="Loader">Loading...</div>
+    <img src={logo} alt="loading..." />
 );
 
 export default spinner;

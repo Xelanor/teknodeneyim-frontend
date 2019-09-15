@@ -27,7 +27,7 @@ const homepagePost = (props) => {
           </div>
         </Link>
       </div>
-      <div className="flex mt-2">
+      <div className="flex-1 mt-2 mb-8">
         <div className="font-normal text-md text-gray-600">
           {props.description}
         </div>

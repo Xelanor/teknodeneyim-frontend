@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 const comment = (props) => {
   return (
-    <>
-      <div className="flex mt-16">
+    <div className="mb-16">
+      <div className="flex">
         <div className="flex font-normal text-md text-black">
           {props.content}
         </div>
@@ -33,7 +33,7 @@ const comment = (props) => {
           />
         </Link>
       </div>
-    </>
+    </div>
   );
 }
 
