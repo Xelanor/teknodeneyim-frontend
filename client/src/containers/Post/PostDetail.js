@@ -106,35 +106,37 @@ class PostDetail extends Component {
 
       page = (
         <div className="">
-          <div className="flex items-center">
-            <div className="font-semibold text-2xl text-tekno">
-              {content}
+          <div className="mb-16">
+            <div className="flex items-center">
+              <div className="font-semibold text-2xl text-tekno">
+                {content}
+              </div>
+              <div onClick={() => this.onPostSaved(_id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
+                <span className="BtnWrapper items-center">
+                  {/* <span className="Count mr-1">{saved.length}</span> */}
+                  {saved.includes(this.props.auth.user.id) ? <i style={{ color: "#e0245e" }} className="fas fa-star"></i> : <i className="far fa-star"></i>}
+                </span>
+              </div>
             </div>
-            <div onClick={() => this.onPostSaved(_id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
-              <span className="BtnWrapper items-center">
-                {/* <span className="Count mr-1">{saved.length}</span> */}
-                {saved.includes(this.props.auth.user.id) ? <i style={{ color: "#e0245e" }} className="fas fa-star"></i> : <i className="far fa-star"></i>}
-              </span>
+            <div className="flex mt-2">
+              <div className="font-normal text-md text-gray-600">
+                {description}
+              </div>
             </div>
-          </div>
-          <div className="flex mt-2">
-            <div className="font-normal text-md text-gray-600">
-              {description}
+            <div className="flex items-center float-right">
+              <div className="font-bold text-sm text-purple-900">
+                {new Date(createdAt).toLocaleString()}
+              </div>
+              <div className="ml-4 font-normal text-sm text-black">
+                {username.username}
+              </div>
+              <img
+                src={username.avatar}
+                alt={username.username}
+                title={username.username}
+                className="w-10 h-10 rounded-full mx-4"
+              />
             </div>
-          </div>
-          <div className="flex items-center float-right">
-            <div className="font-bold text-sm text-purple-900">
-              {new Date(createdAt).toLocaleString()}
-            </div>
-            <div className="ml-4 font-normal text-sm text-black">
-              {username.username}
-            </div>
-            <img
-              src={username.avatar}
-              alt={username.username}
-              title={username.username}
-              className="w-10 h-10 rounded-full mx-4"
-            />
           </div>
           <Comments
             comments={this.state.elements}
