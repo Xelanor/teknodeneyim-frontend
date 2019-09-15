@@ -33,7 +33,7 @@ class HomePage extends Component {
       />
     }
     return (
-      <div className="flex-1 px-4 py-10">
+      <div className="flex-1 px-4 py-3">
         <div className="flex mb-4">
           <div className="font-bold text-3xl text-purple-900">
             En Güncel Deneyimler

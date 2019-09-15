@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { registerUser } from '../../store/actions/authentication';
 import classnames from 'classnames'
 
@@ -72,7 +72,7 @@ class Register extends Component {
             </div>
             <div className="mb-6">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-                E-mail
+                E-posta
             </label>
               <input
                 className={classnames("shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
@@ -88,7 +88,7 @@ class Register extends Component {
             </div>
             <div className="mb-6">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                Password
+                Parola
             </label>
               <input
                 className={classnames("shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
@@ -104,7 +104,7 @@ class Register extends Component {
             </div>
             <div className="mb-6">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                Password
+                Parola (Yeniden)
             </label>
               <input
                 className={classnames("shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
@@ -122,9 +122,11 @@ class Register extends Component {
               <button className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline" type="submit">
                 Kayıt Ol
             </button>
-              <a className="inline-block align-baseline font-bold text-sm text-tekno hover:text-tekno">
-                Zaten Üye Misin?
-            </a>
+              <Link to="/login">
+                <a className="inline-block align-baseline font-bold text-sm text-tekno hover:text-tekno">
+                  Zaten Üye Misin?
+              </a>
+              </Link>
             </div>
           </form>
         </div>
