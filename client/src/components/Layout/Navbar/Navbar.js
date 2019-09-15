@@ -142,7 +142,7 @@ class Navbar extends Component {
           <div className="block flex-grow flex items-center w-auto">
             <form onSubmit={this.onSearchSubmit}>
               <input type="search"
-                className="outline-none bg-purple-white shadow rounded-full text-xs border-0 p-1 pr-2 focus:border-tekno"
+                className="outline-none bg-purple-white shadow rounded-full text-xs border-0 p-1 pr-2 focus:border-tekno appearance-none"
                 placeholder="Deneyim Bul..."
                 value={this.state.searchText}
                 onChange={this.onSearchChange} />
