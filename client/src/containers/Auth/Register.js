@@ -50,7 +50,7 @@ class Register extends Component {
     return (
       <div className="w-full justify-center flex-1 px-4 py-10">
         <div className="w-full max-w-sm items-center mx-auto">
-          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={this.handleSubmit}>
+          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 appearance-none" onSubmit={this.handleSubmit}>
             <div className="font-semibold text-xl text-gray-900 mb-8">
               Kayıt Ol
             </div>
@@ -119,7 +119,7 @@ class Register extends Component {
               {errors.password_confirm && (<div className="text-red-500 text-xs italic">{errors.password_confirm}</div>)}
             </div>
             <div className="flex items-center justify-between">
-              <button className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline" type="submit">
+              <button className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline appearance-none" type="submit">
                 Kayıt Ol
             </button>
               <Link to="/login">
