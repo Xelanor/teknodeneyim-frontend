@@ -51,7 +51,7 @@ class App extends Component {
             <Route path="/" exact component={HomePage} />
             <Route path="/register" exact component={Register} />
             <Route path="/login" exact component={Login} />
-            <Route path='/posts/:id' component={PostDetail} />
+            <Route path='/post/:id' component={PostDetail} />
             <Route path='/search/:search' component={Search} />
             <Route path='/profil/:userName' exact component={ProfilePage} />
             <AdminRoute path='/admin' exact component={AdminPage} />

@@ -5,7 +5,7 @@ const savedPost = (props) => {
   return (
     <div className="flex-1 mb-8">
       <div className="flex items-center">
-        <Link to={`/posts/${props.id}`}>
+        <Link to={`/post/${props.id}`}>
           <div className="font-semibold text-2xl text-tekno">
             {props.content}
           </div>
