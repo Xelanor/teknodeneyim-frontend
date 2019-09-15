@@ -168,7 +168,7 @@ class Navbar extends Component {
           </div>
         </nav>
         <nav id="headers" className="container mx-auto px-2 mt-3">
-          <ul className="flex items-stretch justify-between w-full m-0 p-0">
+          <ul className="flex items-stretch justify-between w-full mx-1 px-1 md:px-16">
             {this.NavBarLinks.map(link => {
               return (
                 <NavbarLinks key={link.to} to={link.to} title={link.title} content={link.content} />
