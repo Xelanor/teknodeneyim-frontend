@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../../store/actions/authentication';
 import classnames from 'classnames'
+import { Link } from 'react-router-dom'
 
 class Login extends Component {
 
@@ -86,9 +87,9 @@ class Login extends Component {
               <button className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline appearance-none" type="submit">
                 Giriş
             </button>
-              <a className="inline-block align-baseline font-bold text-sm text-tekno hover:text-tekno">
+              <Link to="/sifremi-unuttum" className="inline-block align-baseline font-bold text-sm text-tekno hover:text-tekno">
                 Şifreni mi unuttun?
-            </a>
+              </Link>
             </div>
           </form>
         </div>

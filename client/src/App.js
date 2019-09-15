@@ -12,6 +12,8 @@ import PostDetail from './containers/Post/PostDetail'
 import Search from './containers/Search/Search'
 import ProfilePage from './containers/ProfilePage/ProfilePage'
 import AdminPage from './containers/Admin/AdminPage'
+import ForgotPassword from './containers/Auth/ForgotPassword'
+import ResetPassword from './containers/Auth/ResetPassword'
 
 import RegisteredRoute from './components/PrivateRoutes/RegisteredRoute'
 import AdminRoute from './components/PrivateRoutes/AdminRoute'
@@ -51,6 +53,8 @@ class App extends Component {
             <Route path="/" exact component={HomePage} />
             <Route path="/register" exact component={Register} />
             <Route path="/login" exact component={Login} />
+            <Route path="/sifremi-unuttum" exact component={ForgotPassword} />
+            <Route path="/reset/:token" exact component={ResetPassword} />
             <Route path='/post/:id' component={PostDetail} />
             <Route path='/search/:search' component={Search} />
             <Route path='/profil/:userName' exact component={ProfilePage} />

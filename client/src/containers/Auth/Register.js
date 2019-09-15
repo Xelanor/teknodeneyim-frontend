@@ -122,10 +122,8 @@ class Register extends Component {
               <button className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline appearance-none" type="submit">
                 Kayıt Ol
             </button>
-              <Link to="/login">
-                <a className="inline-block align-baseline font-bold text-sm text-tekno hover:text-tekno">
-                  Zaten Üye Misin?
-              </a>
+              <Link to="/login" className="inline-block align-baseline font-bold text-sm text-tekno hover:text-tekno">
+                Zaten Üye Misin?
               </Link>
             </div>
           </form>

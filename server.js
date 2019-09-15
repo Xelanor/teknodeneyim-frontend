@@ -33,10 +33,16 @@ connection.once('open', () => {
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts')
 const commentsRouter = require('./routes/comments')
+const forgotPassword = require('./routes/forgotPassword')
+const resetPassword = require('./routes/resetPassword')
+const updatePasswordViaEmail = require('./routes/updatePasswordViaEmail')
 
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
+app.use('/', forgotPassword);
+app.use('/', resetPassword);
+app.use('/', updatePasswordViaEmail);
 
 // Serve static assets if in PROD
 if (process.env.NODE_ENV === "production") {
