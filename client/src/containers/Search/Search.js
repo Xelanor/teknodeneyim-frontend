@@ -35,8 +35,8 @@ class Search extends Component {
     let posts = <Spinner />
     if (this.state.posts) {
       if (this.state.posts.length === 0) {
-        posts = <div className="flex px-4 py-10">
-          <div className="font-bold text-3xl text-purple-900">
+        posts = <div className="flex px-4">
+          <div className="font-bold text-xl text-tekno3">
             Aradığınız sonuca ulaşılamadı. Lütfen tekrar deneyiniz.
         </div>
         </div>
@@ -49,7 +49,7 @@ class Search extends Component {
     }
     return (
       <div className="flex-1 px-4 pt-3">
-        <div className="font-bold text-3xl text-purple-900">
+        <div className="font-bold text-3xl text-purple-900 mb-4">
           {this.state.searchText} için Arama Sonuçları
           </div>
         <div className="flex mb-4">

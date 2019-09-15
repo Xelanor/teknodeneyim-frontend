@@ -80,12 +80,12 @@ class Navbar extends Component {
       <div className="border-b-2 border-gray-200" id="mainNavBar">
         <div className="mb-2">
           <nav className="flex items-center justify-between flex-wrap bg-transparent p-1">
-            <div className="flex items-center flex-shrink-0 text-white mr-8">
+            <div className="flex items-center justify-center flex-shrink-0 pr-8 text-white w-1/4">
               <Link to="/">
                 <img
                   src={logo}
                   alt="some text"
-                  width="130"
+                  width="145"
                   height="40"
                 />
               </Link>
