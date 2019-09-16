@@ -16,24 +16,29 @@ class Navbar extends Component {
 
   NavBarLinks = [
     {
-      content: "Huawei",
-      to: "huawei",
-      title: "Huawei ürünleri"
+      content: "Akıllı Telefon",
+      to: "akıllıtelefon",
+      title: "Akıllı Telefonlar"
     },
     {
-      content: "Apple",
-      to: "apple",
-      title: "Apple ürünleri"
+      content: "Bilgisayar",
+      to: "bilgisayar",
+      title: "Bilgisayarlar"
     },
     {
-      content: "Samsung",
-      to: "Samsung",
-      title: "Samsung ürünleri"
+      content: "Donanım",
+      to: "donanim",
+      title: "Donanım Ürünleri"
     },
     {
-      content: "Lenovo",
-      to: "lenovo",
-      title: "Lenovo ürünleri"
+      content: "Mağazalar",
+      to: "magazalar",
+      title: "Mağazalar"
+    },
+    {
+      content: "Yazılım",
+      to: "yazılım",
+      title: "Yazılım"
     }
   ]
 
