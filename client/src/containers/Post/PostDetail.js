@@ -9,7 +9,7 @@ import NewComment from '../../components/Comments/Comment/NewComment'
 import Comments from '../../components/Comments/Comments'
 
 import { likeComment, savePost } from '../../store/actions/likeAction'
-import { fetchComments, submitComment } from '../../store/actions/fetchActions'
+import { fetchComments, submitComment, fetchSidePosts } from '../../store/actions/fetchActions'
 import { COMMENT_PER_PAGE } from '../../store/actions/types'
 
 import './PostDetail.css'
@@ -64,6 +64,7 @@ class PostDetail extends Component {
     this.props.fetchComments(this.props.match.params.id)
     this.setState({ loading: false })
     window.scrollTo(0, 0)
+    this.props.fetchSidePosts()
   }
 
   onCommentChange = (e) => {
@@ -166,4 +167,4 @@ const mapStateToProps = state => ({
   post: state.posts.post,
 });
 
-export default withRouter(connect(mapStateToProps, { likeComment, savePost, fetchComments, submitComment })(PostDetail));
+export default withRouter(connect(mapStateToProps, { likeComment, savePost, fetchComments, submitComment, fetchSidePosts })(PostDetail));
