@@ -9,7 +9,7 @@ const postsList = (props) => {
       key={post._id}
       id={post._id}
       content={post.content}
-      comments={post.comments.length}
+      comments={post.commentsize}
     />
   })
   return (

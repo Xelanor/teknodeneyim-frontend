@@ -1,16 +1,22 @@
-import { SET_SIDEBAR_POSTS, SET_POST_COMMENTS, LIKE_COMMENT, SAVE_POST } from '../actions/types';
+import { SET_SIDEBAR_POSTS, SET_HOMEPAGE_POSTS, SET_POST_COMMENTS, LIKE_COMMENT, SAVE_POST } from '../actions/types';
 
 const initialState = {
   posts: null,
+  sidebarposts: null,
   post: null
 }
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case SET_SIDEBAR_POSTS:
+    case SET_HOMEPAGE_POSTS:
       return {
         ...state,
         posts: action.payload
+      }
+    case SET_SIDEBAR_POSTS:
+      return {
+        ...state,
+        sidebarposts: action.payload
       }
     case SET_POST_COMMENTS:
       return {

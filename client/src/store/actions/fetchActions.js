@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { SET_SIDEBAR_POSTS, SET_POST_COMMENTS, COMMENT_PER_PAGE } from './types'
+import { SET_SIDEBAR_POSTS, SET_HOMEPAGE_POSTS, SET_POST_COMMENTS, COMMENT_PER_PAGE } from './types'
 
 export const submitComment = (comment) => async dispatch => {
   await axios.post('/comments/add', comment)
@@ -20,8 +20,21 @@ export const createPost = (post) => dispatch => {
     .catch((error) => { console.log(error); })
 }
 
-export const fetchPosts = () => dispatch => {
+export const fetchHomePosts = () => dispatch => {
   axios.get('/posts/homepage')
+    .then(res => { dispatch(setHomePosts(res.data)) })
+    .catch(err => { console.log(err) })
+}
+
+export const setHomePosts = data => {
+  return {
+    type: SET_HOMEPAGE_POSTS,
+    payload: data
+  }
+}
+
+export const fetchSidePosts = () => dispatch => {
+  axios.get('/posts/sidebar-posts')
     .then(res => { dispatch(setSidebarPosts(res.data)) })
     .catch(err => { console.log(err) })
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from "react-redux";
 
-import { fetchPosts, createPost } from '../../store/actions/fetchActions'
+import { fetchSidePosts, createPost } from '../../store/actions/fetchActions'
 
 class CreatePost extends Component {
   state = {
@@ -25,7 +25,7 @@ class CreatePost extends Component {
     }
     this.props.createPost(post)
     this.setState({ content: "", description: "", subjects: "" })
-    this.props.fetchPosts()
+    this.props.fetchSidePosts()
   }
 
   render() {
@@ -90,4 +90,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { fetchPosts, createPost })(CreatePost);
+export default connect(mapStateToProps, { fetchSidePosts, createPost })(CreatePost);

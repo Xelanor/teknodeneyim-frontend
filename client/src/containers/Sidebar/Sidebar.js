@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 
 import PostsList from '../../components/PostsList/PostsList'
 
-import { fetchPosts } from '../../store/actions/fetchActions'
+import { fetchSidePosts } from '../../store/actions/fetchActions'
 
 class Sidebar extends Component {
   state = {}
 
   componentDidMount() {
-    this.props.fetchPosts()
+    this.props.fetchSidePosts()
   }
 
   render() {
@@ -36,7 +36,7 @@ class Sidebar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  posts: state.posts.posts
+  posts: state.posts.sidebarposts
 })
 
-export default connect(mapStateToProps, { fetchPosts })(Sidebar);
+export default connect(mapStateToProps, { fetchSidePosts })(Sidebar);

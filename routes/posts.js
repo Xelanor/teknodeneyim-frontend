@@ -35,6 +35,21 @@ router.route('/homepage').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Get X posts with highest comments for sidebar
+router.route('/sidebar-posts').get((req, res) => {
+  Post.aggregate([
+    {
+      $project: {
+        content: 1,
+        commentsize: { $size: "$comments" }
+      }
+    },
+    { $sort: { commentsize: -1 } }
+  ])
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
 // Get X posts in descending order for Hompage with Y comments
 router.route('/search/:content').get((req, res) => {
   var nameRegex = new RegExp(req.params.content.toLowerCase(), 'i')
