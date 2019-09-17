@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import axios from 'axios'
+import EdiText from 'react-editext'
 
 import SavedPosts from '../../components/PostsList/SavedPosts/SavedPosts'
 
 import { savePost } from '../../store/actions/likeAction'
+import { changeUserDescription } from '../../store/actions/fetchActions'
 
 class ProfilePage extends Component {
   state = {
@@ -41,6 +43,10 @@ class ProfilePage extends Component {
       .catch(err => { console.log(err) })
   }
 
+  changeUserDescription = val => {
+    this.props.changeUserDescription(this.state.user._id, val)
+  }
+
   render() {
     let { user } = this.state
     let page
@@ -58,8 +64,12 @@ class ProfilePage extends Component {
               <div className="font-bold text-3xl text-tekno ml-8 -mt-1">
                 {user.username}
               </div>
-              <div className="font-medium text-xl text-gray-400 ml-8 mt-2">
-                Kısa Bir Kişisel Tanıtım
+              <div className="font-medium text-xl text-gray-500 ml-8 mt-2">
+                <EdiText
+                  type='text'
+                  value={user.description}
+                  onSave={this.changeUserDescription}
+                />
               </div>
             </div>
           </div>
@@ -88,4 +98,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { savePost })(ProfilePage);
+export default connect(mapStateToProps, { savePost, changeUserDescription })(ProfilePage);

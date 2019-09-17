@@ -185,6 +185,13 @@ router.post('/user-save-post', async (req, res) => {
   }
 });
 
+// Add description to User
+router.route('/change-description').post((req, res) => {
+  User.findByIdAndUpdate(req.body.userId, { $set: { description: req.body.description } })
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;
 
 // router.route('/').get((req, res) => {

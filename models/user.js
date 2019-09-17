@@ -21,6 +21,10 @@ const userSchema = new Schema({
   avatar: {
     type: String
   },
+  description: {
+    type: String,
+    default: "Kısa Bir Kişisel Tanıtım"
+  },
   posts: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post'

@@ -2,6 +2,12 @@ import axios from 'axios'
 
 import { SET_SIDEBAR_POSTS, SET_HOMEPAGE_POSTS, SET_POST_COMMENTS, COMMENT_PER_PAGE } from './types'
 
+export const changeUserDescription = (userId, description) => async dispatch => {
+  await axios.post('/users/change-description', { userId, description })
+    .then(res => console.log(res))
+    .catch((error) => { console.log(error); })
+}
+
 export const submitComment = (comment) => async dispatch => {
   await axios.post('/comments/add', comment)
     .then(res => dispatch(addCommentToPost({ id: comment.target, comment: res.data })))
