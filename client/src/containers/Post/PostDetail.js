@@ -89,17 +89,17 @@ class PostDetail extends Component {
       if (this.props.post.pageCount > 1) {
         paginationElement = (
           <ReactPaginate
-            previousLabel={"← Previous"}
-            nextLabel={"Next →"}
+            previousLabel={"Geri"}
+            nextLabel={"İleri"}
             breakLabel={<span className="gap">...</span>}
             pageCount={this.props.post.pageCount}
             onPageChange={this.handlePageClick}
             forcePage={this.state.currentPage}
-            containerClassName={"pagination"}
-            previousLinkClassName={"previous_page"}
-            nextLinkClassName={"font-normal text-md text-gray-600"}
+            containerClassName={"pagination p-2 leading-tight text-tekno"}
+            previousLinkClassName={"block p-2 font-bold leading-tight text-tekno"}
+            nextLinkClassName={"block p-2 font-bold leading-tight text-tekno"}
             disabledClassName={"disabled"}
-            activeClassName={"active"}
+            activeClassName={"active font-bold"}
           />
         );
       }
@@ -139,6 +139,9 @@ class PostDetail extends Component {
               />
             </div>
           </div>
+          <div className="flex-1 mb-2 mt-2 text-right">
+            {paginationElement}
+          </div>
           <Comments
             comments={this.state.elements}
             commentLike={this.onCommentLiked}
@@ -153,7 +156,7 @@ class PostDetail extends Component {
       <div className="flex-1 px-4 mb-16 mt-12 items-center">
         {page}
         {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} comment={this.state.comment} loading={this.state.loading} /> : null}
-        <div className="flex-1 mb-16 mt-6 text-center">
+        <div className="flex-1 mb-8 mt-2 text-right">
           {paginationElement}
         </div>
       </div>
