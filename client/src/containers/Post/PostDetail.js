@@ -107,7 +107,7 @@ class PostDetail extends Component {
 
       page = (
         <div className="">
-          <div className="mb-16">
+          <div className="mb-12">
             <div className="flex items-center">
               <div className="font-semibold text-2xl text-tekno">
                 {content}
@@ -126,17 +126,8 @@ class PostDetail extends Component {
             </div>
             <div className="flex items-center float-right">
               <div className="font-bold text-sm text-purple-900">
-                {new Date(createdAt).toLocaleString()}
+                Konu açılış tarihi: {new Date(createdAt).toLocaleString()}
               </div>
-              <div className="ml-4 font-normal text-sm text-black">
-                {username.username}
-              </div>
-              <img
-                src={username.avatar}
-                alt={username.username}
-                title={username.username}
-                className="w-10 h-10 rounded-full mx-4"
-              />
             </div>
           </div>
           <div className="flex-1 mb-2 mt-2 text-right">

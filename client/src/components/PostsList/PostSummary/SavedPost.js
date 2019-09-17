@@ -33,7 +33,7 @@ const savedPost = (props) => {
           src={props.user.avatar}
           alt={props.user.username}
           title={props.user.username}
-          className="w-10 h-10 rounded-full mx-4"
+          className="w-10 h-10 rounded-full ml-4"
         />
       </div>
     </div>

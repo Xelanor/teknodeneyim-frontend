@@ -29,7 +29,7 @@ const comment = (props) => {
             src={props.username.avatar}
             alt={props.username.username}
             title={props.username.username}
-            className="w-10 h-10 rounded-full mx-4"
+            className="w-10 h-10 rounded-full ml-4"
           />
         </Link>
       </div>
