@@ -16,7 +16,7 @@ class Navbar extends Component {
 
   NavBarLinks = [
     {
-      content: "Akıllı Telefon",
+      content: "AkıllıTelefon",
       to: "akıllıtelefon",
       title: "Akıllı Telefonlar"
     },
