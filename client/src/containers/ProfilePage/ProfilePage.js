@@ -65,11 +65,11 @@ class ProfilePage extends Component {
                 {user.username}
               </div>
               <div className="font-medium text-xl text-gray-500 ml-8 mt-2">
-                <EdiText
+                {this.props.auth.user.id === user._id ? <EdiText
                   type='text'
                   value={user.description}
                   onSave={this.changeUserDescription}
-                />
+                /> : user.description}
               </div>
             </div>
           </div>
@@ -81,6 +81,7 @@ class ProfilePage extends Component {
               posts={user.saved}
               onPostSaved={this.onPostSaved}
               user={user}
+              loggedInUser={this.props.auth.user.id}
             />
           </div>
         </div>

@@ -2,6 +2,14 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 const savedPost = (props) => {
+  let saveButton
+  if (props.loggedInUser === props.user._id) {
+    saveButton = <div onClick={() => props.onPostSaved(props.id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
+      <span className="BtnWrapper items-center">
+        {props.saved.includes(props.user._id) ? <i style={{ color: "#e0245e" }} className="fas fa-star"></i> : <i className="far fa-star"></i>}
+      </span>
+    </div>
+  }
   return (
     <div className="flex-1 mb-8">
       <div className="flex items-center">
@@ -10,12 +18,7 @@ const savedPost = (props) => {
             {props.content}
           </div>
         </Link>
-        <div onClick={() => props.onPostSaved(props.id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
-          <span className="BtnWrapper items-center">
-            {/* <span className="Count mr-1">{props.Datesaved.length}</span> */}
-            {props.saved.includes(props.user._id) ? <i style={{ color: "#e0245e" }} className="fas fa-star"></i> : <i className="far fa-star"></i>}
-          </span>
-        </div>
+        {saveButton}
       </div>
       <div className="flex mt-2">
         <div className="font-normal text-md text-gray-600">
