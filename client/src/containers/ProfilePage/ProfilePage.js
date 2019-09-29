@@ -75,7 +75,7 @@ class ProfilePage extends Component {
           </div>
           <div className="flex-1 px-8">
             <div className="font-bold text-3xl text-tekno3 mb-3">
-              Favori Başlıkların
+              {this.props.auth.user.id === user._id ? "Favori Başlıkların" : user.username + " Kullanıcısının Favori Başlıkları"}
             </div>
             <SavedPosts
               posts={user.saved}
