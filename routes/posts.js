@@ -51,25 +51,53 @@ router.route('/sidebar-posts').get((req, res) => {
 })
 
 // Get X posts in descending order for Hompage with Y comments
-router.route('/search/:content').get((req, res) => {
-  var nameRegex = new RegExp(req.params.content.toLowerCase(), 'i')
-  Post.find({ $or: [{ "content": nameRegex }, { "description": nameRegex }, { "subjects": nameRegex }] })
-    .sort({ createdAt: 'desc' })
-    .limit(10)
-    .populate({
-      path: 'username',
-      select: 'username avatar' // Just get the username field
-    })
-    .populate({
-      path: "comments",
-      options: { sort: '-createdAt', limit: 3 },
-      populate: {
-        path: "username",
+router.route('/search/').post((req, res) => {
+  let content = req.body.content.trim()
+  if (content.length > 0) {
+    var nameRegex = new RegExp(req.body.content.toLowerCase(), 'i')
+    Post.find({ $or: [{ "content": nameRegex }, { "description": nameRegex }, { "subjects": nameRegex }] })
+      .sort({ createdAt: 'desc' })
+      .limit(10)
+      .populate({
+        path: 'username',
         select: 'username avatar' // Just get the username field
-      }
-    })
-    .then(req => res.json(req))
-    .catch(err => res.status(400).json('Error: ' + err));
+      })
+      .populate({
+        path: "comments",
+        options: { sort: '-createdAt', limit: 3 },
+        populate: {
+          path: "username",
+          select: 'username avatar' // Just get the username field
+        }
+      })
+      .then(req => res.json(req))
+      .catch(err => res.status(400).json('Error: ' + err));
+  } else {
+    return res.json([])
+  }
+});
+
+// Get X posts in descending order for Hompage with Y comments
+router.route('/autocomplete').post((req, res) => {
+  let content = req.body.content.trim()
+  if (content.length > 0) {
+    var nameRegex = new RegExp(content.toLowerCase(), 'i')
+    Post.aggregate([
+      { $match: { $or: [{ "content": nameRegex }, { "description": nameRegex }, { "subjects": nameRegex }] } },
+      {
+        $project: {
+          content: 1,
+          commentsize: { $size: "$comments" }
+        }
+      },
+      { $sort: { commentsize: -1 } }
+    ])
+      .limit(10)
+      .then(req => res.json(req))
+      .catch(err => res.status(400).json('Error: ' + err));
+  } else {
+    return res.json([])
+  }
 });
 
 // Add new post 

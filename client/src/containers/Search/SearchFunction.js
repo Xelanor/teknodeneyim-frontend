@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import onClickOutside from "react-onclickoutside"
 import { debounce } from 'lodash'
 import * as _ from 'underscore';
@@ -27,7 +27,7 @@ class SearchFunction extends Component {
     const value = e.target.value
     this.setState({ searchText: value })
     if (value.length > 0) {
-      axios.get('/posts/search/' + value)
+      axios.post('/posts/autocomplete/', { content: value })
         .then(res => { this.setState({ suggestions: res.data }) })
         .catch(err => { console.log(err) })
     } else {
@@ -41,12 +41,21 @@ class SearchFunction extends Component {
       return null
     } else {
       return (
-        <ul className="text-left bg-gray-300 z-30 absolute">
+        <div className="text-left mt-1 bg-white z-30 absolute border-b border-l border-r ">
           {suggestions.map((item) => (
-            <Link key={item._id} to={`/post/${item._id}`}><li key={item._id} onClick={() => this.suggestionSelected(item)}>{item.content}</li></Link>
+            <Link onClick={() => this.suggestionSelected(item)} key={item._id} to={`/post/${item._id}`}>
+              <div className="flex hover:bg-gray-300 hover:underline">
+                <div className="flex-1 p-2">
+                  {item.content}
+                </div>
+                <div className="flex p-2 ml-4 float-right">
+                  {item.commentsize}
+                </div>
+              </div>
+            </Link>
           )
           )}
-        </ul>
+        </div>
       )
     }
   }
@@ -87,4 +96,4 @@ class SearchFunction extends Component {
   }
 }
 
-export default onClickOutside(SearchFunction);
+export default withRouter(onClickOutside(SearchFunction));
