@@ -6,14 +6,11 @@ import { withRouter } from 'react-router-dom';
 
 import { logoutUser } from '../../../store/actions/authentication';
 import NavbarLinks from './NavbarLinks'
+import SearchFunction from '../../../containers/Search/SearchFunction'
 
 import logo from '../../../assets/logo1.png'
 
 class Navbar extends Component {
-  state = {
-    searchText: ""
-  }
-
   NavBarLinks = [
     {
       content: "AkıllıTelefon",
@@ -46,20 +43,7 @@ class Navbar extends Component {
     e.preventDefault();
     this.props.logoutUser(this.props.history);
   };
-
-  onSearchSubmit = e => {
-    e.preventDefault()
-    let searchText = this.state.searchText
-    this.setState({ searchText: "" })
-    if (searchText.length !== 0) {
-      this.props.history.push("/search/" + searchText)
-    }
-  }
-
-  onSearchChange = e => {
-    this.setState({ searchText: e.target.value })
-  }
-
+  
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
@@ -114,18 +98,7 @@ class Navbar extends Component {
             </Link>
           </div>
           <div className="w-full block flex-grow lg:flex lg:items-center md:w-auto">
-            <div className="text-sm lg:flex-grow">
-              <form onSubmit={this.onSearchSubmit}>
-                <input type="search"
-                  className="outline-none bg-purple-white shadow rounded-full border-0 p-2 pr-16 focus:border-tekno"
-                  placeholder="Deneyim Bul..."
-                  value={this.state.searchText}
-                  onChange={this.onSearchChange} />
-                <button type="submit">
-                  <i style={{ color: "#F67e7d" }} className="fa fa-search ml-1 p-2"></i>
-                </button>
-              </form>
-            </div>
+            <SearchFunction class="outline-none bg-purple-white shadow rounded-full border-0 p-2 pr-16 focus:border-tekno"/>
           </div>
           <div className="inline-flex">
             <div>
@@ -145,16 +118,7 @@ class Navbar extends Component {
             </Link>
           </div>
           <div className="block flex-grow flex items-center w-auto">
-            <form onSubmit={this.onSearchSubmit}>
-              <input type="search"
-                className="outline-none bg-purple-white shadow rounded-full text-xs border-0 p-1 pr-2 focus:border-tekno appearance-none"
-                placeholder="Deneyim Bul..."
-                value={this.state.searchText}
-                onChange={this.onSearchChange} />
-              <button type="submit">
-                <i style={{ color: "#F67e7d" }} className="fa fa-search ml-0 p-2"></i>
-              </button>
-            </form>
+            <SearchFunction class="outline-none bg-purple-white shadow rounded-full text-xs border-0 p-1 pr-2 focus:border-tekno appearance-none"/>
           </div>
           {isAuthenticated ? authLinksMobile : guestLinksMobile}
           <div className="block">
