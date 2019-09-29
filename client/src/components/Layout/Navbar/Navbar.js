@@ -43,7 +43,7 @@ class Navbar extends Component {
     e.preventDefault();
     this.props.logoutUser(this.props.history);
   };
-  
+
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
@@ -98,7 +98,7 @@ class Navbar extends Component {
             </Link>
           </div>
           <div className="w-full block flex-grow lg:flex lg:items-center md:w-auto">
-            <SearchFunction class="outline-none bg-purple-white shadow rounded-full border-0 p-2 pr-16 focus:border-tekno"/>
+            <SearchFunction class="outline-none bg-purple-white shadow rounded-full border border-solid border-gray-400 p-2 pr-16 focus:border-tekno" />
           </div>
           <div className="inline-flex">
             <div>
@@ -118,23 +118,9 @@ class Navbar extends Component {
             </Link>
           </div>
           <div className="block flex-grow flex items-center w-auto">
-            <SearchFunction class="outline-none bg-purple-white shadow rounded-full text-xs border-0 p-1 pr-2 focus:border-tekno appearance-none"/>
+            <SearchFunction class="outline-none bg-purple-white shadow rounded-full text-xs border border-solid border-gray-400 p-1 pr-2 focus:border-tekno appearance-none" />
           </div>
           {isAuthenticated ? authLinksMobile : guestLinksMobile}
-          <div className="block">
-            {/* <button
-              className="flex items-center px-3 py-2 border rounded text-tekno border-tekno hover:text-white hover:bg-tekno"
-            >
-              <svg
-                className="fill-current h-2 w-2"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <title>Menu</title>
-                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-              </svg>
-            </button> */}
-          </div>
         </nav>
         <nav id="headers" className="container mx-auto px-2 mt-3">
           <ul className="flex items-stretch justify-between w-full mx-1 px-1 md:px-16">

@@ -5,6 +5,8 @@ import onClickOutside from "react-onclickoutside"
 import { debounce } from 'lodash'
 import * as _ from 'underscore';
 
+import './Search.css'
+
 class SearchFunction extends Component {
   state = {
     suggestions: [],
@@ -82,7 +84,7 @@ class SearchFunction extends Component {
             // onChange={this.debounceEventHandler(this.onTextChanged, 300)}
             onChange={this.onTextChanged}
             type="search"
-            className={this.props.class}
+            className={this.props.class + " searchbox"}
             placeholder="Deneyim Bul..."
             value={this.state.searchText}
           />

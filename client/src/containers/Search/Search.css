@@ -1,0 +1,5 @@
+.searchbox:focus {
+  border-color: #f67e7d;
+  box-shadow: 0 0 6px #f67e7d;
+  outline: 0 none;
+}
