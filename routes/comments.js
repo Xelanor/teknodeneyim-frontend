@@ -18,6 +18,13 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Delete comment
+router.route('/delete').post((req, res) => {
+  Comment.findByIdAndDelete(req.body.comment)
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 // like or unlike comment
 router.post('/:id/like', async (req, res) => {
   try {

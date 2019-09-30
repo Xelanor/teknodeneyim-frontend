@@ -144,7 +144,7 @@ class PostDetail extends Component {
       page = <Spinner />
     }
     return (
-      <div className="flex-1 px-4 mb-16 mt-12 items-center">
+      <div className="flex-1 px-4 mb-16 mt-4 items-center">
         {page}
         {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} comment={this.state.comment} loading={this.state.loading} /> : null}
         <div className="flex-1 mb-8 mt-2 text-right">

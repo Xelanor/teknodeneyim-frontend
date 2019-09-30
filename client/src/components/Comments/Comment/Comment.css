@@ -1,0 +1,16 @@
+.container-prompt {
+  overflow: hidden;
+  width: 80%;
+  max-width: 600px;
+  padding: 1em;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.modal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
