@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 import { connect } from "react-redux";
 import ReactPaginate from 'react-paginate'
 import { withRouter } from 'react-router-dom'
@@ -103,7 +102,7 @@ class PostDetail extends Component {
           />
         );
       }
-      let { username, content, createdAt, description, _id, saved } = this.props.post.post
+      let { content, createdAt, description, _id, saved } = this.props.post.post
 
       page = (
         <div className="">

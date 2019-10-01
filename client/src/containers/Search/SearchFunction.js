@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link, withRouter } from "react-router-dom";
 import onClickOutside from "react-onclickoutside"
-import { debounce } from 'lodash'
 import * as _ from 'underscore';
 
 import './Search.css'
@@ -76,7 +75,6 @@ class SearchFunction extends Component {
   }
 
   render() {
-    const { searchText } = this.state
     return (
       <div className="text-sm lg:flex-grow">
         <form onSubmit={this.onSearchSubmit}>

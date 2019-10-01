@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom'
 
 import HomepagePosts from '../components/PostsList/HomepagePosts'
-import Spinner from '../components/UI/Spinner/Spinner'
 
 import { likeComment } from '../store/actions/likeAction'
 import { fetchHomePosts } from '../store/actions/fetchActions'

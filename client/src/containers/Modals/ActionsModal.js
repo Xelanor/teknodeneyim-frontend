@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Paper, Slide, Grid, Typography, TextField, Button } from '@material-ui/core'
+import { Paper, Slide } from '@material-ui/core'
 import axios from 'axios'
 class ActionModal extends Component {
   state = {
