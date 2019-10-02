@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 
 import HomepagePosts from '../components/PostsList/HomepagePosts'
 
@@ -18,6 +18,8 @@ class HomePage extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.likeComment(commentId, this.props.auth.user.id)
       this.props.fetchHomePosts()
+    } else {
+      this.props.history.push("/login")
     }
   }
 

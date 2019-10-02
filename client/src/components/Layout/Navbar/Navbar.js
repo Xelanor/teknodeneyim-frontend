@@ -24,7 +24,7 @@ class Navbar extends Component {
     },
     {
       content: "Donanım",
-      to: "donanim",
+      to: "donanım",
       title: "Donanım Ürünleri"
     },
     {

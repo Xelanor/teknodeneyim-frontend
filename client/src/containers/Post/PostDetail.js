@@ -10,6 +10,7 @@ import Comments from '../../components/Comments/Comments'
 import { likeComment, savePost } from '../../store/actions/likeAction'
 import { fetchComments, submitComment, fetchSidePosts } from '../../store/actions/fetchActions'
 import { COMMENT_PER_PAGE } from '../../store/actions/types'
+import timeAgo from '../../utils/timeAgo'
 
 import './PostDetail.css'
 
@@ -73,6 +74,8 @@ class PostDetail extends Component {
   onCommentLiked = (commentId) => {
     if (this.props.auth.isAuthenticated) {
       this.props.likeComment(commentId, this.props.auth.user.id)
+    } else {
+      this.props.history.push("/login")
     }
   }
 
@@ -125,7 +128,7 @@ class PostDetail extends Component {
             </div>
             <div className="flex items-center float-right">
               <div className="font-bold text-sm text-purple-900">
-                Konu açılış tarihi: {new Date(createdAt).toLocaleString()}
+                Konu açılış tarihi: {timeAgo(new Date(createdAt).getTime())}
               </div>
             </div>
           </div>

@@ -92,7 +92,7 @@ router.route('/autocomplete').post((req, res) => {
       },
       { $sort: { commentsize: -1 } }
     ])
-      .limit(10)
+      .limit(7)
       .then(req => res.json(req))
       .catch(err => res.status(400).json('Error: ' + err));
   } else {

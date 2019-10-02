@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import { MoreHoriz } from '@material-ui/icons'
 import { Tooltip, IconButton, Zoom, MenuItem, Popover, Modal } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from "react-redux";
 
 import ActionsModal from '../../../containers/Modals/ActionsModal'
 import './Comment.css'
+import timeAgo from '../../../utils/timeAgo'
 
 const StyledMenuItem = withStyles(theme => ({
   root: {
@@ -42,11 +44,11 @@ function Comment(props) {
         </div>
       </div>
       <div className="flex items-center float-right">
-        <Tooltip TransitionComponent={Zoom} title="Yorum Ayarları" key="yorum-ayarlari" placement="left">
+        {props.auth.isAuthenticated ? <Tooltip TransitionComponent={Zoom} title="Yorum Ayarları" key="yorum-ayarlari" placement="left">
           <IconButton onClick={handleCommentSettingsClick} size="small">
             <MoreHoriz />
           </IconButton>
-        </Tooltip>
+        </Tooltip> : null}
         <div onClick={() => props.commentLike(props.id)} className="LikeBtn Btn items-center cursor-pointer ml-4 mr-3">
           <span className="BtnWrapper items-center">
             <span className="Count mr-1">{props.likes.length}</span>
@@ -54,7 +56,7 @@ function Comment(props) {
           </span>
         </div>
         <div className="font-bold text-sm text-purple-900">
-          {new Date(props.createdAt).toLocaleString()}
+          {timeAgo(new Date(props.createdAt).getTime())}
         </div>
         <Link to={`/profil/${props.username.username}`}>
           <div className="ml-4 font-normal text-sm text-black">
@@ -77,8 +79,8 @@ function Comment(props) {
         onClick={handleClose}
         onClose={handleClose}
       >
-        <StyledMenuItem onClick={() => handleModalShow('report-comment', true)}>Rapor Et</StyledMenuItem>
-        <StyledMenuItem onClick={() => handleModalShow('delete-comment', true)}>Yorumu Sil</StyledMenuItem>
+        {props.user !== props.username._id ? <StyledMenuItem onClick={() => handleModalShow('report-comment', true)}>Rapor Et</StyledMenuItem> : null}
+        {props.user === props.username._id ? <StyledMenuItem onClick={() => handleModalShow('delete-comment', true)}>Yorumu Sil</StyledMenuItem> : null}
       </Popover>
 
       <Modal
@@ -103,4 +105,8 @@ function Comment(props) {
   );
 }
 
-export default Comment;
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Comment);
