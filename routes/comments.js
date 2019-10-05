@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Comment = require('../models/comment');
+let User = require('../models/user');
 
 router.route('/').get((req, res) => {
   Comment.find().sort({ createdAt: 'desc' })
@@ -19,10 +20,17 @@ router.route('/add').post((req, res) => {
 });
 
 // Delete comment
-router.post('/delete', async (req, res) => {
-  await Comment.findByIdAndDelete(req.body.comment)
+router.post('/delete', (req, res) => {
+  Comment.findByIdAndDelete(req.body.comment)
     .then(req => res.json(req))
     .catch(err => res.status(400).json('Error: ' + err));
+
+  User.findOneAndUpdate({ _id: req.body.reporter }, {
+    $set: {
+      lastCommentDeleted: Date.now()
+    }
+  })
+    .catch(err => res.status(400).json('Error: ' + err))
 });
 
 // like or unlike comment

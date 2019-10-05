@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Paper, Slide } from '@material-ui/core'
 import axios from 'axios'
 
-import { NEXT_REPORTABLE_TIME } from '../../store/actions/types'
+import { NEXT_REPORTABLE_TIME, NEXT_COMMENT_DELETE_TIME } from '../../store/actions/types'
 
 class ActionModal extends Component {
   state = {}
@@ -26,10 +26,19 @@ class ActionModal extends Component {
 
   handleDeleteComment = async () => {
     await this.props.modalShow('', false)
-    const { comment, postId } = this.props
-    axios.post('/comments/delete', { comment })
-    axios.post('/posts/delete-comment', { comment, postId })
-    window.location.reload();
+    const { reporter, comment, postId } = this.props
+    let lastCommentDeleted = ""
+    await axios.get('/users/report/' + reporter)
+      .then(res => { lastCommentDeleted = res.data.lastCommentDeleted ? res.data.lastCommentDeleted : null })
+    lastCommentDeleted = new Date(lastCommentDeleted).getTime()
+    let now_plus_time = Date.now() - NEXT_COMMENT_DELETE_TIME * 60000 // Minute to hours
+    if (now_plus_time >= lastCommentDeleted || lastCommentDeleted == null) {
+      axios.post('/comments/delete', { comment, reporter })
+      axios.post('/posts/delete-comment', { comment, postId })
+      window.location.reload();
+    } else {
+      await this.props.modalShow('comment-not-deleted', true)
+    }
   }
 
   // Renders the Report Comment Modal Window
@@ -152,6 +161,24 @@ class ActionModal extends Component {
     );
   };
 
+  renderCannotDeleteComment = () => {
+    return (
+      <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={500}>
+        <div className="w-full">
+          <div className="flex mb-1">
+            <div className="font-semibold text-xl text-tekno3">
+              Bir yorumu daha silebilmeniz için
+            </div>
+          </div>
+          <div className="flex mb-8">
+            <div className="font-semibold text-xl text-tekno3">
+              bir süre beklemeniz gerekmektedir.
+            </div>
+          </div>
+        </div >
+      </Slide >
+    );
+  };
 
   render() {
     if (this.props.modalType === 'report-comment') {
@@ -165,6 +192,9 @@ class ActionModal extends Component {
     }
     else if (this.props.modalType === 'delete-comment') {
       return <Paper tabIndex={-1} className="container-prompt">{this.renderDeleteComment()}</Paper>;
+    }
+    else if (this.props.modalType === 'comment-not-deleted') {
+      return <Paper tabIndex={-1} className="container-prompt">{this.renderCannotDeleteComment()}</Paper>;
     }
     else {
       return <div>Hi</div>
