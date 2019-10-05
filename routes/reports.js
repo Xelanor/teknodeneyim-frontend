@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const mailer = require('../utils/Mailer')
 let Report = require('../models/report');
+let User = require('../models/user');
 
 router.route('/new-report').post((req, res) => {
   const { reporter, reported, comment } = req.body
@@ -14,6 +15,14 @@ router.route('/new-report').post((req, res) => {
       text: `Rapor Geldi`
     }))
     .catch(err => res.status(400).json('Error: ' + err));
+
+  User.findOneAndUpdate({ _id: reporter }, {
+    $set: {
+      lastReported: Date.now()
+    }
+  })
+    .then(() => res.json(''))
+    .catch(err => res.status(400).json('Error: ' + err))
 });
 
 module.exports = router;
