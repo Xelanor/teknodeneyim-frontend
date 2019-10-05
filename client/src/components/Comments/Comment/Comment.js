@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { MoreHoriz } from '@material-ui/icons'
 import { Tooltip, IconButton, Zoom, MenuItem, Popover, Modal } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
-import { connect } from "react-redux";
 
 import ActionsModal from '../../../containers/Modals/ActionsModal'
 import './Comment.css'
@@ -44,7 +43,7 @@ function Comment(props) {
         </div>
       </div>
       <div className="flex items-center float-right">
-        {props.auth.isAuthenticated ? <Tooltip TransitionComponent={Zoom} title="Yorum Ayarları" key="yorum-ayarlari" placement="left">
+        {props.user !== "" ? <Tooltip TransitionComponent={Zoom} title="Yorum Ayarları" key="yorum-ayarlari" placement="left">
           <IconButton onClick={handleCommentSettingsClick} size="small">
             <MoreHoriz />
           </IconButton>
@@ -105,8 +104,4 @@ function Comment(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps)(Comment);
+export default Comment;
