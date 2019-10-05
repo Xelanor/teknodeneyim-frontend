@@ -31,4 +31,5 @@ button:disabled:hover {
   background-color: #ffaaa9;
   color: white;
   border-color: white;
+  cursor: default;
 }
