@@ -49,6 +49,9 @@ const userSchema = new Schema({
   lastCommentDeleted: {
     type: Date
   },
+  lastCommented: {
+    type: Date
+  },
 }, {
   timestamps: true,
 });

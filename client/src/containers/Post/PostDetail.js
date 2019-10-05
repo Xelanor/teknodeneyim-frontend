@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import ReactPaginate from 'react-paginate'
 import { withRouter } from 'react-router-dom'
+import { MenuItem, Modal } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles';
+import axios from 'axios'
 
 import Spinner from '../../components/UI/Spinner/Spinner'
 import NewComment from '../../components/Comments/Comment/NewComment'
 import Comments from '../../components/Comments/Comments'
+import ActionsModal from '../Modals/ActionsModal'
 
 import { likeComment, savePost } from '../../store/actions/likeAction'
 import { fetchComments, submitComment, fetchSidePosts } from '../../store/actions/fetchActions'
-import { COMMENT_PER_PAGE, MAX_COMMENT_CHARACTHERS } from '../../store/actions/types'
+import { COMMENT_PER_PAGE, MAX_COMMENT_CHARACTHERS, NEXT_COMMENT_TIME } from '../../store/actions/types'
 import timeAgo from '../../utils/timeAgo'
 
 import './PostDetail.css'
@@ -25,8 +29,17 @@ class PostDetail extends Component {
     ringStyle: {
       stroke: "",
       strokeDasharray: ""
-    }
+    },
+    modalVisible: false,
+    modalType: ""
   }
+
+  StyledMenuItem = withStyles(theme => ({
+    root: {
+      minHeight: '10px',
+      fontSize: '0.8rem',
+    },
+  }))(MenuItem);
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.post !== prevProps.post) {
@@ -64,12 +77,23 @@ class PostDetail extends Component {
       content: this.state.comment,
       target: this.props.post.post._id
     }
-    await this.props.submitComment(comment)
-    this.setState({ comment: "" })
-    this.props.fetchComments(this.props.match.params.id)
-    this.setState({ loading: false })
-    window.scrollTo(0, 0)
-    this.props.fetchSidePosts()
+    let lastCommented = ""
+    await axios.get('/users/report/' + this.props.auth.user.id)
+      .then(res => { lastCommented = res.data.lastCommented ? res.data.lastCommented : null })
+      .catch(err => { console.log(err) })
+    lastCommented = new Date(lastCommented).getTime()
+    let now_plus_time = Date.now() - NEXT_COMMENT_TIME * 60000 // Minute to hours
+    if (now_plus_time >= lastCommented || lastCommented == null) {
+      await this.props.submitComment(comment)
+      this.setState({ comment: "" })
+      this.props.fetchComments(this.props.match.params.id)
+      this.setState({ loading: false })
+      window.scrollTo(0, 0)
+      this.props.fetchSidePosts()
+    } else {
+      await this.handleModalShow('comment-not-submitted', true)
+      this.setState({ loading: false })
+    }
   }
 
   onCommentChange = (e) => {
@@ -91,13 +115,16 @@ class PostDetail extends Component {
     }
   }
 
+  handleModalShow = (modalType, show) => {
+    this.setState({ modalType, modalVisible: show })
+  };
+
   styleRing = (numChar) => {
     const r = 15;
     const circleLength = 2 * Math.PI * r;
     const teknoColor = "#F67E7D"
 
     let colored = (circleLength * numChar) / MAX_COMMENT_CHARACTHERS;
-    console.log(colored)
     let gray = circleLength - colored > 0 ? circleLength - colored : 0
 
     this.setState((state) => ({
@@ -188,6 +215,18 @@ class PostDetail extends Component {
         <div className="flex-1 w-full mb-8 mt-2 text-right float-right">
           {paginationElement}
         </div>
+        <Modal
+          open={this.state.modalVisible}
+          aria-labelledby="post modal"
+          aria-describedby="create comment modal"
+          className="modal-wrapper"
+          onClose={() => this.setState({ modalVisible: false })}
+        >
+          <ActionsModal
+            modalShow={this.handleModalShow}
+            modalType={this.state.modalType}
+          />
+        </Modal>
       </div>
     );
   }

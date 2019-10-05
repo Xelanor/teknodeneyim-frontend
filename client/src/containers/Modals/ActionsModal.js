@@ -180,6 +180,25 @@ class ActionModal extends Component {
     );
   };
 
+  renderCannotSubmitComment = () => {
+    return (
+      <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={500}>
+        <div className="w-full">
+          <div className="flex mb-1">
+            <div className="font-semibold text-xl text-tekno3">
+              Bir yorum daha gönderebilmeniz için
+            </div>
+          </div>
+          <div className="flex mb-8">
+            <div className="font-semibold text-xl text-tekno3">
+              10dk beklemeniz gerekmektedir.
+            </div>
+          </div>
+        </div >
+      </Slide >
+    );
+  };
+
   render() {
     if (this.props.modalType === 'report-comment') {
       return <Paper tabIndex={-1} className="container-prompt">{this.renderReportComment()}</Paper>;
@@ -195,6 +214,9 @@ class ActionModal extends Component {
     }
     else if (this.props.modalType === 'comment-not-deleted') {
       return <Paper tabIndex={-1} className="container-prompt">{this.renderCannotDeleteComment()}</Paper>;
+    }
+    else if (this.props.modalType === 'comment-not-submitted') {
+      return <Paper tabIndex={-1} className="container-prompt">{this.renderCannotSubmitComment()}</Paper>;
     }
     else {
       return <div>Hi</div>

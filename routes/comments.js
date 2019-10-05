@@ -17,6 +17,13 @@ router.route('/add').post((req, res) => {
   newComment.save()
     .then(comment => res.json(comment._id))
     .catch(err => res.status(400).json('Error: ' + err));
+
+  User.findOneAndUpdate({ _id: username }, {
+    $set: {
+      lastCommented: Date.now()
+    }
+  })
+    .catch(err => res.status(400).json('Error: ' + err))
 });
 
 // Delete comment

@@ -195,7 +195,7 @@ router.route('/change-description').post((req, res) => {
 router.route('/report/:userId').get((req, res) => {
   const userId = req.params.userId
   User.findOne({ _id: userId })
-    .select('lastReported lastCommentDeleted')
+    .select('lastReported lastCommentDeleted lastCommented')
     .exec()
     .then(req => res.json(req))
     .catch(err => res.status(400).json('Error: ' + err));
