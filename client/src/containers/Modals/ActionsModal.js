@@ -26,8 +26,10 @@ class ActionModal extends Component {
 
   handleDeleteComment = async () => {
     await this.props.modalShow('', false)
-    const { comment } = this.props
+    const { comment, postId } = this.props
     axios.post('/comments/delete', { comment })
+    axios.post('/posts/delete-comment', { comment, postId })
+    window.location.reload();
   }
 
   // Renders the Report Comment Modal Window

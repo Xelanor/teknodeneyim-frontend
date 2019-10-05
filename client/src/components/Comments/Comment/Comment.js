@@ -97,6 +97,7 @@ function Comment(props) {
           reported={props.username._id}
           comment={props.id}
           createdAt={new Date(props.createdAt).toLocaleString()}
+          postId={props.postId}
         />
       </Modal>
 

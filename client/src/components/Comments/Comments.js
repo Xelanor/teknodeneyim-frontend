@@ -14,6 +14,7 @@ const comments = (props) => {
       likes={comment.likes}
       commentLike={props.commentLike}
       user={props.user}
+      postId={props.postId}
     />
   })
   return (

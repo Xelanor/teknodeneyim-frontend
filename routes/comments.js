@@ -19,8 +19,8 @@ router.route('/add').post((req, res) => {
 });
 
 // Delete comment
-router.route('/delete').post((req, res) => {
-  Comment.findByIdAndDelete(req.body.comment)
+router.post('/delete', async (req, res) => {
+  await Comment.findByIdAndDelete(req.body.comment)
     .then(req => res.json(req))
     .catch(err => res.status(400).json('Error: ' + err));
 });

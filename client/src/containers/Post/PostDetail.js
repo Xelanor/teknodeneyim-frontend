@@ -138,6 +138,7 @@ class PostDetail extends Component {
           <Comments
             comments={this.state.elements}
             commentLike={this.onCommentLiked}
+            postId={this.props.match.params.id}
             user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""}
           />
         </div>

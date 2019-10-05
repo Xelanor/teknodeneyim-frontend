@@ -192,6 +192,15 @@ router.route('/change-description').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/report/:userId').get((req, res) => {
+  const userId = req.params.userId
+  User.findOne({ _id: userId })
+    .select('lastReported')
+    .exec()
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
 module.exports = router;
 
 // router.route('/').get((req, res) => {

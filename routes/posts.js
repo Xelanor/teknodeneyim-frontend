@@ -186,4 +186,10 @@ router.post('/:id/save', async (req, res) => {
   }
 });
 
+router.post('/delete-comment', async (req, res) => {
+  await Post.findByIdAndUpdate(req.body.postId, { $pullAll: { comments: [req.body.comment] } })
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;
