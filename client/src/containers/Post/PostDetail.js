@@ -9,7 +9,7 @@ import Comments from '../../components/Comments/Comments'
 
 import { likeComment, savePost } from '../../store/actions/likeAction'
 import { fetchComments, submitComment, fetchSidePosts } from '../../store/actions/fetchActions'
-import { COMMENT_PER_PAGE } from '../../store/actions/types'
+import { COMMENT_PER_PAGE, MAX_COMMENT_CHARACTHERS } from '../../store/actions/types'
 import timeAgo from '../../utils/timeAgo'
 
 import './PostDetail.css'
@@ -20,7 +20,12 @@ class PostDetail extends Component {
     currentPage: 0,
     offset: 0,
     elements: null,
-    loading: false
+    loading: false,
+    numChar: 0,
+    ringStyle: {
+      stroke: "",
+      strokeDasharray: ""
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -68,7 +73,8 @@ class PostDetail extends Component {
   }
 
   onCommentChange = (e) => {
-    this.setState({ comment: e.target.value })
+    this.setState({ comment: e.target.value, numChar: e.target.value.length })
+    this.styleRing(e.target.value.length)
   }
 
   onCommentLiked = (commentId) => {
@@ -83,6 +89,25 @@ class PostDetail extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.savePost(postId, this.props.auth.user.id)
     }
+  }
+
+  styleRing = (numChar) => {
+    const r = 15;
+    const circleLength = 2 * Math.PI * r;
+    const teknoColor = "#F67E7D"
+
+    let colored = (circleLength * numChar) / MAX_COMMENT_CHARACTHERS;
+    console.log(colored)
+    let gray = circleLength - colored > 0 ? circleLength - colored : 0
+
+    this.setState((state) => ({
+      ringStyle: {
+        stroke: (MAX_COMMENT_CHARACTHERS - numChar) <= 0 ? "red" :
+          (MAX_COMMENT_CHARACTHERS - numChar) <= 100 ? "orange" :
+            teknoColor,
+        strokeDasharray: `${colored} ${gray}`
+      }
+    }));
   }
 
   render() {
@@ -141,6 +166,17 @@ class PostDetail extends Component {
             postId={this.props.match.params.id}
             user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""}
           />
+          {this.props.auth.isAuthenticated ?
+            <NewComment
+              onCommentChange={this.onCommentChange}
+              submitForm={this.onSubmitComment}
+              comment={this.state.comment}
+              loading={this.state.loading}
+              numChar={this.state.numChar}
+              ringStyle={this.state.ringStyle}
+              maxChar={MAX_COMMENT_CHARACTHERS}
+            />
+            : null}
         </div>
       )
     } else {
@@ -149,8 +185,7 @@ class PostDetail extends Component {
     return (
       <div className="flex-1 px-4 mb-16 mt-4 items-center">
         {page}
-        {this.props.auth.isAuthenticated ? <NewComment onCommentChange={this.onCommentChange} submitForm={this.onSubmitComment} comment={this.state.comment} loading={this.state.loading} /> : null}
-        <div className="flex-1 mb-8 mt-2 text-right">
+        <div className="flex-1 w-full mb-8 mt-2 text-right float-right">
           {paginationElement}
         </div>
       </div>

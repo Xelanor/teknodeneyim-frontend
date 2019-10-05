@@ -10,3 +10,4 @@ export const CREATE_POST = 'CREATE_POST';
 export const COMMENT_PER_PAGE = 10;
 export const NEXT_REPORTABLE_TIME = 60
 export const NEXT_COMMENT_DELETE_TIME = 60
+export const MAX_COMMENT_CHARACTHERS = 500

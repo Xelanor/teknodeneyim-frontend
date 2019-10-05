@@ -14,3 +14,21 @@
   justify-content: center;
   align-items: center;
 }
+
+circle {
+  fill: none;
+  stroke-width: 3;
+}
+#gray {
+  stroke: lightgray;
+}
+
+button:disabled {
+  background-color: #ffaaa9;
+}
+
+button:disabled:hover {
+  background-color: #ffaaa9;
+  color: white;
+  border-color: white;
+}
