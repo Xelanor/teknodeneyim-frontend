@@ -10,13 +10,13 @@ class ActionModal extends Component {
   handleReportComment = async () => {
     await this.props.modalShow('', false)
     const { reporter, reported, comment } = this.props
-    let lastReported
+    let lastReported = ""
     await axios.get('/users/report/' + reporter)
-      .then(res => { lastReported = res.data.lastReported })
+      .then(res => { lastReported = res.data.lastReported ? res.data.lastReported : null })
       .catch(err => { console.log(err) })
     lastReported = new Date(lastReported).getTime()
     let now_plus_time = Date.now() - NEXT_REPORTABLE_TIME * 60000 // Minute to hours
-    if (now_plus_time >= lastReported) {
+    if (now_plus_time >= lastReported || lastReported == null) {
       axios.post('/reports/new-report', { reporter, reported, comment })
       await this.props.modalShow('comment-reported', true)
     } else {
