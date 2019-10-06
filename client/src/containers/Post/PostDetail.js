@@ -16,6 +16,7 @@ import { likeComment, savePost } from '../../store/actions/likeAction'
 import { fetchComments, submitComment, fetchSidePosts } from '../../store/actions/fetchActions'
 import { COMMENT_PER_PAGE, MAX_COMMENT_CHARACTHERS, NEXT_COMMENT_TIME, BAD_WORDS } from '../../store/actions/types'
 import timeAgo from '../../utils/timeAgo'
+import Filter from '../../utils/badwords'
 
 import './PostDetail.css'
 
@@ -75,9 +76,7 @@ class PostDetail extends Component {
     e.preventDefault()
     this.setState({ loading: true })
     let userComment = this.state.comment
-    var Filter = require('../../utils/badwords')
-    var filter = new Filter({ list: BAD_WORDS })
-    userComment = filter.clean(userComment)
+    userComment = Filter(BAD_WORDS, userComment)
     let comment = {
       username: this.props.auth.user.id,
       content: userComment,
