@@ -10,10 +10,11 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import NewComment from '../../components/Comments/Comment/NewComment'
 import Comments from '../../components/Comments/Comments'
 import ActionsModal from '../Modals/ActionsModal'
+// import Tooltip from '../../components/UI/Tooltip/Tooltip'
 
 import { likeComment, savePost } from '../../store/actions/likeAction'
 import { fetchComments, submitComment, fetchSidePosts } from '../../store/actions/fetchActions'
-import { COMMENT_PER_PAGE, MAX_COMMENT_CHARACTHERS, NEXT_COMMENT_TIME } from '../../store/actions/types'
+import { COMMENT_PER_PAGE, MAX_COMMENT_CHARACTHERS, NEXT_COMMENT_TIME, BAD_WORDS } from '../../store/actions/types'
 import timeAgo from '../../utils/timeAgo'
 
 import './PostDetail.css'
@@ -31,7 +32,8 @@ class PostDetail extends Component {
       strokeDasharray: ""
     },
     modalVisible: false,
-    modalType: ""
+    // modalType: "",
+    // displayInfo: false
   }
 
   StyledMenuItem = withStyles(theme => ({
@@ -72,9 +74,13 @@ class PostDetail extends Component {
   onSubmitComment = async (e) => {
     e.preventDefault()
     this.setState({ loading: true })
+    let userComment = this.state.comment
+    var Filter = require('../../utils/badwords')
+    var filter = new Filter({ list: BAD_WORDS })
+    userComment = filter.clean(userComment)
     let comment = {
       username: this.props.auth.user.id,
-      content: this.state.comment,
+      content: userComment,
       target: this.props.post.post._id
     }
     let lastCommented = ""
@@ -83,7 +89,7 @@ class PostDetail extends Component {
       .catch(err => { console.log(err) })
     lastCommented = new Date(lastCommented).getTime()
     let now_plus_time = Date.now() - NEXT_COMMENT_TIME * 60000 // Minute to hours
-    if (now_plus_time >= lastCommented || lastCommented == null) {
+    if (now_plus_time >= lastCommented || lastCommented == null || this.props.auth.user.role == "admin") {
       await this.props.submitComment(comment)
       this.setState({ comment: "" })
       this.props.fetchComments(this.props.match.params.id)
@@ -137,6 +143,14 @@ class PostDetail extends Component {
     }));
   }
 
+  // hoverOn = () => {
+  //   this.setState({ displayInfo: true })
+  // }
+
+  // hoverOff = () => {
+  //   this.setState({ displayInfo: false })
+  // }
+
   render() {
     let page, paginationElement
     if (this.state.elements) {
@@ -166,9 +180,9 @@ class PostDetail extends Component {
               <div className="font-semibold text-2xl text-tekno">
                 {content}
               </div>
+              {/* <Tooltip message={'asdasfasfasfa'} position={'bottom'}><i style={{ color: "#e0245e" }} className="fas fa-star"></i></Tooltip> */}
               <div onClick={() => this.onPostSaved(_id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
                 <span className="BtnWrapper items-center">
-                  {/* <span className="Count mr-1">{saved.length}</span> */}
                   {saved.includes(this.props.auth.user.id) ? <i style={{ color: "#e0245e" }} className="fas fa-star"></i> : <i className="far fa-star"></i>}
                 </span>
               </div>
