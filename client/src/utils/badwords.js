@@ -1,5 +1,5 @@
 const isProfane = (list, string) => {
-  return list.includes(string)
+  return list.includes(string.toLowerCase())
 }
 
 const replaceWord = (string) => {
