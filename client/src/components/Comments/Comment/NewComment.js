@@ -4,7 +4,7 @@ import Spinner from '../../UI/Spinner/Spinner'
 
 const newComment = (props) => {
   return (
-    <div id="deneyim" className="mt-16 w-full md:w-1/2 mx-auto text-center items-center">
+    <div id="deneyim" className="mt-16 w-full md:w-3/4 mx-auto text-center items-center">
       <form onSubmit={props.submitForm}>
         <textarea
           disabled={props.loading}
@@ -13,8 +13,8 @@ const newComment = (props) => {
           value={props.comment}
           onChange={props.onCommentChange}
           placeholder="Deneyim Paylaş..."
-          rows="3"
-          className="form-textarea outline-none bg-gray-100 shadow rounded-lg border-0 p-2 w-full block focus:border-tekno mb-2 mr-2 appearance-none" />
+          rows="5"
+          className="form-textarea outline-none bg-gray-100 shadow rounded-lg border-0 p-4 w-full block focus:border-tekno mb-2 mr-2 appearance-none" />
         <div className="flex mt-2 lg:mt-0 h-10 float-right w-full justify-between">
           {props.loading ? <Spinner /> :
             <button
