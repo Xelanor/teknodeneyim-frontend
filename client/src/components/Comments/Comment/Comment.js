@@ -38,7 +38,7 @@ function Comment(props) {
   return (
     <div className="mb-16">
       <div className="flex">
-        <div className="flex font-normal text-md text-black">
+        <div className="flex whitespace-pre-line font-normal text-md text-black">
           {props.content}
         </div>
       </div>
