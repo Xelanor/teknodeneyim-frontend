@@ -117,6 +117,8 @@ class PostDetail extends Component {
   onPostSaved = (postId) => {
     if (this.props.auth.isAuthenticated) {
       this.props.savePost(postId, this.props.auth.user.id)
+    } else {
+      this.props.history.push("/login")
     }
   }
 

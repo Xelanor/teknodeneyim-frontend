@@ -4,7 +4,7 @@ import { withRouter, Redirect } from 'react-router-dom'
 
 import HomepagePosts from '../components/PostsList/HomepagePosts'
 
-import { likeComment } from '../store/actions/likeAction'
+import { likeHomepageComment } from '../store/actions/likeAction'
 import { fetchHomePosts } from '../store/actions/fetchActions'
 
 class HomePage extends Component {
@@ -14,10 +14,9 @@ class HomePage extends Component {
     this.props.fetchHomePosts()
   }
 
-  onCommentLiked = (commentId) => {
+  onCommentLiked = async (commentId) => {
     if (this.props.auth.isAuthenticated) {
-      this.props.likeComment(commentId, this.props.auth.user.id)
-      this.props.fetchHomePosts()
+      await this.props.likeHomepageComment(commentId, this.props.auth.user.id)
     } else {
       this.props.history.push("/login")
     }
@@ -45,9 +44,9 @@ class HomePage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   posts: state.posts.posts
-});
+})
 
-export default withRouter(connect(mapStateToProps, { fetchHomePosts, likeComment })(HomePage));
+export default withRouter(connect(mapStateToProps, { fetchHomePosts, likeHomepageComment })(HomePage));

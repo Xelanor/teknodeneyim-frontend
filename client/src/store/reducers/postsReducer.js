@@ -1,4 +1,4 @@
-import { SET_SIDEBAR_POSTS, SET_HOMEPAGE_POSTS, SET_POST_COMMENTS, LIKE_COMMENT, SAVE_POST } from '../actions/types';
+import { SET_SIDEBAR_POSTS, SET_HOMEPAGE_POSTS, SET_POST_COMMENTS, LIKE_COMMENT, SAVE_POST, LIKE_HOMEPAGE_COMMENT } from '../actions/types';
 
 const initialState = {
   posts: null,
@@ -24,7 +24,7 @@ export default function (state = initialState, action) {
         post: action.payload
       }
     case LIKE_COMMENT:
-      let comments = state.post.post.comments
+      let comments = [...state.post.post.comments]
       Object.keys(comments).forEach(key => {
         if (comments[key]._id === action.payload.commentId) {
           comments[key].likes.includes(action.payload.userId) ? comments[key].likes.splice(comments[key].likes.indexOf(action.payload.userId), 1) : comments[key].likes.push(action.payload.userId)
@@ -40,8 +40,21 @@ export default function (state = initialState, action) {
           }
         }
       }
+    case LIKE_HOMEPAGE_COMMENT:
+      let state_posts = [...state.posts]
+      state_posts.map(post => {
+        post.comments.map(comment => {
+          if (comment._id === action.payload.commentId) {
+            comment.likes.includes(action.payload.userId) ? comment.likes.splice(comment.likes.indexOf(action.payload.userId), 1) : comment.likes.push(action.payload.userId)
+          }
+        })
+      })
+      return {
+        ...state,
+        posts: state_posts
+      }
     case SAVE_POST:
-      let saved = state.post.post.saved
+      let saved = [...state.post.post.saved]
       saved.includes(action.payload.userId) ? saved.splice(saved.indexOf(action.payload.userId), 1) : saved.push(action.payload.userId)
       return {
         ...state,
