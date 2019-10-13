@@ -11,12 +11,14 @@ import Login from './containers/Auth/Login'
 import PostDetail from './containers/Post/PostDetail'
 import Search from './containers/Search/Search'
 import ProfilePage from './containers/ProfilePage/ProfilePage'
-import AdminPage from './containers/Admin/AdminPage'
 import ForgotPassword from './containers/Auth/ForgotPassword'
 import ResetPassword from './containers/Auth/ResetPassword'
 
-import RegisteredRoute from './components/PrivateRoutes/RegisteredRoute'
+// import RegisteredRoute from './components/PrivateRoutes/RegisteredRoute'
 import AdminRoute from './components/PrivateRoutes/AdminRoute'
+import AdminPage from './containers/Admin/AdminPage'
+import DisplayPosts from './containers/Admin/CrudPages/CrudPosts/CrudPosts'
+import EditPost from './containers/Admin/CrudPages/CrudPosts/EditPost'
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from './utils/setAuthToken'
@@ -59,6 +61,8 @@ class App extends Component {
             <Route path='/search/:search' component={Search} />
             <Route path='/profil/:userName' exact component={ProfilePage} />
             <AdminRoute path='/admin' exact component={AdminPage} />
+            <AdminRoute path='/admin/posts' exact component={DisplayPosts} />
+            <AdminRoute path='/admin/posts/edit/:id' exact component={EditPost} />
           </div>
         </Router>
       </Provider>
