@@ -37,6 +37,7 @@ const forgotPassword = require('./routes/forgotPassword')
 const resetPassword = require('./routes/resetPassword')
 const updatePasswordViaEmail = require('./routes/updatePasswordViaEmail')
 const reports = require('./routes/reports')
+const dashboardRoutes = require('./routes/dashboardRoutes')
 
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
@@ -45,6 +46,7 @@ app.use('/', forgotPassword);
 app.use('/', resetPassword);
 app.use('/', updatePasswordViaEmail);
 app.use('/reports', reports);
+app.use('/admin', dashboardRoutes);
 
 // Serve static assets if in PROD
 if (process.env.NODE_ENV === "production") {
