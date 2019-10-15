@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import ReactPaginate from 'react-paginate'
 
-import CrudPost from './CrudPost/CrudPost'
+import CrudPost from './CrudComment/CrudComment'
 import '../DisplayPosts.css'
 
 class DisplayPosts extends Component {
   state = {
-    posts: null,
+    comments: null,
     currentPage: 0,
     offset: 0,
     elements: null,
@@ -15,14 +15,14 @@ class DisplayPosts extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.posts !== prevState.posts) {
+    if (this.state.comments !== prevState.comments) {
       this.setElementsForCurrentPage()
     }
   }
 
   getData() {
-    axios.get('/admin/posts/show')
-      .then(res => this.setState({ posts: res.data, pageCount: Math.ceil(res.data.length / 10) }))
+    axios.get('/admin/comments/show')
+      .then(res => this.setState({ comments: res.data, pageCount: Math.ceil(res.data.length / 10) }))
       .catch(err => { console.log(err) })
   }
 
@@ -31,7 +31,7 @@ class DisplayPosts extends Component {
   }
 
   deletePost = async (postId) => {
-    await axios.post('/admin/posts/delete', { _id: postId })
+    await axios.post('/admin/comments/delete', { _id: postId })
       .then(res => console.log(res))
       .catch(err => { console.log(err) })
 
@@ -39,7 +39,7 @@ class DisplayPosts extends Component {
   }
 
   setElementsForCurrentPage() {
-    let elements = this.state.posts
+    let elements = this.state.comments
       .slice(this.state.offset, this.state.offset + 10)
     this.setState({ elements: elements });
   }
@@ -55,7 +55,7 @@ class DisplayPosts extends Component {
 
   render() {
     let paginationElement
-    if (this.state.posts) {
+    if (this.state.comments) {
       if (this.state.pageCount > 1) {
         paginationElement = (
           <ReactPaginate
@@ -86,17 +86,14 @@ class DisplayPosts extends Component {
                       <th>No</th>
                       <th>Date</th>
                       <th>Subject</th>
-                      <th>Description</th>
-                      <th>Hashtags</th>
+                      <th>Comment</th>
                       <th>Author</th>
                       <th>Like</th>
-                      <th>Comment</th>
-                      <th>Save</th>
                     </tr>
                   </thead>
                   <tbody>
                     <CrudPost
-                      posts={this.state.elements}
+                      comments={this.state.elements}
                       delete={this.deletePost}
                     />
                   </tbody>

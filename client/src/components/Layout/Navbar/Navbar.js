@@ -57,6 +57,7 @@ class Navbar extends Component {
             className="w-10 h-10 rounded-full mx-4"
           />
         </Link>
+        {user.role === "admin" ? <Link to="/admin" className="inline-block text-base px-4 py-2 leading-none border rounded-lg bg-tekno3 text-white border-white hover:border-tekno3 hover:text-tekno3 hover:bg-transparent">Admin</Link> : null}
       </div>
     )
     const authLinksMobile = (
