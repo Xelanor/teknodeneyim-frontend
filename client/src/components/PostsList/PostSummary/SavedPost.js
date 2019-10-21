@@ -25,7 +25,7 @@ const savedPost = (props) => {
           {props.description}
         </div>
       </div>
-      <div className="flex items-center float-right">
+      {/* <div className="flex items-center float-right">
         <div className="font-bold text-sm text-purple-900">
           {new Date(props.createdAt).toLocaleString()}
         </div>
@@ -38,7 +38,7 @@ const savedPost = (props) => {
           title={props.user.username}
           className="w-10 h-10 rounded-full ml-4"
         />
-      </div>
+      </div> */}
     </div>
   );
 }
