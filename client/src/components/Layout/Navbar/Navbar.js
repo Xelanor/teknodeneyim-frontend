@@ -62,7 +62,7 @@ class Navbar extends Component {
     )
     const authLinksMobile = (
       <div className="flex flex-row-reverse">
-        <Link to="#" className="inline-block text-xs px-1 py-1 leading-none border rounded-lg bg-tekno text-white border-white hover:border-tekno hover:text-tekno hover:bg-transparent" onClick={this.onLogoutClick}>Çıkış Yap</Link>
+        <Link to="#" className="inline-block px-1 py-1 leading-none border rounded-lg bg-tekno text-white border-white hover:border-tekno hover:text-tekno hover:bg-transparent" style={{fontSize: '0.6rem'}} onClick={this.onLogoutClick}>Çıkış Yap</Link>
         <Link to={{ pathname: "/profil/" + user.username }} >
           <img
             src={user.avatar}

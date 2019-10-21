@@ -20,7 +20,7 @@ const newComment = (props) => {
             <button
               type="submit"
               value="submit"
-              className="inline-block text-base px-4 py-2 mr-4 leading-none border rounded-lg bg-tekno text-white border-white hover:border-tekno hover:text-tekno hover:bg-transparent"
+              className="inline-block text-xs md:text-base px-2 md:px-4 py-2 mr-4 leading-none border rounded-lg bg-tekno text-white border-white hover:border-tekno hover:text-tekno hover:bg-transparent"
               disabled={props.numChar > props.maxChar}
             >Gönder
             </button>}
