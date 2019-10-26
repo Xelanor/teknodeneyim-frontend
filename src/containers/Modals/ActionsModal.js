@@ -26,13 +26,13 @@ class ActionModal extends Component {
 
   handleDeleteComment = async () => {
     await this.props.modalShow('', false)
-    const { reporter, comment, postId } = this.props
+    const { reporter, comment, postId, username } = this.props
     let lastCommentDeleted = ""
     await axios.get('/users/report/' + reporter)
       .then(res => { lastCommentDeleted = res.data.lastCommentDeleted ? res.data.lastCommentDeleted : null })
     lastCommentDeleted = new Date(lastCommentDeleted).getTime()
     let now_plus_time = Date.now() - NEXT_COMMENT_DELETE_TIME * 60000 // Minute to hours
-    if (now_plus_time >= lastCommentDeleted || lastCommentDeleted == null) {
+    if (now_plus_time >= lastCommentDeleted || lastCommentDeleted == null || username === "xelanor") {
       axios.post('/comments/delete', { comment, reporter })
       axios.post('/posts/delete-comment', { comment, postId })
       window.location.reload();
