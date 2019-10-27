@@ -27,8 +27,8 @@ router.post('/forgotPassword', (req, res, next) => {
             from: 'info@teknodeneyim.com',
             subject: 'TeknoDeneyim Şifre Sıfırlama',
             text: `Lütfen aşağıdaki şifre sıfırlama linkine tıklayın: \n\n` +
-              `teknodeneyim.herokuapp.com/reset/${token}\n\n` +
-              `BYE`
+              `teknodeneyim.com/reset/${token}\n\n` +
+              `Teknodeneyim.com`
           })
             .then(req => res.json('recovery email sent')))
           .catch(err => res.status(400).json('Error: ' + err))
