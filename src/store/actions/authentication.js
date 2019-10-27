@@ -4,7 +4,7 @@ import setAuthToken from '../../utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 
 export const registerUser = (user, history) => dispatch => {
-  axios.post('/users/register', user)
+  axios.post(`${process.env.REACT_APP_API_URL}/users/register`, user)
     .then(res => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);
@@ -22,7 +22,7 @@ export const registerUser = (user, history) => dispatch => {
 }
 
 export const loginUser = (user, history) => dispatch => {
-  axios.post('/users/login', user)
+  axios.post(`${process.env.REACT_APP_API_URL}/users/login`, user)
     .then(res => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);

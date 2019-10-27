@@ -28,7 +28,7 @@ class SearchFunction extends Component {
     const value = e.target.value
     this.setState({ searchText: value })
     if (value.length > 0) {
-      axios.post('/posts/autocomplete/', { content: value })
+      axios.post(`${process.env.REACT_APP_API_URL}/posts/autocomplete/`, { content: value })
         .then(res => { this.setState({ suggestions: res.data }) })
         .catch(err => { console.log(err) })
     } else {

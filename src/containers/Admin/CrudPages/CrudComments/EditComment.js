@@ -7,7 +7,7 @@ class EditPost extends Component {
   }
 
   async componentDidMount() {
-    await axios.get('/posts/' + this.props.match.params.id)
+    await axios.get(`${process.env.REACT_APP_API_URL}/posts/` + this.props.match.params.id)
       .then(res => this.setState({ post: res.data }))
       .catch(err => { console.log(err) })
     let subjects = this.state.post.subjects.join(',')
@@ -31,7 +31,7 @@ class EditPost extends Component {
       description: this.state.post.description,
       subjects: this.state.post.subjects.split(',')
     }
-    axios.post('/admin/posts/edit', post)
+    axios.post(`${process.env.REACT_APP_API_URL}/admin/posts/edit`, post)
       .then(res => console.log(res))
       .catch(err => { console.log(err) })
     this.props.history.push("/admin/posts")

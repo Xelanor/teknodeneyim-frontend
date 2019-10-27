@@ -16,7 +16,7 @@ export default class ResetPassword extends Component {
   async componentDidMount() {
     const { match: { params: { token }, }, } = this.props;
     try {
-      const response = await axios.get('/reset', { params: { resetPasswordToken: token, }, });
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/reset`, { params: { resetPasswordToken: token, }, });
       if (response.data.message === 'password reset link a-ok') {
         this.setState({
           username: response.data.username,
@@ -46,7 +46,7 @@ export default class ResetPassword extends Component {
     const { username, password } = this.state;
     const { match: { params: { token }, }, } = this.props;
     try {
-      const response = await axios.put('/updatePasswordViaEmail',
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/updatePasswordViaEmail`,
         {
           username,
           password,

@@ -25,7 +25,7 @@ class Search extends Component {
     this.setState({ loading: true })
     let searchText = this.props.match.params.search
     this.setState({ searchText: this.props.match.params.search })
-    await axios.post('/posts/search/', { content: searchText })
+    await axios.post(`${process.env.REACT_APP_API_URL}/posts/search/`, { content: searchText })
       .then(res => { this.setState({ posts: res.data }) })
       .catch(err => { console.log(err) })
     this.setState({ loading: false })

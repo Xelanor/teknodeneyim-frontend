@@ -14,6 +14,7 @@ class Sidebar extends Component {
 
   componentDidMount() {
     this.props.fetchSidePosts()
+    console.log(process.env.REACT_APP_API_URL)
   }
 
   toggleSidebar = () => {

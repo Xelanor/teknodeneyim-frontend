@@ -11,13 +11,13 @@ class ActionModal extends Component {
     await this.props.modalShow('', false)
     const { reporter, reported, comment } = this.props
     let lastReported = ""
-    await axios.get('/users/report/' + reporter)
+    await axios.get(`${process.env.REACT_APP_API_URL}/users/report/` + reporter)
       .then(res => { lastReported = res.data.lastReported ? res.data.lastReported : null })
       .catch(err => { console.log(err) })
     lastReported = new Date(lastReported).getTime()
     let now_plus_time = Date.now() - NEXT_REPORTABLE_TIME * 60000 // Minute to hours
     if (now_plus_time >= lastReported || lastReported == null) {
-      axios.post('/reports/new-report', { reporter, reported, comment })
+      axios.post(`${process.env.REACT_APP_API_URL}/reports/new-report`, { reporter, reported, comment })
       await this.props.modalShow('comment-reported', true)
     } else {
       await this.props.modalShow('comment-not-reported', true)
@@ -28,13 +28,13 @@ class ActionModal extends Component {
     await this.props.modalShow('', false)
     const { reporter, comment, postId, username } = this.props
     let lastCommentDeleted = ""
-    await axios.get('/users/report/' + reporter)
+    await axios.get(`${process.env.REACT_APP_API_URL}/users/report/` + reporter)
       .then(res => { lastCommentDeleted = res.data.lastCommentDeleted ? res.data.lastCommentDeleted : null })
     lastCommentDeleted = new Date(lastCommentDeleted).getTime()
     let now_plus_time = Date.now() - NEXT_COMMENT_DELETE_TIME * 60000 // Minute to hours
     if (now_plus_time >= lastCommentDeleted || lastCommentDeleted == null || username === "xelanor") {
-      axios.post('/comments/delete', { comment, reporter })
-      axios.post('/posts/delete-comment', { comment, postId })
+      axios.post(`${process.env.REACT_APP_API_URL}/comments/delete`, { comment, reporter })
+      axios.post(`${process.env.REACT_APP_API_URL}/posts/delete-comment`, { comment, postId })
       window.location.reload();
     } else {
       await this.props.modalShow('comment-not-deleted', true)

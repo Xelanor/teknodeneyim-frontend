@@ -21,7 +21,7 @@ class DisplayPosts extends Component {
   }
 
   getData() {
-    axios.get('/admin/posts/show')
+    axios.get(`${process.env.REACT_APP_API_URL}/admin/posts/show`)
       .then(res => this.setState({ posts: res.data, pageCount: Math.ceil(res.data.length / 10) }))
       .catch(err => { console.log(err) })
   }
@@ -31,7 +31,7 @@ class DisplayPosts extends Component {
   }
 
   deletePost = async (postId) => {
-    await axios.post('/admin/posts/delete', { _id: postId })
+    await axios.post(`${process.env.REACT_APP_API_URL}/admin/posts/delete`, { _id: postId })
       .then(res => console.log(res))
       .catch(err => { console.log(err) })
 

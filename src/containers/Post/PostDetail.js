@@ -83,7 +83,7 @@ class PostDetail extends Component {
       target: this.props.post.post._id
     }
     let lastCommented = ""
-    await axios.get('/users/report/' + this.props.auth.user.id)
+    await axios.get(`${process.env.REACT_APP_API_URL}/users/report/` + this.props.auth.user.id)
       .then(res => { lastCommented = res.data.lastCommented ? res.data.lastCommented : null })
       .catch(err => { console.log(err) })
     lastCommented = new Date(lastCommented).getTime()

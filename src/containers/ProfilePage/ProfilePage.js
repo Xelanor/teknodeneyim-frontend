@@ -34,7 +34,7 @@ class ProfilePage extends Component {
   getData = () => {
     const userName = this.props.match.params.userName
     this.setState({ userName })
-    axios.get('/users/' + userName)
+    axios.get(`${process.env.REACT_APP_API_URL}/users/` + userName)
       .then(res => {
         this.setState({
           user: res.data

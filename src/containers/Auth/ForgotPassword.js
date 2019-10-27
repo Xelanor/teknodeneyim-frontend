@@ -28,7 +28,7 @@ class ForgotPassword extends Component {
       });
     } else {
       try {
-        const response = await axios.post('/forgotPassword', { email })
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/forgotPassword`, { email })
         console.log(response.data);
         if (response.data === 'recovery email sent') {
           this.setState({
