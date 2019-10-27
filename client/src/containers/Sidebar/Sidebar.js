@@ -4,6 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 import './Sidebar.css'
 
 import PostsList from '../../components/PostsList/PostsList'
+import Loading from '../../components/UI/Loading/SideLoading/SideLoading'
 
 import { fetchSidePosts } from '../../store/actions/fetchActions'
 
@@ -32,6 +33,18 @@ class Sidebar extends Component {
           </div>
           <PostsList posts={this.props.posts} />
         </div>
+    } else {
+      posts = <div>
+        <div className="flex justify-between">
+          <div className="mb-4 font-semibold text-base text-gray-900">
+            En Popüler Deneyimler
+                  </div>
+        </div>
+        {Array(6).fill().map(Math.random).map(a => {
+          return <Loading />
+        })}
+      </div>
+
     }
     return (
       <div className="md:w-3/12 px-4 pb-4 lg:p-4 border-r-2 border-gray-200">

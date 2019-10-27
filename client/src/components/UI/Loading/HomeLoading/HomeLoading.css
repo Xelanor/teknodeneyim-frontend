@@ -1,0 +1,70 @@
+.single-post {
+  width: 100%;
+}
+
+.title {
+  height: 22px;
+  width: 60%;
+  animation: pulse 2s infinite ease-in-out;
+  -webkit-animation: pulse 2s infinite ease-in-out;
+}
+
+.content {
+  height: 18px;
+  width: 100%;
+  animation: pulse-desc 2s infinite ease-in-out;
+  -webkit-animation: pulse-desc 2s infinite ease-in-out;
+}
+
+.content-last {
+  height: 18px;
+  width: 50%;
+  animation: pulse-desc 2s infinite ease-in-out;
+  -webkit-animation: pulse-desc 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: rgba(246, 126, 125, 0.1);
+  }
+  50% {
+    background-color: rgba(246, 126, 125, 0.3);
+  }
+  100% {
+    background-color: rgba(246, 126, 125, 0.1);
+  }
+}
+@-webkit-keyframes pulse {
+  0% {
+    background-color: rgba(246, 126, 125, 0.1);
+  }
+  50% {
+    background-color: rgba(246, 126, 125, 0.3);
+  }
+  100% {
+    background-color: rgba(246, 126, 125, 0.1);
+  }
+}
+
+@keyframes pulse-desc {
+  0% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+  50% {
+    background-color: rgba(165, 165, 165, 0.3);
+  }
+  100% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+}
+@-webkit-keyframes pulse-desc {
+  0% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+  50% {
+    background-color: rgba(165, 165, 165, 0.3);
+  }
+  100% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+}
