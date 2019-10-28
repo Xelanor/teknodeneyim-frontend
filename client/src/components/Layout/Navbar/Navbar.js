@@ -48,7 +48,7 @@ class Navbar extends Component {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
       <div className="flex flex-row-reverse">
-        <Link to="#" className="inline-block text-base px-4 py-2 leading-none border rounded-lg bg-tekno text-white border-white hover:border-tekno hover:text-tekno hover:bg-transparent" onClick={this.onLogoutClick}>Çıkış Yap</Link>
+        <Link to="#" className="inline-block text-base px-4 py-2 border rounded-lg bg-tekno text-white border-white hover:border-tekno hover:text-tekno hover:bg-transparent" onClick={this.onLogoutClick}>Çıkış Yap</Link>
         <Link to={{ pathname: "/profil/" + user.username }} >
           <img
             src={user.avatar}
@@ -57,12 +57,12 @@ class Navbar extends Component {
             className="w-10 h-10 rounded-full mx-4"
           />
         </Link>
-        {user.role === "admin" ? <Link to="/admin" className="inline-block text-base px-4 py-2 leading-none border rounded-lg bg-tekno3 text-white border-white hover:border-tekno3 hover:text-tekno3 hover:bg-transparent">Admin</Link> : null}
+        {user.role === "admin" ? <Link to="/admin" className="inline-block text-base px-4 py-2 border rounded-lg bg-tekno3 text-white border-white hover:border-tekno3 hover:text-tekno3 hover:bg-transparent">Admin</Link> : null}
       </div>
     )
     const authLinksMobile = (
       <div className="flex flex-row-reverse">
-        <Link to="#" className="inline-block px-1 py-1 leading-none border rounded-lg bg-tekno text-white border-white hover:border-tekno hover:text-tekno hover:bg-transparent" style={{fontSize: '0.6rem'}} onClick={this.onLogoutClick}>Çıkış Yap</Link>
+        <Link to="#" className="inline-block px-1 py-1 border rounded-lg bg-tekno text-white border-white hover:border-tekno hover:text-tekno hover:bg-transparent" style={{ fontSize: '0.6rem' }} onClick={this.onLogoutClick}>Çıkış Yap</Link>
         <Link to={{ pathname: "/profil/" + user.username }} >
           <img
             src={user.avatar}
@@ -71,6 +71,7 @@ class Navbar extends Component {
             className="w-6 h-6 rounded-full mx-1"
           />
         </Link>
+        {user.role === "admin" ? <Link to="/admin" className="inline-block text-base px-1 py-1 border rounded-lg bg-tekno3 text-white border-white hover:border-tekno3 hover:text-tekno3 hover:bg-transparent" style={{ fontSize: '0.6rem' }}>Admin</Link> : null}
       </div>
     )
     const guestLinks = (
