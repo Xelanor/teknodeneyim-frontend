@@ -11,8 +11,8 @@ const crudPost = (props) => {
         <td>{index + 1}</td>
         <td>{timeAgo(new Date(post.updatedAt).getTime())}</td>
         <td>{post.content}</td>
-        <td>{post.description}</td>
-        <td>{post.subjects.join(",")}</td>
+        <td className="description-zip">{post.description}</td>
+        <td>{post.subjects.join(", ")}</td>
         <td>{post.username.username}</td>
         <td>{post.likes.length}</td>
         <td>{post.comments.length}</td>

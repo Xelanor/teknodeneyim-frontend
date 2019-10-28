@@ -13,8 +13,9 @@ table {
   border-collapse: separate;
   border-spacing: 0;
   color: #4a4a4d;
-  font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 12px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
   width: 100%;
+  table-layout: fixed;
 }
 tr {
   overflow-x: scroll;
@@ -74,4 +75,12 @@ td {
   background-color: #0099ff;
   color: white;
   border: 1px solid #0099ff;
+}
+
+.description-zip {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -80,7 +80,7 @@ class DisplayPosts extends Component {
           (
             <div className={"app"}>
               <div>
-                <table className={"table"}>
+                <table className={"table"} style={{ tableLayout: "auto" }}>
                   <thead>
                     <tr>
                       <th>No</th>
