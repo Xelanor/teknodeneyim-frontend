@@ -44,7 +44,8 @@ router.route('/sidebar-posts').get((req, res) => {
         commentsize: { $size: "$comments" }
       }
     },
-    { $sort: { commentsize: -1 } }
+    { $sort: { commentsize: -1 } },
+    { $limit: 10 }
   ])
     .then(req => res.json(req))
     .catch(err => res.status(400).json('Error: ' + err));
