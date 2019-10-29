@@ -16,6 +16,11 @@ class Login extends Component {
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.loginSection = React.createRef()
+  }
+
+  componentDidMount() {
+    window.scrollTo(0, this.loginSection.current.offsetTop)
   }
 
   handleInputChange(e) {
@@ -48,7 +53,7 @@ class Login extends Component {
       <div className="w-full justify-center flex-1 px-4 py-10">
         <div className="w-full max-w-sm items-center mx-auto">
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 appearance-none" onSubmit={this.handleSubmit}>
-            <div className="font-semibold text-xl text-gray-900 mb-8">
+            <div className="font-semibold text-xl text-gray-900 mb-8" ref={this.loginSection}>
               Giriş Yap
             </div>
             <div className="mb-4">
