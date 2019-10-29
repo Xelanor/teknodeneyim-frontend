@@ -80,6 +80,9 @@ class DisplayPosts extends Component {
           (
             <div className={"app"}>
               <div>
+                <div className="font-bold text-3xl text-tekno3">
+                  Yorumlar
+                </div>
                 <table className={"table"} style={{ tableLayout: "auto" }}>
                   <thead>
                     <tr>
