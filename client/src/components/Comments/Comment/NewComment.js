@@ -25,7 +25,7 @@ const newComment = (props) => {
             >Gönder
             </button>}
           <div id="counter" className="flex items-center">
-            <p>Karakter Sayısı: {props.numChar}/{props.maxChar}</p>
+            <div className="text-sm">Karakter Sayısı: {props.numChar}/{props.maxChar}</div>
             <svg className="h-10 w-16">
               <circle id="gray" cx="50%" cy="50%" r="15"></circle>
               <circle id="colored" cx="50%" cy="50%" r="15" style={props.ringStyle}></circle>
