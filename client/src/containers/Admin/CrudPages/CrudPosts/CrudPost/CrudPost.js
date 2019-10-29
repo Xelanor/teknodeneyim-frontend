@@ -27,7 +27,7 @@ const crudPost = (props) => {
         </td>
         <td>
           <div
-            onClick={() => props.delete(post._id)}
+            onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) props.delete(post._id) }}
             className="inline-block cursor-pointer text-base px-4 py-2 leading-none border rounded-lg bg-tekno3 text-white border-white hover:border-tekno3 hover:text-tekno3 hover:bg-transparent"
           >Delete
           </div>
