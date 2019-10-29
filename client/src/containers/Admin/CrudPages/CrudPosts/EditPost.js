@@ -52,11 +52,12 @@ class EditPost extends Component {
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                     Konu Adı
                   </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  <textarea
+                    className="form-textarea shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="content"
                     name="content"
                     type="text"
+                    rows="2"
                     placeholder="Konu Adı"
                     onChange={this.handleInputChange}
                     value={this.state.post.content}
@@ -66,11 +67,12 @@ class EditPost extends Component {
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                     Konu Açıklaması
                   </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  <textarea
+                    className="form-textarea shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="description"
                     name="description"
                     type="text"
+                    rows="5"
                     placeholder="Konu Açıklaması"
                     onChange={this.handleInputChange}
                     value={this.state.post.description}
@@ -80,11 +82,12 @@ class EditPost extends Component {
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                     Hashtagler (Virgül ile ayır)
                   </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  <textarea
+                    className="form-textarea shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="subjects"
                     name="subjects"
                     type="text"
+                    rows="2"
                     placeholder="Konu Açıklaması"
                     onChange={this.handleInputChange}
                     value={this.state.post.subjects}
