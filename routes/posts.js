@@ -17,7 +17,7 @@ router.route('/').get((req, res) => {
 // Get X posts in descending order for Hompage with Y comments
 router.route('/homepage').get((req, res) => {
   Post.find()
-    .sort({ createdAt: 'desc' })
+    .sort({ updatedAt: 'desc' })
     .limit(10)
     .populate({
       path: 'username',
