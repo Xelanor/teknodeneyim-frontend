@@ -30,14 +30,13 @@ router.route('/posts/delete').post((req, res) => {
 router.route('/posts/edit/').post((req, res) => {
   Post.findOne({ _id: req.body.postId })
     .then(post => {
-      post.update({
-        content: req.body.content,
-        description: req.body.description,
-        subjects: req.body.subjects
-      })
-        .then(() => {
-          res.status(200).send({ message: 'password updated' })
-        })
+      post.content = req.body.content
+      post.description = req.body.description
+      post.subjects = req.body.subjects
+      post.save()
+    })
+    .then(() => {
+      res.status(200).send({ message: 'password updated' })
     })
 })
 
