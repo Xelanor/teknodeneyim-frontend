@@ -41,6 +41,7 @@ router.route('/sidebar-posts').get((req, res) => {
     {
       $project: {
         content: 1,
+        slug: 1,
         commentsize: { $size: "$comments" }
       }
     },
@@ -88,6 +89,7 @@ router.route('/autocomplete').post((req, res) => {
       {
         $project: {
           content: 1,
+          slug: 1,
           commentsize: { $size: "$comments" }
         }
       },
@@ -116,8 +118,8 @@ router.route('/add').post((req, res) => {
 });
 
 // Get a spesific post with populate
-router.route('/:id').get((req, res) => {
-  Post.findById(req.params.id)
+router.route('/:slug').get((req, res) => {
+  Post.findOne({ slug: req.params.slug })
     .populate({
       path: 'username',
       select: 'username avatar' // Just get the username field
@@ -188,7 +190,7 @@ router.post('/:id/save', async (req, res) => {
 });
 
 router.post('/delete-comment', async (req, res) => {
-  await Post.findByIdAndUpdate(req.body.postId, { $pullAll: { comments: [req.body.comment] } })
+  await Post.findOneAndUpdate({ slug: req.body.postId }, { $pullAll: { comments: [req.body.comment] } })
     .then(req => res.json(req))
     .catch(err => res.status(400).json('Error: ' + err));
 });

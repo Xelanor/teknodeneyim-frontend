@@ -10,6 +10,7 @@ const postsList = (props) => {
       id={post._id}
       content={post.content}
       comments={post.commentsize}
+      slug={post.slug}
     />
   })
   return (

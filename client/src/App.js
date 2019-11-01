@@ -59,7 +59,7 @@ class App extends Component {
             <Route path="/login" exact component={Login} />
             <Route path="/sifremi-unuttum" exact component={ForgotPassword} />
             <Route path="/reset/:token" exact component={ResetPassword} />
-            <Route path='/post/:id' component={PostDetail} />
+            <Route path='/post/:slug' component={PostDetail} />
             <Route path='/search/:search' component={Search} />
             <Route path='/profil/:userName' exact component={ProfilePage} />
             <AdminRoute path='/admin' exact component={AdminPage} />

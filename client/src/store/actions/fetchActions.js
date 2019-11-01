@@ -52,8 +52,8 @@ export const setSidebarPosts = data => {
   }
 }
 
-export const fetchComments = (postId) => dispatch => {
-  axios.get(`/posts/${postId}`)
+export const fetchComments = (slug) => dispatch => {
+  axios.get(`/posts/${slug}`)
     .then(res => { dispatch(setPostComments(res.data)) })
     .catch(err => { console.log(err) })
 }

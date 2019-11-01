@@ -15,6 +15,7 @@ const savedPosts = (props) => {
       createdAt={post.createdAt}
       user={props.user}
       loggedInUser={props.loggedInUser}
+      slug={post.slug}
     />
   })
   return (

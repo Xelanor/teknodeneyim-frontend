@@ -48,13 +48,13 @@ class PostDetail extends Component {
     if (this.props.post !== prevProps.post) {
       this.setElementsForCurrentPage()
     }
-    if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.props.fetchComments(this.props.match.params.id)
+    if (prevProps.match.params.slug !== this.props.match.params.slug) {
+      this.props.fetchComments(this.props.match.params.slug)
     }
   }
 
   componentDidMount() {
-    this.props.fetchComments(this.props.match.params.id)
+    this.props.fetchComments(this.props.match.params.slug)
   }
 
   setElementsForCurrentPage() {
@@ -91,7 +91,7 @@ class PostDetail extends Component {
     if (now_plus_time >= lastCommented || lastCommented == null || this.props.auth.user.role == "admin") {
       await this.props.submitComment(comment)
       this.setState({ comment: "" })
-      this.props.fetchComments(this.props.match.params.id)
+      this.props.fetchComments(this.props.match.params.slug)
       this.setState({ loading: false })
       window.scrollTo(0, 0)
       this.props.fetchSidePosts()
@@ -205,7 +205,7 @@ class PostDetail extends Component {
           <Comments
             comments={this.state.elements}
             commentLike={this.onCommentLiked}
-            postId={this.props.match.params.id}
+            postId={this.props.match.params.slug}
             user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""}
           />
           {this.props.auth.isAuthenticated ?

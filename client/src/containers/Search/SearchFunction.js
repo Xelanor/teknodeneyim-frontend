@@ -44,7 +44,7 @@ class SearchFunction extends Component {
       return (
         <div className="text-left mt-1 bg-white z-30 absolute border-b border-l border-r ">
           {suggestions.map((item) => (
-            <Link onClick={() => this.suggestionSelected(item)} key={item._id} to={`/post/${item._id}`}>
+            <Link onClick={() => this.suggestionSelected(item)} key={item._id} to={`/post/${item.slug}`}>
               <div className="flex hover:bg-gray-300 hover:underline">
                 <div className="flex-1 p-2">
                   {item.content}
