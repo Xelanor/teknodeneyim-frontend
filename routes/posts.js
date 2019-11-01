@@ -137,6 +137,26 @@ router.route('/:slug').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Get a spesific post with populate
+router.route('/post/:id').get((req, res) => {
+  Post.findOne({ _id: req.params.id })
+    .populate({
+      path: 'username',
+      select: 'username avatar' // Just get the username field
+    })
+    .populate({
+      path: "comments",
+      options: { sort: '-createdAt' },
+      populate: {
+        path: "username",
+        select: 'username avatar' // Just get the username field
+      }
+    })
+    .exec()
+    .then(post => res.json(post))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 // Add comment to a Post
 router.route('/add-comment-to-post').post((req, res) => {
   Post.findByIdAndUpdate(req.body.id, { $push: { comments: req.body.comment } })

@@ -7,7 +7,7 @@ class EditPost extends Component {
   }
 
   async componentDidMount() {
-    await axios.get('/posts/' + this.props.match.params.id)
+    await axios.get('/posts/post/' + this.props.match.params.id)
       .then(res => this.setState({ post: res.data }))
       .catch(err => { console.log(err) })
     let subjects = this.state.post.subjects.join(',')
