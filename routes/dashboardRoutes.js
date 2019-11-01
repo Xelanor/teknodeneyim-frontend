@@ -40,6 +40,14 @@ router.route('/posts/edit/').post((req, res) => {
     })
 })
 
+router.route('/posts/save/').get((req, res) => {
+  Post.find()
+    .then(users => users.forEach(user => user.save()))
+    .then(() => {
+      res.status(200).send({ message: 'password updated' })
+    })
+})
+
 // Get all the comments for table
 router.route('/comments/show').get((req, res) => {
   Comment.find().sort({ createdAt: 'desc' })

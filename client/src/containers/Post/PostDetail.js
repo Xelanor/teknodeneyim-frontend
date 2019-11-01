@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { MenuItem, Modal } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios'
+import { Helmet } from "react-helmet";
 
 import Spinner from '../../components/UI/Spinner/Spinner'
 import NewComment from '../../components/Comments/Comment/NewComment'
@@ -176,6 +177,11 @@ class PostDetail extends Component {
 
       page = (
         <div className="">
+          <Helmet>
+            <meta charSet="utf-8" />
+            <title>{content}</title>
+            <meta name="description" content={description} />
+          </Helmet>
           <div className="mb-12">
             <div className="flex items-center">
               <div className="font-semibold text-2xl text-tekno">
