@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const URLSlugs = require('mongoose-url-slugs');
 
 const Schema = mongoose.Schema;
 
@@ -11,7 +12,8 @@ const postSchema = new Schema({
   content: {
     type: String,
     trim: true,
-    required: true
+    required: true,
+    unique: true
   },
   description: {
     type: String
@@ -46,6 +48,8 @@ postSchema.methods.toggleSave = async function (userId) {
   await post.save()
   return post
 }
+
+postSchema.plugin(URLSlugs('content', { update: true }))
 
 const Post = mongoose.model('Post', postSchema);
 
