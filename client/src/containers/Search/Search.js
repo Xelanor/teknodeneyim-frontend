@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import Spinner from '../../components/UI/Spinner/Spinner'
 import HomepagePosts from '../../components/PostsList/HomepagePosts'
+import Loading from '../../components/UI/Loading/HomeLoading/HomeLoading'
 
 class Search extends Component {
   state = {
@@ -32,7 +33,9 @@ class Search extends Component {
   }
 
   render() {
-    let posts = <Spinner />
+    let posts = Array(3).fill().map(Math.random).map(a => {
+      return <Loading />
+    })
     if (this.state.posts) {
       if (this.state.posts.length === 0) {
         posts = <div className="flex px-4">
@@ -45,14 +48,16 @@ class Search extends Component {
       }
     }
     if (this.state.loading) {
-      posts = <Spinner />
+      posts = Array(3).fill().map(Math.random).map(a => {
+        return <Loading />
+      })
     }
     return (
       <div className="flex-1 px-4 pt-3">
         <div className="font-bold text-3xl text-purple-900 mb-4">
           {this.state.searchText} için Arama Sonuçları
           </div>
-        <div className="flex mb-4">
+        <div className="flex-1 mb-4">
           {posts}
         </div>
       </div>
