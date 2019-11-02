@@ -22,6 +22,7 @@ import DisplayPosts from './containers/Admin/CrudPages/CrudPosts/CrudPosts'
 import EditPost from './containers/Admin/CrudPages/CrudPosts/EditPost'
 import DisplayComments from './containers/Admin/CrudPages/CrudComments/CrudComments'
 import EditComment from './containers/Admin/CrudPages/CrudComments/EditComment'
+import DisplayOffers from './containers/Admin/CrudPages/CrudOffers/CrudOffers'
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from './utils/setAuthToken'
@@ -69,6 +70,7 @@ class App extends Component {
             <AdminRoute path='/admin/posts/edit/:id' exact component={EditPost} />
             <AdminRoute path='/admin/comments' exact component={DisplayComments} />
             <AdminRoute path='/admin/comments/edit/:id' exact component={EditComment} />
+            <AdminRoute path='/admin/offers' exact component={DisplayOffers} />
           </div>
         </Router>
       </Provider>

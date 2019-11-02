@@ -141,7 +141,7 @@ router.route('/:slug').get((req, res) => {
 
 // Get a spesific post with populate
 router.route('/post/:id').get((req, res) => {
-  Post.findOne({ _id: req.params.id, state: "active" })
+  Post.findOne({ _id: req.params.id })
     .populate({
       path: 'username',
       select: 'username avatar' // Just get the username field

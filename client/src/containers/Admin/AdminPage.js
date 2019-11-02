@@ -12,12 +12,17 @@ class AdminPage extends Component {
           <Link to="/admin/posts">
             <button className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline" type="submit">
               Konular
-          </button>
+            </button>
           </Link>
           <Link to="/admin/comments">
             <button className="bg-tekno hover:bg-tekno text-white font-bold ml-4 py-2 px-6 rounded focus:outline-none focus:shadow-outline" type="submit">
               Yorumlar
-          </button>
+            </button>
+          </Link>
+          <Link to="/admin/offers">
+            <button className="bg-tekno hover:bg-tekno text-white font-bold ml-4 py-2 px-6 rounded focus:outline-none focus:shadow-outline" type="submit">
+              Öneriler
+            </button>
           </Link>
           <CreatePost />
         </div>

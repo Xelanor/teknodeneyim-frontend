@@ -34,7 +34,7 @@ class EditPost extends Component {
     axios.post('/admin/posts/edit', post)
       .then(res => console.log(res))
       .catch(err => { console.log(err) })
-    this.props.history.push("/admin/posts")
+    this.props.history.push("/admin")
     window.location.reload();
   }
 

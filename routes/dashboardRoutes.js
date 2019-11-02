@@ -75,4 +75,32 @@ router.route('/comments/delete').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
+// Get all the passive posts for table
+router.route('/posts/show-passive').get((req, res) => {
+  Post.find({ state: "passive" }).sort({ createdAt: 'desc' })
+    .populate({
+      path: "username",
+      select: "role username avatar"
+    })
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/posts/accept').post((req, res) => {
+  Post.findOne({ _id: req.body.postId })
+    .then(post => {
+      post.state = "active"
+      post.save()
+    })
+})
+
+router.route('/posts/decline').post((req, res) => {
+  Post.findOne({ _id: req.body.postId })
+    .then(post => {
+      post.state = "declined"
+      post.save()
+    })
+    .catch(err => console.log(err));
+})
+
 module.exports = router;
