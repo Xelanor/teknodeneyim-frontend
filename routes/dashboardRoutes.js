@@ -6,7 +6,7 @@ let Report = require('../models/report');
 
 // Get all the posts for table
 router.route('/posts/show').get((req, res) => {
-  Post.find().sort({ createdAt: 'desc' })
+  Post.find({ state: "active" }).sort({ createdAt: 'desc' })
     .populate({
       path: "username",
       select: "role username avatar"

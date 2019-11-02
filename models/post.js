@@ -15,6 +15,11 @@ const postSchema = new Schema({
     required: true,
     unique: true
   },
+  state: {
+    type: String,
+    required: true,
+    default: "active"
+  },
   description: {
     type: String
   },

@@ -16,7 +16,7 @@ router.route('/').get((req, res) => {
 
 // Get X posts in descending order for Hompage with Y comments
 router.route('/homepage').get((req, res) => {
-  Post.find()
+  Post.find({ state: "active" })
     .sort({ updatedAt: 'desc' })
     .limit(10)
     .populate({
@@ -38,6 +38,7 @@ router.route('/homepage').get((req, res) => {
 // Get X posts with highest comments for sidebar
 router.route('/sidebar-posts').get((req, res) => {
   Post.aggregate([
+    { $match: { state: "active" } },
     {
       $project: {
         content: 1,
@@ -57,7 +58,7 @@ router.route('/search/').post((req, res) => {
   let content = req.body.content.trim()
   if (content.length > 0) {
     var nameRegex = new RegExp(req.body.content.toLowerCase(), 'i')
-    Post.find({ $or: [{ "content": nameRegex }, { "description": nameRegex }, { "subjects": nameRegex }] })
+    Post.find({ $and: [{ state: "active" }, { $or: [{ "content": nameRegex }, { "description": nameRegex }, { "subjects": nameRegex }] }] })
       .sort({ createdAt: 'desc' })
       .limit(10)
       .populate({
@@ -85,7 +86,7 @@ router.route('/autocomplete').post((req, res) => {
   if (content.length > 0) {
     var nameRegex = new RegExp(content.toLowerCase(), 'i')
     Post.aggregate([
-      { $match: { $or: [{ "content": nameRegex }, { "description": nameRegex }, { "subjects": nameRegex }] } },
+      { $match: { $and: [{ state: "active" }, { $or: [{ "content": nameRegex }, { "description": nameRegex }, { "subjects": nameRegex }] }] } },
       {
         $project: {
           content: 1,
@@ -119,7 +120,7 @@ router.route('/add').post((req, res) => {
 
 // Get a spesific post with populate
 router.route('/:slug').get((req, res) => {
-  Post.findOne({ slug: req.params.slug })
+  Post.findOne({ slug: req.params.slug, state: "active" })
     .populate({
       path: 'username',
       select: 'username avatar' // Just get the username field
@@ -139,7 +140,7 @@ router.route('/:slug').get((req, res) => {
 
 // Get a spesific post with populate
 router.route('/post/:id').get((req, res) => {
-  Post.findOne({ _id: req.params.id })
+  Post.findOne({ _id: req.params.id, state: "active" })
     .populate({
       path: 'username',
       select: 'username avatar' // Just get the username field
