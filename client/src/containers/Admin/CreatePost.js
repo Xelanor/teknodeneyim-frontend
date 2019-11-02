@@ -20,7 +20,8 @@ class CreatePost extends Component {
       username: this.props.auth.user.id,
       content: this.state.content,
       description: this.state.description,
-      subjects: this.state.subjects.split(',')
+      subjects: this.state.subjects.split(','),
+      state: "active"
     }
     this.props.createPost(post)
     this.setState({ content: "", description: "", subjects: "" })

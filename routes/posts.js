@@ -111,7 +111,8 @@ router.route('/add').post((req, res) => {
   const content = req.body.content;
   const description = req.body.description;
   const subjects = req.body.subjects;
-  const newPost = new Post({ username, content, description, subjects });
+  const state = req.body.state;
+  const newPost = new Post({ username, content, description, subjects, state });
 
   newPost.save()
     .then(() => res.json('Post added!'))

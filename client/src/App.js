@@ -13,6 +13,7 @@ import Search from './containers/Search/Search'
 import ProfilePage from './containers/ProfilePage/ProfilePage'
 import ForgotPassword from './containers/Auth/ForgotPassword'
 import ResetPassword from './containers/Auth/ResetPassword'
+import CreatePost from './containers/ProfilePage/CreatePost'
 
 import RegisteredRoute from './components/PrivateRoutes/RegisteredRoute'
 import AdminRoute from './components/PrivateRoutes/AdminRoute'
@@ -62,6 +63,7 @@ class App extends Component {
             <Route path='/post/:slug' component={PostDetail} />
             <Route path='/search/:search' component={Search} />
             <Route path='/profil/:userName' exact component={ProfilePage} />
+            <RegisteredRoute path='/yeni-konu' exact component={CreatePost} />
             <AdminRoute path='/admin' exact component={AdminPage} />
             <AdminRoute path='/admin/posts' exact component={DisplayPosts} />
             <AdminRoute path='/admin/posts/edit/:id' exact component={EditPost} />
