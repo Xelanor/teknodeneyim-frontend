@@ -7,7 +7,7 @@ const ProfileAvatars = (props) => {
     <>
       {AVATARS.map(avatar => {
         return (
-          <div key={avatar} onClick={() => props.change(avatar)} className="flex-auto justify-center cursor-pointer">
+          <div key={avatar} onClick={() => props.change(avatar)} className="cursor-pointer">
             <img
               src={avatar}
               className="w-16 h-16 rounded-full"
