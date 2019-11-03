@@ -79,8 +79,9 @@ class ProfilePage extends Component {
     if (user) {
       page = (
         <div className="flex-1">
-          <div className="flex m-8" onClick={() => { this.setState({ changeAvatar: !this.state.changeAvatar }) }}>
+          <div className="flex m-8">
             <img
+              onClick={() => { this.setState({ changeAvatar: !this.state.changeAvatar }) }}
               src={user.avatar}
               alt={user.username}
               title={user.username}
