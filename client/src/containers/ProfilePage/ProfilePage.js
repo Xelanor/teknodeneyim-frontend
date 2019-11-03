@@ -73,6 +73,14 @@ class ProfilePage extends Component {
     window.location.reload();
   }
 
+  onChangeAvatarClick = () => {
+    if (this.props.auth.user.id === this.state.user._id) {
+      this.setState({
+        changeAvatar: !this.state.changeAvatar
+      })
+    }
+  }
+
   render() {
     let { user } = this.state
     let page
@@ -81,7 +89,7 @@ class ProfilePage extends Component {
         <div className="flex-1">
           <div className="flex m-8">
             <img
-              onClick={() => { this.setState({ changeAvatar: !this.state.changeAvatar }) }}
+              onClick={this.onChangeAvatarClick}
               src={user.avatar}
               alt={user.username}
               title={user.username}
