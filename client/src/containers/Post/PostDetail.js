@@ -179,7 +179,7 @@ class PostDetail extends Component {
         <div className="">
           <Helmet>
             <meta charSet="utf-8" />
-            <title>{content}</title>
+            <title>{content} - Teknodeneyim</title>
             <meta name="description" content={description} />
           </Helmet>
           <div className="mb-12">
