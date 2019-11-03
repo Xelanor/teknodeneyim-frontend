@@ -33,7 +33,7 @@ class CreatePost extends Component {
       <div className="w-full justify-center flex-1 px-4 py-10">
         <div className="w-full max-w-sm items-center mx-auto">
           {this.state.submitted ?
-            <div className="font-bold text-xl text-tekno3">
+            <div className="font-bold text-xl text-tekno3 text-center">
               Konu açma talebiniz işleme alınmıştır. Mail ile bilgilendirme yapılacaktır. Teşekkür ederiz.
             </div> :
             <form onSubmit={this.onFormSubmitHandler}>

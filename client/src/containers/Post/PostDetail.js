@@ -6,6 +6,9 @@ import { MenuItem, Modal } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios'
 import { Helmet } from "react-helmet";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
 
 import Spinner from '../../components/UI/Spinner/Spinner'
 import NewComment from '../../components/Comments/Comment/NewComment'
@@ -190,7 +193,7 @@ class PostDetail extends Component {
               {/* <Tooltip message={'asdasfasfasfa'} position={'bottom'}><i style={{ color: "#e0245e" }} className="fas fa-star"></i></Tooltip> */}
               <div onClick={() => this.onPostSaved(_id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
                 <span className="BtnWrapper items-center">
-                  {saved.includes(this.props.auth.user.id) ? <i style={{ color: "#e0245e" }} className="fas fa-star"></i> : <i className="far fa-star"></i>}
+                  {saved.includes(this.props.auth.user.id) ? <FontAwesomeIcon icon={faStar} className="text-tekno" /> : <FontAwesomeIcon icon={farStar} />}
                 </span>
               </div>
             </div>

@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import { MoreHoriz } from '@material-ui/icons'
 import { Tooltip, IconButton, Zoom, MenuItem, Popover, Modal } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHandshake } from '@fortawesome/free-solid-svg-icons'
+import { faHandshake as farHandshake } from '@fortawesome/free-regular-svg-icons'
 
 import ActionsModal from '../../../containers/Modals/ActionsModal'
 import './Comment.css'
@@ -51,7 +54,7 @@ function Comment(props) {
         <div onClick={() => props.commentLike(props.id)} className="LikeBtn Btn items-center cursor-pointer ml-4 mr-3">
           <span className="BtnWrapper items-center">
             <span className="Count mr-1">{props.likes.length}</span>
-            {props.likes.includes(props.user) ? <i className="fas fa-handshake text-tekno"></i> : <i className="far fa-handshake hover:text-tekno"></i>}
+            {props.likes.includes(props.user) ? <FontAwesomeIcon icon={faHandshake} className="text-tekno" /> : <FontAwesomeIcon icon={farHandshake} className="hover:text-tekno" />}
           </span>
         </div>
         <div className="font-bold text-sm text-purple-900">

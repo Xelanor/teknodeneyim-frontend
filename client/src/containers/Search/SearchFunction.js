@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link, withRouter } from "react-router-dom";
 import onClickOutside from "react-onclickoutside"
 import * as _ from 'underscore';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import './Search.css'
 
@@ -87,7 +89,7 @@ class SearchFunction extends Component {
             value={this.state.searchText}
           />
           <button type="submit">
-            <i style={{ color: "#F67e7d" }} className="fa fa-search ml-1 p-2"></i>
+            <FontAwesomeIcon icon={faSearch} className="text-tekno ml-2" />
           </button>
           {this.renderSuggestions()}
         </form>
