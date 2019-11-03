@@ -201,6 +201,13 @@ router.route('/report/:userId').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
+// Add description to User
+router.route('/change-avatar').post((req, res) => {
+  User.findByIdAndUpdate(req.body.userId, { $set: { avatar: req.body.avatar } })
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;
 
 // router.route('/').get((req, res) => {
