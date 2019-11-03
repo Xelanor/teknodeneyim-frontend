@@ -9,7 +9,7 @@ const savedPost = (props) => {
   if (props.loggedInUser === props.user._id) {
     saveButton = <div onClick={() => props.onPostSaved(props.id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
       <span className="BtnWrapper items-center">
-        {props.saved.includes(props.user._id) ? <FontAwesomeIcon icon={faStar} className="text-tekno" /> : <FontAwesomeIcon icon={farStar} />}
+        {props.saved.includes(props.user._id) ? <FontAwesomeIcon icon={faStar} className="text-tekno3" /> : <FontAwesomeIcon icon={farStar} />}
       </span>
     </div>
   }

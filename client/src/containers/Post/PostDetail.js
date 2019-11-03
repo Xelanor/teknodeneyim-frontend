@@ -193,7 +193,7 @@ class PostDetail extends Component {
               {/* <Tooltip message={'asdasfasfasfa'} position={'bottom'}><i style={{ color: "#e0245e" }} className="fas fa-star"></i></Tooltip> */}
               <div onClick={() => this.onPostSaved(_id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
                 <span className="BtnWrapper items-center">
-                  {saved.includes(this.props.auth.user.id) ? <FontAwesomeIcon icon={faStar} className="text-tekno" /> : <FontAwesomeIcon icon={farStar} />}
+                  {saved.includes(this.props.auth.user.id) ? <FontAwesomeIcon icon={faStar} className="text-tekno3" /> : <FontAwesomeIcon icon={farStar} />}
                 </span>
               </div>
             </div>
