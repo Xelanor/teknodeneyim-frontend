@@ -47,11 +47,8 @@ class ActionModal extends Component {
       <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={500}>
         <div className="w-full">
           <div className="flex mb-8">
-            <div className="font-semibold text-md text-tekno3">
-              {this.props.username}
-            </div>
             <div className="font-semibold text-md text-tekno">
-              &nbsp;adlı kullanıcıyı rapor etmek istediğinize emin misiniz?
+              {this.props.username} adlı kullanıcıyı rapor etmek istediğinize emin misiniz?
             </div>
           </div>
           <div className="flex">
