@@ -54,7 +54,7 @@ class Search extends Component {
     }
     return (
       <div className="flex-1 px-4 pt-3">
-        <div className="font-bold text-3xl text-purple-900 mb-4">
+        <div className="font-bold text-xl lg:text-2xl text-purple-900 mb-4">
           {this.state.searchText} için Arama Sonuçları
           </div>
         <div className="flex-1 mb-4">
