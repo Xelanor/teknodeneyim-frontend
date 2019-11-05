@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from 'react-redux';
 import store from './store/store'
 
@@ -14,6 +14,7 @@ import ProfilePage from './containers/ProfilePage/ProfilePage'
 import ForgotPassword from './containers/Auth/ForgotPassword'
 import ResetPassword from './containers/Auth/ResetPassword'
 import CreatePost from './containers/ProfilePage/CreatePost'
+import NotFoundPage from './components/Layout/NotFoundPage/NotFoundPage'
 
 import RegisteredRoute from './components/PrivateRoutes/RegisteredRoute'
 import AdminRoute from './components/PrivateRoutes/AdminRoute'
@@ -56,21 +57,24 @@ class App extends Component {
           <Navbar />
           <div className="lg:flex h-full">
             <Sidebar />
-            <Route path="/" exact component={HomePage} />
-            <Route path="/register" exact component={Register} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/sifremi-unuttum" exact component={ForgotPassword} />
-            <Route path="/reset/:token" exact component={ResetPassword} />
-            <Route path='/post/:slug' component={PostDetail} />
-            <Route path='/search/:search' component={Search} />
-            <Route path='/profil/:userName' exact component={ProfilePage} />
-            <RegisteredRoute path='/yeni-konu' exact component={CreatePost} />
-            <AdminRoute path='/admin' exact component={AdminPage} />
-            <AdminRoute path='/admin/posts' exact component={DisplayPosts} />
-            <AdminRoute path='/admin/posts/edit/:id' exact component={EditPost} />
-            <AdminRoute path='/admin/comments' exact component={DisplayComments} />
-            <AdminRoute path='/admin/comments/edit/:id' exact component={EditComment} />
-            <AdminRoute path='/admin/offers' exact component={DisplayOffers} />
+            <Switch>
+              <Route path="/" exact component={HomePage} />
+              <Route path="/register" exact component={Register} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/sifremi-unuttum" exact component={ForgotPassword} />
+              <Route path="/reset/:token" exact component={ResetPassword} />
+              <Route path='/post/:slug' component={PostDetail} />
+              <Route path='/search/:search' component={Search} />
+              <Route path='/profil/:userName' exact component={ProfilePage} />
+              <RegisteredRoute path='/yeni-konu' exact component={CreatePost} />
+              <AdminRoute path='/admin' exact component={AdminPage} />
+              <AdminRoute path='/admin/posts' exact component={DisplayPosts} />
+              <AdminRoute path='/admin/posts/edit/:id' exact component={EditPost} />
+              <AdminRoute path='/admin/comments' exact component={DisplayComments} />
+              <AdminRoute path='/admin/comments/edit/:id' exact component={EditComment} />
+              <AdminRoute path='/admin/offers' exact component={DisplayOffers} />
+              <Route path="*" component={NotFoundPage} />
+            </Switch>
           </div>
         </Router>
       </Provider>
