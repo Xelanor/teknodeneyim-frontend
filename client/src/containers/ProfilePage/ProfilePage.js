@@ -20,7 +20,7 @@ class ProfilePage extends Component {
   state = {
     userName: null,
     user: null,
-    changeAvatar: false
+    changeAvatar: true
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -87,7 +87,7 @@ class ProfilePage extends Component {
     if (user) {
       page = (
         <div className="flex-1">
-          <div className="flex m-8">
+          <div className="flex m-4">
             <img
               onClick={this.onChangeAvatarClick}
               src={user.avatar}
@@ -115,11 +115,14 @@ class ProfilePage extends Component {
             unmountOnExit
           >
             {this.props.auth.user.id === user._id ?
-              <div className="flex flex-wrap px-8 py-4">
+              <div className="flex flex-wrap px-4 py-4 mb-4">
+                <div className="font-bold text-xl text-tekno3 mb-3 w-full">
+                  Profil Resmini Değiştir
+                </div>
                 <ProfileAvatars change={this.onChangeAvatar} />
               </div> : null}
           </CSSTransition>
-          <div className="flex-1 px-8">
+          <div className="flex-1 px-4">
             <div className="font-bold text-3xl text-tekno3 mb-3">
               {this.props.auth.user.id === user._id ? "Favori Başlıkların" : user.username + " Kullanıcısının Favori Başlıkları"}
             </div>
