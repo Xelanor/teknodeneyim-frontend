@@ -30,14 +30,14 @@ class CreatePost extends Component {
 
   render() {
     return (
-      <div className="w-full justify-center flex-1 px-4 py-10">
+      <div className="w-full justify-center flex-1 px-4 py-1 lg:py-10">
         <div className="w-full max-w-sm items-center mx-auto">
           {this.state.submitted ?
             <div className="font-bold text-xl text-tekno3 text-center">
               Konu açma talebiniz işleme alınmıştır. Mail ile bilgilendirme yapılacaktır. Teşekkür ederiz.
             </div> :
             <form onSubmit={this.onFormSubmitHandler}>
-              <div className="font-semibold text-xl text-gray-900 my-8">
+              <div className="font-semibold text-xl text-gray-900 mt-1 mb-4 lg:my-8">
                 Konu Oluştur
             </div>
               <div className="mb-4">
