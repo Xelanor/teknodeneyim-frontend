@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import ReactPaginate from 'react-paginate'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { MenuItem, Modal } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios'
@@ -176,7 +176,7 @@ class PostDetail extends Component {
           />
         );
       }
-      let { content, createdAt, description, _id, saved } = this.props.post.post
+      let { content, createdAt, description, _id, saved, username } = this.props.post.post
 
       page = (
         <div className="">
@@ -206,6 +206,19 @@ class PostDetail extends Component {
               <div className="font-bold text-sm text-purple-900">
                 Konu açılış tarihi: {timeAgo(new Date(createdAt).getTime())}
               </div>
+              <Link to={`/profil/${username.username}`}>
+                <div className="ml-4 font-normal text-sm text-black">
+                  {username.username}
+                </div>
+              </Link>
+              <Link to={`/profil/${username.username}`}>
+                <img
+                  src={username.avatar}
+                  alt={username.username}
+                  title={username.username}
+                  className="w-8 h-8 rounded-full ml-4"
+                />
+              </Link>
             </div>
           </div>
           <div className="flex-1 mb-2 mt-2 text-right">
