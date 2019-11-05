@@ -54,7 +54,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Navbar />
-          <div className="md:flex h-full">
+          <div className="lg:flex h-full">
             <Sidebar />
             <Route path="/" exact component={HomePage} />
             <Route path="/register" exact component={Register} />

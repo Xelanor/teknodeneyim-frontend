@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { CSSTransition } from 'react-transition-group';
 import './Sidebar.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import MediaQuery from 'react-responsive'
 
 import PostsList from '../../components/PostsList/PostsList'
 import Loading from '../../components/UI/Loading/SideLoading/SideLoading'
@@ -49,21 +50,29 @@ class Sidebar extends Component {
 
     }
     return (
-      <div className="md:w-3/12 px-4 pb-4 lg:p-4 border-r-2 border-gray-200">
-        <button onClick={this.toggleSidebar} className="bg-tekno lg:hidden hover:bg-tekno mb-2 text-white font-bold h-6 w-full rounded focus:outline-none focus:shadow-outline appearance-none" type="submit">
-          <FontAwesomeIcon icon={faChevronDown} />
+      <div className="lg:w-3/12 px-4 pb-4 lg:p-4 border-r-2 border-gray-200">
+        <button onClick={this.toggleSidebar} className="bg-tekno lg:hidden hover:bg-tekno mb-2 text-white font-bold h-12 w-full rounded focus:outline-none focus:shadow-outline appearance-none" type="submit">
+          <div className="font-semibold text-base text-white">
+            En Popüler Deneyimler
+          </div>
+          {this.state.displaySidebar ? <FontAwesomeIcon icon={faChevronDown} /> : <FontAwesomeIcon icon={faChevronUp} />}
         </button>
         <div>
-          <CSSTransition
-            in={this.state.displaySidebar}
-            timeout={300}
-            classNames="alert"
-            unmountOnExit
-          >
-            <>
-              {posts}
-            </>
-          </CSSTransition>
+          <MediaQuery maxWidth={1024}>
+            <CSSTransition
+              in={!this.state.displaySidebar}
+              timeout={300}
+              classNames="alert"
+              unmountOnExit
+            >
+              <>
+                {posts}
+              </>
+            </CSSTransition>
+          </MediaQuery>
+          <MediaQuery minWidth={1024}>
+            {posts}
+          </MediaQuery>
         </div>
       </div>
     );
