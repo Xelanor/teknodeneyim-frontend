@@ -37,6 +37,7 @@ class PostDetail extends Component {
       strokeDasharray: ""
     },
     modalVisible: false,
+    starHover: false
     // modalType: "",
     // displayInfo: false
   }
@@ -193,7 +194,15 @@ class PostDetail extends Component {
               {/* <Tooltip message={'asdasfasfasfa'} position={'bottom'}><i style={{ color: "#e0245e" }} className="fas fa-star"></i></Tooltip> */}
               <div onClick={() => this.onPostSaved(_id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
                 <span className="BtnWrapper items-center">
-                  {saved.includes(this.props.auth.user.id) ? <FontAwesomeIcon icon={faStar} className="text-tekno3" /> : <FontAwesomeIcon icon={farStar} />}
+                  {saved.includes(this.props.auth.user.id) ?
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      className="text-tekno3" /> :
+                    <FontAwesomeIcon
+                      onMouseEnter={() => this.setState({ starHover: true })}
+                      onMouseLeave={() => this.setState({ starHover: false })}
+                      icon={this.state.starHover ? faStar : farStar}
+                      className="text-tekno3" />}
                 </span>
               </div>
             </div>
