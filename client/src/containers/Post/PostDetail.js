@@ -205,6 +205,9 @@ class PostDetail extends Component {
                       className="text-tekno3" />}
                 </span>
               </div>
+              <div className="ml-1 text-tekno3">
+                {saved.length}
+              </div>
             </div>
             <div className="flex mt-2">
               <div className="font-normal text-md text-gray-600">
