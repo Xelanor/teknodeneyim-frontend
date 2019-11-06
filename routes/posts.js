@@ -4,7 +4,7 @@ let Post = require('../models/post');
 // Get oll posts in descending order with X limit
 router.route('/').get((req, res) => {
   Post.find()
-    .sort({ createdAt: 'desc' })
+    .sort({ updated: 'desc' })
     .limit(10)
     .populate({
       path: 'username',
@@ -17,7 +17,7 @@ router.route('/').get((req, res) => {
 // Get X posts in descending order for Hompage with Y comments
 router.route('/homepage').get((req, res) => {
   Post.find({ state: "active" })
-    .sort({ updatedAt: 'desc' })
+    .sort({ updated: 'desc' })
     .limit(10)
     .populate({
       path: 'username',
@@ -161,7 +161,7 @@ router.route('/post/:id').get((req, res) => {
 
 // Add comment to a Post
 router.route('/add-comment-to-post').post((req, res) => {
-  Post.findByIdAndUpdate(req.body.id, { $push: { comments: req.body.comment } })
+  Post.findByIdAndUpdate(req.body.id, { $push: { comments: req.body.comment }, $set: { updated: Date.now() } })
     .then(() => res.json('Comment added to Post!'))
     .catch(err => res.status(400).json('Error: ' + err))
 })

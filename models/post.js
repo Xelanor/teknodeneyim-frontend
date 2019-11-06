@@ -35,7 +35,11 @@ const postSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment'
   }],
-  subjects: [String]
+  subjects: [String],
+  updated: {
+    type: Date,
+    default: Date.now
+  }
 }, {
   timestamps: true,
 });
