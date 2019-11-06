@@ -20,7 +20,7 @@ class ProfilePage extends Component {
   state = {
     userName: null,
     user: null,
-    changeAvatar: true
+    changeAvatar: false
   }
 
   componentDidUpdate(prevProps, prevState) {
