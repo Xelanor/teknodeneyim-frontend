@@ -13,7 +13,7 @@ import { fetchSidePosts } from '../../store/actions/fetchActions'
 
 class Sidebar extends Component {
   state = {
-    displaySidebar: true,
+    displaySidebar: false,
   }
 
   componentDidMount() {
