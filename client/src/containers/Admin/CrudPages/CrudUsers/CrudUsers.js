@@ -25,7 +25,9 @@ class CrudUsers extends Component {
           <div className="font-bold text-3xl text-tekno3 mb-4">
             Üyeler
           </div>
-          {this.state.users ? <UserCards users={this.state.users}/> : "yükleniyor" }
+          <div className="flex">
+            {this.state.users ? <UserCards users={this.state.users}/> : "yükleniyor" }
+          </div>
         </div>
       </div>
 
