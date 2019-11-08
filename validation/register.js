@@ -1,8 +1,6 @@
 const Validator = require('validator');
 const isEmpty = require('./is-empty');
 
-const mailer = require('../utils/Mailer')
-
 module.exports = function validateRegisterInput(data) {
   let errors = {};
   data.username = !isEmpty(data.username) ? data.username : '';
@@ -48,16 +46,6 @@ module.exports = function validateRegisterInput(data) {
 
   if (Validator.isEmpty(data.password_confirm)) {
     errors.password_confirm = 'Şifre gereklidir';
-  }
-
-  // Send async confirmation email
-  if (isEmpty(errors)) {
-    mailer.send({
-      to: data.email,
-      from: 'info@teknodeneyim.com',
-      templateId: "d-81f802b3f8064be4ab3f7949fae0b04e",
-      tags: {}
-    })
   }
 
   return {

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const validateRegisterInput = require('../validation/register');
 const validateLoginInput = require('../validation/login');
+const mailer = require('../utils/Mailer')
 
 let User = require('../models/user');
 
@@ -22,50 +23,77 @@ router.post('/register', function (req, res) {
   }).then(user => {
     if (user) {
       return res.status(400).json({
-        email: 'Email already exists'
+        email: 'E-posta adresi daha önceden alınmıştır'
       });
     }
     else {
-      const avatar = avatars[Math.floor(Math.random() * avatars.length)]
-      const newUser = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        avatar
-      });
-
-      bcrypt.genSalt(10, (err, salt) => {
-        if (err) console.error('There was an error', err);
-        else {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
+      User.findOne({
+        username: req.body.username
+      }).then(user => {
+        if (user) {
+          return res.status(400).json({
+            username: 'Kullanıcı adı daha önceden alınmıştır'
+          });
+        } else {
+          const avatar = avatars[Math.floor(Math.random() * avatars.length)]
+          const newUser = new User({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+            avatar
+          });
+    
+          bcrypt.genSalt(10, (err, salt) => {
             if (err) console.error('There was an error', err);
             else {
-              newUser.password = hash;
-              newUser
-                .save()
-                .then(user => {
-                  const payload = {
-                    id: user.id,
-                    username: user.username,
-                    avatar: user.avatar,
-                    role: user.role
-                  }
-                  jwt.sign(payload, 'secret', {
-                    expiresIn: 31556926
-                  }, (err, token) => {
-                    if (err) console.error('There is some error in token', err);
-                    else {
-                      res.json({
-                        success: true,
-                        token: `Bearer ${token}`
+              bcrypt.hash(newUser.password, salt, (err, hash) => {
+                if (err) console.error('There was an error', err);
+                else {
+                  newUser.password = hash;
+                  newUser
+                    .save()
+                    .then(user => {
+                      const payload = {
+                        id: user.id,
+                        username: user.username,
+                        avatar: user.avatar,
+                        role: user.role
+                      }
+                      jwt.sign(payload, 'secret', {
+                        expiresIn: 31556926
+                      }, (err, token) => {
+                        if (err) console.error('There is some error in token', err);
+                        else {
+                          res.json({
+                            success: true,
+                            token: `Bearer ${token}`
+                          });
+                        }
                       });
-                    }
-                  });
-                });
+                    })
+                    .then(() => {
+                      mailer.send({
+                        to: req.body.email,
+                        from: 'Teknodeneyim <info@teknodeneyim.com>',
+                        subject: "Teknodeneyim'e Hoşgeldiniz",
+                        text: `
+                        Teknodeneyim.com
+                        Tekno Deneyim'e Hoşgeldiniz
+                        Bu e-posta adresi ile Tekno Deneyim’e kaydolmadıysanız lütfen bu e-postayı dikkate almayınız.
+                        İletişim için: info@teknodeneyim.com`,
+                        html: `
+                        <h1 style="text-align: center; font-family: Arial, Helvetica, sans-serif; color: #F67E7D">Teknodeneyim.com</h1>
+                        <h3 style="text-align: center; font-family: Arial, Helvetica, sans-serif; margin-top: 70px">Tekno Deneyim'e Hoşgeldiniz</h3>
+                        <h5 style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-style: italic; margin-top: 70px;color: #843B62;">Bu e-posta adresi ile Tekno Deneyim’e kaydolmadıysanız lütfen bu e-postayı dikkate almayınız.</h5>
+                        <h5 style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-top: 70px;color: #F67E7D;">İletişim için: info@teknodeneyim.com</h5>`,
+                      })
+                    })
+                }
+              });
             }
           });
         }
-      });
+      })
     }
   });
 });

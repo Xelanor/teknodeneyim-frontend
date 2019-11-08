@@ -33,6 +33,7 @@ class Register extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.setState({errors:{}})
     const user = {
       username: this.state.username,
       email: this.state.email,
