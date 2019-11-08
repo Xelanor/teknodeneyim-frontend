@@ -7,7 +7,7 @@ import timeAgo from '../../../utils/timeAgo'
 
 const UserCard = (props) => {
   return (
-    <div className="flex flex-wrap justify-center">
+    <div className="justify-center">
       <div className="w-64 m-4 rounded overflow-hidden shadow-lg bg-tekno">
         <div className="flex p-4 justify-between items-center">
           <div className="flex-col text-center">
