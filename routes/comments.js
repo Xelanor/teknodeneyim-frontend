@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let Comment = require('../models/comment');
 let User = require('../models/user');
+let Post = require('../models/post');
 
 router.route('/').get((req, res) => {
   Comment.find().sort({ createdAt: 'desc' })
@@ -15,15 +16,19 @@ router.route('/add').post((req, res) => {
   const newComment = new Comment({ username, content, target });
 
   newComment.save()
-    .then(comment => res.json(comment._id))
+    .then(comment => {
+      User.findByIdAndUpdate(username, {
+        $set: {
+          lastCommented: Date.now()
+        },
+        $push: {
+          comments: comment._id
+        }
+      })
+      .catch(err => console.log(err))
+      res.json(comment._id)
+    })
     .catch(err => res.status(400).json('Error: ' + err));
-
-  User.findOneAndUpdate({ _id: username }, {
-    $set: {
-      lastCommented: Date.now()
-    }
-  })
-    .catch(err => res.status(400).json('Error: ' + err))
 });
 
 // Delete comment
@@ -35,9 +40,19 @@ router.post('/delete', (req, res) => {
   User.findOneAndUpdate({ _id: req.body.reporter }, {
     $set: {
       lastCommentDeleted: Date.now()
+    }, 
+    $pull: {
+      comments: req.body.comment
     }
   })
     .catch(err => res.status(400).json('Error: ' + err))
+    
+  Post.findOneAndUpdate({slug: req.body.postId}, {
+    $pull: {
+      comments: req.body.comment
+    }
+  })
+  .catch(err => res.status(400).json('Error: ' + err))
 });
 
 // like or unlike comment

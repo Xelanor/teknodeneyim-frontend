@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Post = require('../models/post');
+let User = require('../models/user')
 
 // Get oll posts in descending order with X limit
 router.route('/').get((req, res) => {
@@ -115,7 +116,11 @@ router.route('/add').post((req, res) => {
   const newPost = new Post({ username, content, description, subjects, state });
 
   newPost.save()
-    .then(() => res.json('Post added!'))
+    .then(post => {
+      res.json('Post added!')
+      User.findByIdAndUpdate(username, { $push: { posts: post._id } })
+        .then(() => res.json('User added!'))
+    })
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -209,12 +214,6 @@ router.post('/:id/save', async (req, res) => {
       err: e
     })
   }
-});
-
-router.post('/delete-comment', async (req, res) => {
-  await Post.findOneAndUpdate({ slug: req.body.postId }, { $pullAll: { comments: [req.body.comment] } })
-    .then(req => res.json(req))
-    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;

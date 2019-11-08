@@ -70,6 +70,8 @@ router.route('/comments/delete').post((req, res) => {
     })
     Post.updateMany({ $pull: { comments: req.body._id } }, (err, res) => {
     })
+    User.updateMany({ $pull: { comments: req.body._id } }, (err, res) => {
+    })
   })
     .then(req => res.json(req))
     .catch(err => res.status(400).json('Error: ' + err));
@@ -102,5 +104,12 @@ router.route('/posts/decline').post((req, res) => {
     })
     .catch(err => console.log(err));
 })
+
+// Get all the users for table
+router.route('/users/show').get((req, res) => {
+  User.find().sort({ createdAt: 'desc' })
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
 
 module.exports = router;
