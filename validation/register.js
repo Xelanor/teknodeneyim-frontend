@@ -18,6 +18,10 @@ module.exports = function validateRegisterInput(data) {
     errors.username = 'Kullanıcı adı gereklidir';
   }
 
+  if (Validator.contains(data.username, ' ')) {
+    errors.username = 'Kullanıcı adı içerisinde boşluk bulunamaz'
+  }
+
   if (!Validator.isEmail(data.email)) {
     errors.email = 'E-mail adresi geçersizdir';
   }
