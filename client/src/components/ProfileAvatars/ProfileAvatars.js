@@ -10,6 +10,7 @@ const ProfileAvatars = (props) => {
           <div key={avatar} onClick={() => props.change(avatar)} className="cursor-pointer">
             <img
               src={avatar}
+              alt={avatar}
               className="w-16 h-16 rounded-full"
             />
           </div>

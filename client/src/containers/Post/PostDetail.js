@@ -93,7 +93,7 @@ class PostDetail extends Component {
       .catch(err => { console.log(err) })
     lastCommented = new Date(lastCommented).getTime()
     let now_plus_time = Date.now() - NEXT_COMMENT_TIME * 60000 // Minute to hours
-    if (now_plus_time >= lastCommented || lastCommented == null || this.props.auth.user.role == "admin") {
+    if (now_plus_time >= lastCommented || lastCommented == null || this.props.auth.user.role === "admin") {
       await this.props.submitComment(comment)
       this.setState({ comment: "" })
       this.props.fetchComments(this.props.match.params.slug)

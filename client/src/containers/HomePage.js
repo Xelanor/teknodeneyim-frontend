@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import HomepagePosts from '../components/PostsList/HomepagePosts'
 import Loading from '../components/UI/Loading/HomeLoading/HomeLoading'
@@ -32,8 +32,8 @@ class HomePage extends Component {
         user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""}
       />
     } else {
-      posts = Array(5).fill().map(Math.random).map(a => {
-        return <Loading />
+      posts = Array(5).fill().map(Math.random).map((a, index) => {
+        return <Loading key={index}/>
       })
     }
     return (

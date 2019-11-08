@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import ReactPaginate from 'react-paginate'
 
 import CrudOffer from './CrudOffer/CrudOffer'
 import '../DisplayPosts.css'
