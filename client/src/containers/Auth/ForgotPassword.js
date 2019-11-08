@@ -19,6 +19,11 @@ class ForgotPassword extends Component {
 
   sendEmail = async (e) => {
     e.preventDefault();
+    await this.setState({
+      showError: false,
+      messageFromServer: '',
+      showNullError: false,
+    })
     const { email } = this.state;
     if (email === '') {
       this.setState({
@@ -27,9 +32,7 @@ class ForgotPassword extends Component {
         showNullError: true,
       });
     } else {
-      try {
         const response = await axios.post('/forgotPassword', { email })
-        console.log(response.data);
         if (response.data === 'recovery email sent') {
           this.setState({
             showError: false,
@@ -37,9 +40,7 @@ class ForgotPassword extends Component {
             showNullError: false,
           });
         }
-      } catch (error) {
-        console.error(error.response.data);
-        if (error.response.data === 'email not in db') {
+        if (response.data === 'email not in db') {
           this.setState({
             showError: true,
             messageFromServer: '',
@@ -48,7 +49,6 @@ class ForgotPassword extends Component {
         }
       }
     }
-  };
 
   render() {
     const { email, messageFromServer, showNullError, showError } = this.state;
@@ -66,7 +66,7 @@ class ForgotPassword extends Component {
               </label>
               <input
                 className={classnames("shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-                  { 'border-red-500 mb-3': showNullError, 'border-red-500 mb-3': showError, 'border-tekno3 mb-3': messageFromServer })}
+                  { showNullError: 'border-red-500 mb-3', showError: 'border-red-500 mb-3', messageFromServer: 'border-tekno3 mb-3' })}
                 id="email"
                 label="email"
                 name="email"

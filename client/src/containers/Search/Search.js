@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Spinner from '../../components/UI/Spinner/Spinner'
 import HomepagePosts from '../../components/PostsList/HomepagePosts'
 import Loading from '../../components/UI/Loading/HomeLoading/HomeLoading'
 

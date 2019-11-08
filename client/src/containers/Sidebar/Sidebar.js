@@ -43,8 +43,8 @@ class Sidebar extends Component {
             En Popüler Deneyimler
                   </div>
         </div>
-        {Array(6).fill().map(Math.random).map(a => {
-          return <Loading />
+        {Array(6).fill().map(Math.random).map((a, index) => {
+          return <Loading key={index}/>
         })}
       </div>
 
