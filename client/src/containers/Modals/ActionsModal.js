@@ -33,8 +33,7 @@ class ActionModal extends Component {
     lastCommentDeleted = new Date(lastCommentDeleted).getTime()
     let now_plus_time = Date.now() - NEXT_COMMENT_DELETE_TIME * 60000 // Minute to hours
     if (now_plus_time >= lastCommentDeleted || lastCommentDeleted == null) {
-      axios.post('/comments/delete', { comment, reporter })
-      axios.post('/posts/delete-comment', { comment, postId })
+      axios.post('/comments/delete', { comment, reporter, postId })
       window.location.reload();
     } else {
       await this.props.modalShow('comment-not-deleted', true)

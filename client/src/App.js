@@ -24,6 +24,7 @@ import EditPost from './containers/Admin/CrudPages/CrudPosts/EditPost'
 import DisplayComments from './containers/Admin/CrudPages/CrudComments/CrudComments'
 import EditComment from './containers/Admin/CrudPages/CrudComments/EditComment'
 import DisplayOffers from './containers/Admin/CrudPages/CrudOffers/CrudOffers'
+import DisplayUsers from './containers/Admin/CrudPages/CrudUsers/CrudUsers'
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from './utils/setAuthToken'
@@ -73,6 +74,7 @@ class App extends Component {
               <AdminRoute path='/admin/comments' exact component={DisplayComments} />
               <AdminRoute path='/admin/comments/edit/:id' exact component={EditComment} />
               <AdminRoute path='/admin/offers' exact component={DisplayOffers} />
+              <AdminRoute path='/admin/users' exact component={DisplayUsers} />
               <Route path="*" component={NotFoundPage} />
             </Switch>
           </div>

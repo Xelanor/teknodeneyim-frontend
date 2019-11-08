@@ -20,8 +20,13 @@ class AdminPage extends Component {
             </div>
           </Link>
           <Link to="/admin/offers">
-            <div className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 text-center rounded focus:outline-none focus:shadow-outline">
+            <div className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 mb-2 text-center rounded focus:outline-none focus:shadow-outline">
               Öneriler
+            </div>
+          </Link>
+          <Link to="/admin/users">
+            <div className="bg-tekno hover:bg-tekno text-white font-bold py-2 px-6 text-center rounded focus:outline-none focus:shadow-outline">
+              Üyeler
             </div>
           </Link>
           <CreatePost />

@@ -37,10 +37,6 @@ const userSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment'
   }],
-  likes: {
-    type: Number,
-    default: 0
-  },
   role: {
     type: String,
     default: 'member'

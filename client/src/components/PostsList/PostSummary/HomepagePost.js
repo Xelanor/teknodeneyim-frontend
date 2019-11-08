@@ -15,6 +15,7 @@ const homepagePost = (props) => {
         likes={comment.likes}
         commentLike={props.commentLike}
         user={props.user}
+        postId={props.slug}
       />
     )
   })
