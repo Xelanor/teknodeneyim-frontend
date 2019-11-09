@@ -34,4 +34,13 @@ router.route("/set").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+
+router.route("/delete").post((req, res) => {
+  Stock.findOneAndDelete(
+    { name: req.body.name },
+  )
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
 module.exports = router;

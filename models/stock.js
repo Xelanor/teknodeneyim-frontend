@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
+require('mongoose-double')(mongoose);
 
 const Schema = mongoose.Schema;
+var SchemaTypes = mongoose.Schema.Types;
 
 const stockSchema = new Schema(
   {
@@ -8,7 +10,7 @@ const stockSchema = new Schema(
       type: String
     },
     target: {
-      type: Number
+      type: SchemaTypes.Double
     },
     condition: {
       type: String

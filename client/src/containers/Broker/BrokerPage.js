@@ -5,39 +5,58 @@ import "./BrokerPage.css";
 
 class BrokerPage extends Component {
   state = {
-    stocks: null,
+    stocks: null
   };
 
   handleInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   componentDidMount() {
+    axios.get("/stocks").then(res => {
+      console.log(res.data);
+      res.data.map(stock => {
+        this.setState({ [stock.name]: parseFloat(stock["target"]) });
+      });
+    });
     axios
       .get(
         "https://my4wv99yv6.execute-api.us-east-1.amazonaws.com/default/fetch_stock_data"
       )
-      .then(res => this.setState({ stocks: res.data }))
+      .then(res => {
+        this.setState({ stocks: res.data });
+      })
       .catch(err => {
         console.log(err);
       });
   }
 
-  changeTarget = (stock) => {
-    let price = parseInt(this.state.stocks[stock].price)
-    let target = parseInt(this.state[stock])
+  changeTarget = stock => {
+    let price = parseFloat(this.state.stocks[stock].price);
+    let target = parseFloat(this.state[stock]);
     let share = {
       name: stock,
       target: target,
       condition: price > target ? "buy" : "sell",
       state: target === 0 ? false : true
-    }
-    axios.post('/stocks/set', share)
+    };
+    axios
+      .post("/stocks/set", share)
       .then(res => console.log(res))
-      .catch(err => { console.log(err) })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
-    this.setState({[stock]: ""})
-  }
+  deleteStock = stock => {
+    axios
+      .post("/stocks/delete", { name: stock })
+      .then(res => console.log(res))
+      .catch(err => {
+        console.log(err);
+      });
+    window.location.reload();
+  };
 
   render() {
     let { stocks } = this.state;
@@ -83,6 +102,7 @@ class BrokerPage extends Component {
                         id="target"
                         name={stock}
                         type="number"
+                        step="0.01"
                         onChange={this.handleInputChange}
                         value={this.state[stock]}
                       />
@@ -93,6 +113,19 @@ class BrokerPage extends Component {
                         className="inline-block cursor-pointer text-xs py-2 leading-none border rounded-lg bg-tekno3 text-white border-white hover:border-tekno3 hover:text-tekno3 hover:bg-transparent"
                       >
                         Gönder
+                      </div>
+                      <div
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              "Are you sure you wish to delete this item?"
+                            )
+                          )
+                            this.deleteStock(stock);
+                        }}
+                        className="inline-block cursor-pointer text-xs px-2 py-2 leading-none border rounded-lg bg-tekno text-white border-white hover:border-tekno3 hover:text-tekno3 hover:bg-transparent"
+                      >
+                        Sil
                       </div>
                     </td>
                   </tr>
