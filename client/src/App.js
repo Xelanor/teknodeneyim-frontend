@@ -15,8 +15,10 @@ import ForgotPassword from './containers/Auth/ForgotPassword'
 import ResetPassword from './containers/Auth/ResetPassword'
 import CreatePost from './containers/ProfilePage/CreatePost'
 import NotFoundPage from './components/Layout/NotFoundPage/NotFoundPage'
+import BrokerPage from './containers/Broker/BrokerPage'
 
 import RegisteredRoute from './components/PrivateRoutes/RegisteredRoute'
+import BrokerRoute from './components/PrivateRoutes/BrokerRoute'
 import AdminRoute from './components/PrivateRoutes/AdminRoute'
 import AdminPage from './containers/Admin/AdminPage'
 import DisplayPosts from './containers/Admin/CrudPages/CrudPosts/CrudPosts'
@@ -59,6 +61,7 @@ class App extends Component {
           <div className="lg:flex h-full">
             <Sidebar />
             <Switch>
+              <BrokerRoute path="/hisse" exact component={BrokerPage} />
               <Route path="/" exact component={HomePage} />
               <Route path="/register" exact component={Register} />
               <Route path="/login" exact component={Login} />

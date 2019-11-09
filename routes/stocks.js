@@ -19,4 +19,19 @@ router.route("/add").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+router.route("/set").post((req, res) => {
+  Stock.findOneAndUpdate(
+    { name: req.body.name },
+    {
+      $set: {
+        target: req.body.target,
+        condition: req.body.condition,
+        state: req.body.state
+      }
+    }
+  )
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
 module.exports = router;
