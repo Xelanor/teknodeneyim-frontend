@@ -43,4 +43,19 @@ router.route("/delete").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+router.route("/set-disable").post((req, res) => {
+  Stock.findOneAndUpdate(
+    { name: req.body.name },
+    {
+      $set: {
+        target: 0,
+        condition: req.body.condition,
+        state: false
+      }
+    }
+  )
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
 module.exports = router;
