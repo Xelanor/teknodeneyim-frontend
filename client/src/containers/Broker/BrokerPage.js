@@ -5,7 +5,8 @@ import "./BrokerPage.css";
 
 class BrokerPage extends Component {
   state = {
-    stocks: null
+    stocks: null,
+    stock: ""
   };
 
   handleInputChange = e => {
@@ -58,10 +59,46 @@ class BrokerPage extends Component {
     window.location.reload();
   };
 
+  newStock = () => {
+    let stock = `${this.state.stock}.IS`;
+    stock = stock.toUpperCase();
+    axios
+      .post("/stocks/add", { name: stock })
+      .then(res => console.log(res))
+      .catch(err => {
+        console.log(err);
+      });
+
+    this.setState({ stock: "" });
+  };
+
   render() {
     let { stocks } = this.state;
     return (
       <div className="flex-1 px-4 pb-3 lg:py-3">
+        <div className="flex font-bold text-3xl text-tekno3">
+          Yeni Hisse Ekle
+        </div>
+        <div className="flex font-bold text-xs text-tekno mb-2">
+          (Sonuna ".IS" eklemene gerek yok. Ör: THYAO, SODA, HALKB ve büyük
+          küçük harf fark etmez)
+        </div>
+        <div className="flex">
+          <input
+            className=" shadow appearance-none border rounded mr-2 w-24 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="stock"
+            name="stock"
+            type="text"
+            onChange={this.handleInputChange}
+            value={this.state.stock}
+          />
+          <div
+            onClick={() => this.newStock()}
+            className="inline-block cursor-pointer text-xs p-2 leading-none border rounded-lg bg-tekno3 text-white border-white hover:border-tekno3 hover:text-tekno3 hover:bg-transparent"
+          >
+            Gönder
+          </div>
+        </div>
         <div className="flex font-bold text-3xl text-tekno3">
           Hisse Senetleri
         </div>
