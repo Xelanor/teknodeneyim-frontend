@@ -1,0 +1,9 @@
+.bg-split {
+  background: linear-gradient(360deg, white 72%, #843b62 28%);
+}
+
+@media (max-width: 768px) {
+  .bg-split {
+    background: linear-gradient(360deg, white 68%, #843b62 32%);
+  }
+}
