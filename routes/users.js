@@ -7,6 +7,7 @@ const passport = require('passport');
 const validateRegisterInput = require('../validation/register');
 const validateLoginInput = require('../validation/login');
 const mailer = require('../utils/Mailer')
+const Telegram = require('../utils/Telegram')
 
 let User = require('../models/user');
 
@@ -87,6 +88,7 @@ router.post('/register', function (req, res) {
                         <h5 style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-style: italic; margin-top: 70px;color: #843B62;">Bu e-posta adresi ile Tekno Deneyim’e kaydolmadıysanız lütfen bu e-postayı dikkate almayınız.</h5>
                         <h5 style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-top: 70px;color: #F67E7D;">İletişim için: info@teknodeneyim.com</h5>`,
                       })
+                    Telegram(`${req.body.username} - ${req.body.email} ile kayıt oldu`)
                     })
                 }
               });
@@ -133,6 +135,7 @@ router.post('/login', (req, res) => {
                   success: true,
                   token: `Bearer ${token}`
                 });
+                Telegram(`${username} giriş yaptı`)
               }
             });
           }

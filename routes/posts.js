@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let Post = require('../models/post');
 let User = require('../models/user')
+const Telegram = require('../utils/Telegram')
 
 // Get oll posts in descending order with X limit
 router.route('/').get((req, res) => {
@@ -120,6 +121,7 @@ router.route('/add').post((req, res) => {
       res.json('Post added!')
       User.findByIdAndUpdate(username, { $push: { posts: post._id } })
         .then(() => res.json('User added!'))
+      Telegram(`${content} isimli bir konu açıldı Durum: ${state}`)
     })
     .catch(err => res.status(400).json('Error: ' + err));
 });
