@@ -160,7 +160,15 @@ router.route('/:userName').get((req, res) => {
       options: { sort: '-createdAt' },
       populate: {
         path: "username",
-        select: 'username avatar' // Just get the username field
+        select: 'username avatar'
+      }
+    })
+    .populate({
+      path: "comments",
+      options: { sort: '-createdAt' },
+      populate: {
+        path: "username target",
+        select: 'username avatar content slug'
       }
     })
     .exec()

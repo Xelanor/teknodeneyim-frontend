@@ -40,23 +40,30 @@ function Comment(props) {
 
   return (
     <div className="mb-16">
+      {props.target ? <div className="flex mb-4">
+        <Link to={`/post/${props.target.slug}`}>
+          <div className="font-semibold text-2xl text-tekno">
+            {props.target.content}
+          </div>
+        </Link>
+      </div> : null}
       <div className="flex">
         <div className="flex whitespace-pre-line font-normal text-md text-black">
           {props.content}
         </div>
       </div>
       <div className="flex items-center float-right">
-        {props.user !== "" ? <Tooltip TransitionComponent={Zoom} title="Yorum Ayarları" key="yorum-ayarlari" placement="left">
+        {props.user !== "" && !props.profile ? <Tooltip TransitionComponent={Zoom} title="Yorum Ayarları" key="yorum-ayarlari" placement="left">
           <IconButton onClick={handleCommentSettingsClick} size="small">
             <MoreHoriz />
           </IconButton>
         </Tooltip> : null}
-        <div onClick={() => props.commentLike(props.id)} className="LikeBtn Btn items-center cursor-pointer ml-4 mr-3">
+        {!props.profile ? <div onClick={() => props.commentLike(props.id)} className="LikeBtn Btn items-center cursor-pointer ml-4 mr-3">
           <span className="BtnWrapper items-center">
             <span className="Count mr-1">{props.likes.length}</span>
             {props.likes.includes(props.user) ? <FontAwesomeIcon icon={faHandshake} className="text-tekno" /> : <FontAwesomeIcon icon={farHandshake} className="hover:text-tekno" />}
           </span>
-        </div>
+        </div> : null }
         <div className="font-bold text-sm text-purple-900">
           {timeAgo(new Date(props.createdAt).getTime())}
         </div>
