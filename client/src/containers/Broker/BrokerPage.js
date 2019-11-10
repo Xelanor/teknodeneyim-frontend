@@ -6,7 +6,8 @@ import "./BrokerPage.css";
 class BrokerPage extends Component {
   state = {
     stocks: null,
-    stock: ""
+    stock: "",
+    noStock: false
   };
 
   handleInputChange = e => {
@@ -59,17 +60,29 @@ class BrokerPage extends Component {
     window.location.reload();
   };
 
-  newStock = () => {
+  newStock = async () => {
     let stock = `${this.state.stock}.IS`;
     stock = stock.toUpperCase();
-    axios
-      .post("/stocks/add", { name: stock })
-      .then(res => console.log(res))
-      .catch(err => {
-        console.log(err);
-      });
+    await axios
+      .get(
+        "https://oxaqiyy4dl.execute-api.us-east-1.amazonaws.com/default/check_stock_existence?name=" + stock
+      )
+      .then(res => {
+        if (res.data) {
+          axios
+            .post("/stocks/add", { name: stock })
+            .then(res => console.log(res))
+            .catch(err => {
+              console.log(err);
+            });
 
-    this.setState({ stock: "" });
+          this.setState({ stock: "" });
+          this.setState({ noStock: false });
+          window.location.reload()
+        } else {
+          this.setState({ noStock: true });
+        }
+      });
   };
 
   render() {
@@ -99,6 +112,9 @@ class BrokerPage extends Component {
             Gönder
           </div>
         </div>
+        {this.state.noStock ? (
+          <div className="flex text-red-500 text-xs italic">Böyle bir hisse senedi yok</div>
+        ) : null}
         <div className="flex font-bold text-3xl text-tekno3">
           Hisse Senetleri
         </div>
