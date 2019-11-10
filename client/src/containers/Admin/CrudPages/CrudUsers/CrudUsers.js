@@ -25,7 +25,7 @@ class CrudUsers extends Component {
           <div className="font-bold text-3xl text-tekno3 mb-4">
             Üyeler
           </div>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap justify-center">
             {this.state.users ? <UserCards users={this.state.users}/> : "yükleniyor" }
           </div>
         </div>
