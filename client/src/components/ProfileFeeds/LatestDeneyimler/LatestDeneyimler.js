@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Comment from "../../Comments/Comment/Comment";
 
 const FavoritePosts = props => {
-  let sliced_comments = props.user.comments.slice(1, 11);
+  let sliced_comments = props.user.comments.slice(0, 10);
   let comments = sliced_comments.map(comment => {
     return (
       <Comment
