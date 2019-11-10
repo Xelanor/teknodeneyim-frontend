@@ -65,7 +65,8 @@ class BrokerPage extends Component {
     stock = stock.toUpperCase();
     await axios
       .get(
-        "https://oxaqiyy4dl.execute-api.us-east-1.amazonaws.com/default/check_stock_existence?name=" + stock
+        "https://oxaqiyy4dl.execute-api.us-east-1.amazonaws.com/default/check_stock_existence?name=" +
+          stock
       )
       .then(res => {
         if (res.data) {
@@ -78,7 +79,7 @@ class BrokerPage extends Component {
 
           this.setState({ stock: "" });
           this.setState({ noStock: false });
-          window.location.reload()
+          window.location.reload();
         } else {
           this.setState({ noStock: true });
         }
@@ -113,7 +114,9 @@ class BrokerPage extends Component {
           </div>
         </div>
         {this.state.noStock ? (
-          <div className="flex text-red-500 text-xs italic">Böyle bir hisse senedi yok</div>
+          <div className="flex text-red-500 text-xs italic">
+            Böyle bir hisse senedi yok
+          </div>
         ) : null}
         <div className="flex font-bold text-3xl text-tekno3">
           Hisse Senetleri
@@ -151,7 +154,7 @@ class BrokerPage extends Component {
                     <td data-th="Volume">{stocks[stock]["volume"]}</td>
                     <td>
                       <input
-                        className=" shadow appearance-none border rounded w-12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className=" shadow appearance-none border rounded w-24 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="target"
                         name={stock}
                         type="number"
@@ -167,6 +170,8 @@ class BrokerPage extends Component {
                       >
                         Gönder
                       </div>
+                    </td>
+                    <td>
                       <div
                         onClick={() => {
                           if (
