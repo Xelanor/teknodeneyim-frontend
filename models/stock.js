@@ -7,7 +7,8 @@ var SchemaTypes = mongoose.Schema.Types;
 const stockSchema = new Schema(
   {
     name: {
-      type: String
+      type: String,
+      unique: true
     },
     target: {
       type: SchemaTypes.Double
