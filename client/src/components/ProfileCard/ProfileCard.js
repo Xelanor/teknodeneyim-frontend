@@ -1,12 +1,11 @@
 import React from "react";
 import EdiText from "react-editext";
 import timeAgo from "../../utils/timeAgo";
-import classnames from "classnames";
 import PropTypes from "prop-types";
-import { CSSTransition } from "react-transition-group";
-import ProfileAvatars from "../ProfileAvatars/ProfileAvatars";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+import ProfilePictures from "./ProfilePictures/ProfilePictures";
 
 import "./ProfileCard.css";
 
@@ -33,33 +32,13 @@ const ProfileCard = props => {
               {timeAgo(new Date(props.user.createdAt).getTime())}
             </div>
           </div>
-          <div className="flex p-6 justify-center items-center">
-            <div className="w-32 h-32 rounded-full bg-white">
-              <img
-                onClick={props.onChangeAvatarClick}
-                src={props.user.avatar}
-                className="w-32 h-32 rounded-full"
-                className={classnames("w-32 h-32 rounded-full", {
-                  "cursor-pointer": props.auth.id === props.user._id
-                })}
-              />
-            </div>
-          </div>
-          <CSSTransition
-            in={props.changeAvatar}
-            timeout={300}
-            classNames="alert"
-            unmountOnExit
-          >
-            {props.auth.id === props.user._id ? (
-              <div className="flex flex-wrap w-auto mr-4 md:mr-0 md:w-64 p-1 mb-4 absolute z-50 border border-gray-300 bg-white justify-center text-center">
-                <div className="font-bold text-xl text-tekno3 mb-3 w-full">
-                  Profil Resmini Değiştir
-                </div>
-                <ProfileAvatars change={props.onChangeAvatar} />
-              </div>
-            ) : null}
-          </CSSTransition>
+          <ProfilePictures
+            changeAvatar={props.changeAvatar}
+            auth={props.auth}
+            user={props.user}
+            onChangeAvatar={props.onChangeAvatar}
+            onChangeAvatarClick={props.onChangeAvatarClick}
+          />
           <div className="flex items-center justify-center">
             <div className="font-bold text-3xl md:mt-1 text-tekno text-center">
               {props.user.username}
@@ -73,26 +52,45 @@ const ProfileCard = props => {
                   value={props.user.description}
                   onSave={props.changeUserDescription}
                   hideIcons={true}
-                  editButtonContent={<FontAwesomeIcon icon={faEdit} className="text-tekno" style={{marginBottom: "2px"}} size="xs" />}
+                  editButtonContent={
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      className="text-tekno"
+                      style={{ marginBottom: "2px" }}
+                      size="xs"
+                    />
+                  }
                   editButtonClassName="p-0 bg-white border-0"
-                  saveButtonContent={<FontAwesomeIcon icon={faCheck} className="text-tekno3 mr-2" size="xs" />}
+                  saveButtonContent={
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className="text-tekno3 mr-2"
+                      size="xs"
+                    />
+                  }
                   saveButtonClassName="p-0 bg-white border-0"
-                  cancelButtonContent={<FontAwesomeIcon icon={faTimes} className="text-red-500" size="xs" />}
+                  cancelButtonContent={
+                    <FontAwesomeIcon
+                      icon={faTimes}
+                      className="text-red-500"
+                      size="xs"
+                    />
+                  }
                   cancelButtonClassName="p-0 bg-white border-0"
                   viewProps={{
                     className: "text-base text-tekno3"
                   }}
                   inputProps={{
                     style: {
-                      backgroundColor: 'white',
-                      color: '#843B62',
+                      backgroundColor: "white",
+                      color: "#843B62",
                       fontWeight: 700,
                       width: 150,
                       border: "1px solid",
-                      borderColor: '#f5dbe9',
-                      fontSize: '1rem'
+                      borderColor: "#f5dbe9",
+                      fontSize: "1rem"
                     },
-                    name: 'answer1'
+                    name: "answer1"
                   }}
                 />
               ) : (

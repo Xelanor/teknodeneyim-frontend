@@ -75,10 +75,10 @@ class ProfilePage extends Component {
     window.location.reload();
   };
 
-  onChangeAvatarClick = () => {
+  onChangeAvatarClick = change => {
     if (this.props.auth.user.id === this.state.user._id) {
       this.setState({
-        changeAvatar: !this.state.changeAvatar
+        changeAvatar: change
       });
     }
   };
