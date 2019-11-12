@@ -129,8 +129,6 @@ class BrokerPage extends Component {
             <th>Açılış</th>
             <th>Low</th>
             <th>High</th>
-            <th>Değişim</th>
-            <th>Değişim %</th>
             <th>52h high</th>
             <th>52h low</th>
             <th>Volume</th>
@@ -145,12 +143,10 @@ class BrokerPage extends Component {
                     <td data-th="Tarih">{stocks[stock]["date"]}</td>
                     <td data-th="Fiyat">{stocks[stock]["price"]}</td>
                     <td data-th="Açılış">{stocks[stock]["open"]}</td>
-                    <td data-th="Low">{stocks[stock]["low"]}</td>
-                    <td data-th="High">{stocks[stock]["high"]}</td>
-                    <td data-th="Değişim">{stocks[stock]["day_change"]}</td>
-                    <td data-th="Değişim %">{stocks[stock]["change_pct"]}</td>
-                    <td data-th="52h high">{stocks[stock]["52high"]}</td>
-                    <td data-th="52h low">{stocks[stock]["52low"]}</td>
+                    <td data-th="Low">{stocks[stock]["dayLow"]}</td>
+                    <td data-th="High">{stocks[stock]["dayHigh"]}</td>
+                    <td data-th="52h high">{stocks[stock]["52wHigh"]}</td>
+                    <td data-th="52h low">{stocks[stock]["52wLow"]}</td>
                     <td data-th="Volume">{stocks[stock]["volume"]}</td>
                     <td>
                       <input
