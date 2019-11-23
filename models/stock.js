@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-require('mongoose-double')(mongoose);
+require("mongoose-double")(mongoose);
 
 const Schema = mongoose.Schema;
 var SchemaTypes = mongoose.Schema.Types;
@@ -10,13 +10,22 @@ const stockSchema = new Schema(
       type: String,
       unique: true
     },
-    target: {
+    buyTarget: {
       type: SchemaTypes.Double
     },
-    condition: {
-      type: String
+    sellTarget: {
+      type: SchemaTypes.Double
     },
-    state: {
+    prevBuyTarget: {
+      type: SchemaTypes.Double
+    },
+    prevSellTarget: {
+      type: SchemaTypes.Double
+    },
+    buyState: {
+      type: Boolean
+    },
+    sellState: {
       type: Boolean
     }
   },
