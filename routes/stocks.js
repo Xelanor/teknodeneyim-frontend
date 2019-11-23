@@ -19,14 +19,14 @@ router.route("/add").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-router.route("/set").post((req, res) => {
+router.route("/setbuytarget").post((req, res) => {
   Stock.findOneAndUpdate(
     { name: req.body.name },
     {
       $set: {
-        target: req.body.target,
-        condition: req.body.condition,
-        state: req.body.state
+        buyTarget: req.body.target,
+        prevBuyTarget: req.body.prevTarget,
+        stateBuy: req.body.state
       }
     }
   )
@@ -34,11 +34,23 @@ router.route("/set").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+router.route("/setselltarget").post((req, res) => {
+  Stock.findOneAndUpdate(
+    { name: req.body.name },
+    {
+      $set: {
+        sellTarget: req.body.target,
+        prevSellTarget: req.body.prevTarget,
+        stateSell: req.body.state
+      }
+    }
+  )
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json("Error: " + err));
+});
 
 router.route("/delete").post((req, res) => {
-  Stock.findOneAndDelete(
-    { name: req.body.name },
-  )
+  Stock.findOneAndDelete({ name: req.body.name })
     .then(req => res.json(req))
     .catch(err => res.status(400).json("Error: " + err));
 });
