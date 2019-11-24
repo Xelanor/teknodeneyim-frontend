@@ -21,12 +21,6 @@ const stockSchema = new Schema(
     },
     prevSellTarget: {
       type: SchemaTypes.Double
-    },
-    buyState: {
-      type: Boolean
-    },
-    sellState: {
-      type: Boolean
     }
   },
   {

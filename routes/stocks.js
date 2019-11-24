@@ -25,8 +25,7 @@ router.route("/setbuytarget").post((req, res) => {
     {
       $set: {
         buyTarget: req.body.target,
-        prevBuyTarget: req.body.prevTarget,
-        stateBuy: req.body.state
+        prevBuyTarget: req.body.prevTarget
       }
     }
   )
@@ -40,8 +39,7 @@ router.route("/setselltarget").post((req, res) => {
     {
       $set: {
         sellTarget: req.body.target,
-        prevSellTarget: req.body.prevTarget,
-        stateSell: req.body.state
+        prevSellTarget: req.body.prevTarget
       }
     }
   )
