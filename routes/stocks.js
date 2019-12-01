@@ -7,6 +7,12 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+router.route("/single").get((req, res) => {
+  Stock.findOne({ name: req.params.name })
+    .then(req => res.json(req))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
 router.route("/add").post((req, res) => {
   const name = req.body.name;
   const newStock = new Stock({ name });
