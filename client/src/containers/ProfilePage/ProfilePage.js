@@ -1,89 +1,95 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from 'axios'
-import EdiText from 'react-editext'
+import axios from "axios";
+import EdiText from "react-editext";
 import jwt_decode from "jwt-decode";
-import classnames from 'classnames'
-import { CSSTransition } from 'react-transition-group';
+import classnames from "classnames";
+import { CSSTransition } from "react-transition-group";
 
-import SavedPosts from '../../components/PostsList/SavedPosts/SavedPosts'
-import ProfileAvatars from '../../components/ProfileAvatars/ProfileAvatars'
-import setAuthToken from '../../utils/setAuthToken'
-import './ProfilePage.css'
+import SavedPosts from "../../components/PostsList/SavedPosts/SavedPosts";
+import ProfileAvatars from "../../components/ProfileAvatars/ProfileAvatars";
+import setAuthToken from "../../utils/setAuthToken";
+import "./ProfilePage.css";
 
-import { savePost } from '../../store/actions/likeAction'
-import { changeUserDescription } from '../../store/actions/fetchActions'
-import { setCurrentUser } from '../../store/actions/authentication'
-const jwt = require('jsonwebtoken');
+import { savePost } from "../../store/actions/likeAction";
+import { changeUserDescription } from "../../store/actions/fetchActions";
+import { setCurrentUser } from "../../store/actions/authentication";
+const jwt = require("jsonwebtoken");
 
 class ProfilePage extends Component {
   state = {
     userName: null,
     user: null,
-    changeAvatar: false
-  }
+    changeAvatar: false,
+  };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.match.params.userName !== this.props.match.params.userName) {
-      this.getData()
+      this.getData();
     }
   }
 
   componentDidMount() {
-    this.getData()
+    this.getData();
   }
 
   onPostSaved = (postId) => {
     if (this.props.auth.isAuthenticated) {
-      this.props.savePost(postId, this.props.auth.user.id)
-      this.getData()
+      this.props.savePost(postId, this.props.auth.user.id);
+      this.getData();
     }
-  }
+  };
 
   getData = () => {
-    const userName = this.props.match.params.userName
-    this.setState({ userName })
-    axios.get('/users/' + userName)
-      .then(res => {
+    const userName = this.props.match.params.userName;
+    this.setState({ userName });
+    axios
+      .get(`${process.env.REACT_APP_PROXY}/users/${userName}`)
+      .then((res) => {
         this.setState({
-          user: res.data
-        })
+          user: res.data,
+        });
       })
-      .catch(err => { console.log(err) })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  changeUserDescription = val => {
-    this.props.changeUserDescription(this.state.user._id, val)
-  }
+  changeUserDescription = (val) => {
+    this.props.changeUserDescription(this.state.user._id, val);
+  };
 
   onChangeAvatar = (avatar) => {
-    axios.post('/users/change-avatar', { userId: this.state.user._id, avatar })
+    axios.post(`${process.env.REACT_APP_PROXY}/users/change-avatar`, {
+      userId: this.state.user._id,
+      avatar,
+    });
     if (localStorage.jwtToken) {
       const token = localStorage.jwtToken;
       const decoded = jwt_decode(token);
-      decoded.avatar = avatar
+      decoded.avatar = avatar;
 
-      jwt.sign(decoded, 'secret', (err, token) => {
-        token = `Bearer ${token}`
-        localStorage.setItem('jwtToken', token);
+      jwt.sign(decoded, "secret", (err, token) => {
+        token = `Bearer ${token}`;
+        localStorage.setItem("jwtToken", token);
         setAuthToken(token);
         this.props.setCurrentUser(decoded);
-      })
+      });
     }
     window.location.reload();
-  }
+  };
 
   onChangeAvatarClick = () => {
     if (this.props.auth.user.id === this.state.user._id) {
       this.setState({
-        changeAvatar: !this.state.changeAvatar
-      })
+        changeAvatar: !this.state.changeAvatar,
+      });
     }
-  }
+  };
 
   render() {
-    let { user } = this.state
-    let page
+    let { user } = this.state;
+    let page;
     if (user) {
       page = (
         <div className="flex-1">
@@ -93,18 +99,24 @@ class ProfilePage extends Component {
               src={user.avatar}
               alt={user.username}
               title={user.username}
-              className={classnames("w-24 h-24 rounded-full", { "cursor-pointer": this.props.auth.user.id === user._id })}
+              className={classnames("w-24 h-24 rounded-full", {
+                "cursor-pointer": this.props.auth.user.id === user._id,
+              })}
             />
             <div>
               <div className="font-bold text-3xl text-tekno ml-8 -mt-1">
                 {user.username}
               </div>
               <div className="font-medium text-xl text-gray-500 ml-8 mt-2">
-                {this.props.auth.user.id === user._id ? <EdiText
-                  type='text'
-                  value={user.description}
-                  onSave={this.changeUserDescription}
-                /> : user.description}
+                {this.props.auth.user.id === user._id ? (
+                  <EdiText
+                    type="text"
+                    value={user.description}
+                    onSave={this.changeUserDescription}
+                  />
+                ) : (
+                  user.description
+                )}
               </div>
             </div>
           </div>
@@ -114,17 +126,20 @@ class ProfilePage extends Component {
             classNames="alert"
             unmountOnExit
           >
-            {this.props.auth.user.id === user._id ?
+            {this.props.auth.user.id === user._id ? (
               <div className="flex flex-wrap px-4 py-4 mb-4">
                 <div className="font-bold text-xl text-tekno3 mb-3 w-full">
                   Profil Resmini Değiştir
                 </div>
                 <ProfileAvatars change={this.onChangeAvatar} />
-              </div> : null}
+              </div>
+            ) : null}
           </CSSTransition>
           <div className="flex-1 px-4">
             <div className="font-bold text-3xl text-tekno3 mb-3">
-              {this.props.auth.user.id === user._id ? "Favori Başlıkların" : user.username + " Kullanıcısının Favori Başlıkları"}
+              {this.props.auth.user.id === user._id
+                ? "Favori Başlıkların"
+                : user.username + " Kullanıcısının Favori Başlıkları"}
             </div>
             <SavedPosts
               posts={user.saved}
@@ -134,18 +149,18 @@ class ProfilePage extends Component {
             />
           </div>
         </div>
-      )
+      );
     }
-    return (
-      <>
-        {page}
-      </>
-    );
+    return <>{page}</>;
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, { savePost, changeUserDescription, setCurrentUser })(ProfilePage);
+export default connect(mapStateToProps, {
+  savePost,
+  changeUserDescription,
+  setCurrentUser,
+})(ProfilePage);

@@ -1,53 +1,81 @@
-import React, { Component } from 'react';
-import { Paper, Slide } from '@material-ui/core'
-import axios from 'axios'
+import React, { Component } from "react";
+import { Paper, Slide } from "@material-ui/core";
+import axios from "axios";
 
-import { NEXT_REPORTABLE_TIME, NEXT_COMMENT_DELETE_TIME } from '../../store/actions/types'
+import {
+  NEXT_REPORTABLE_TIME,
+  NEXT_COMMENT_DELETE_TIME,
+} from "../../store/actions/types";
 
 class ActionModal extends Component {
-  state = {}
+  state = {};
 
   handleReportComment = async () => {
-    await this.props.modalShow('', false)
-    const { reporter, reported, comment } = this.props
-    let lastReported = ""
-    await axios.get('/users/report/' + reporter)
-      .then(res => { lastReported = res.data.lastReported ? res.data.lastReported : null })
-      .catch(err => { console.log(err) })
-    lastReported = new Date(lastReported).getTime()
-    let now_plus_time = Date.now() - NEXT_REPORTABLE_TIME * 60000 // Minute to hours
+    await this.props.modalShow("", false);
+    const { reporter, reported, comment } = this.props;
+    let lastReported = "";
+    await axios
+      .get(`${process.env.REACT_APP_PROXY}/users/report/${reporter}`)
+      .then((res) => {
+        lastReported = res.data.lastReported ? res.data.lastReported : null;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    lastReported = new Date(lastReported).getTime();
+    let now_plus_time = Date.now() - NEXT_REPORTABLE_TIME * 60000; // Minute to hours
     if (now_plus_time >= lastReported || lastReported == null) {
-      axios.post('/reports/new-report', { reporter, reported, comment })
-      await this.props.modalShow('comment-reported', true)
+      axios.post(`${process.env.REACT_APP_PROXY}/reports/new-report`, {
+        reporter,
+        reported,
+        comment,
+      });
+      await this.props.modalShow("comment-reported", true);
     } else {
-      await this.props.modalShow('comment-not-reported', true)
+      await this.props.modalShow("comment-not-reported", true);
     }
-  }
+  };
 
   handleDeleteComment = async () => {
-    await this.props.modalShow('', false)
-    const { reporter, comment, postId } = this.props
-    let lastCommentDeleted = ""
-    await axios.get('/users/report/' + reporter)
-      .then(res => { lastCommentDeleted = res.data.lastCommentDeleted ? res.data.lastCommentDeleted : null })
-    lastCommentDeleted = new Date(lastCommentDeleted).getTime()
-    let now_plus_time = Date.now() - NEXT_COMMENT_DELETE_TIME * 60000 // Minute to hours
+    await this.props.modalShow("", false);
+    const { reporter, comment, postId } = this.props;
+    let lastCommentDeleted = "";
+    await axios
+      .get(`${process.env.REACT_APP_PROXY}/users/report/${reporter}`)
+      .then((res) => {
+        lastCommentDeleted = res.data.lastCommentDeleted
+          ? res.data.lastCommentDeleted
+          : null;
+      });
+    lastCommentDeleted = new Date(lastCommentDeleted).getTime();
+    let now_plus_time = Date.now() - NEXT_COMMENT_DELETE_TIME * 60000; // Minute to hours
     if (now_plus_time >= lastCommentDeleted || lastCommentDeleted == null) {
-      axios.post('/comments/delete', { comment, reporter, postId })
+      axios.post(`${process.env.REACT_APP_PROXY}/comments/delete`, {
+        comment,
+        reporter,
+        postId,
+      });
       window.location.reload();
     } else {
-      await this.props.modalShow('comment-not-deleted', true)
+      await this.props.modalShow("comment-not-deleted", true);
     }
-  }
+  };
 
   // Renders the Report Comment Modal Window
   renderReportComment = () => {
     return (
-      <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={500}>
+      <Slide
+        direction="left"
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        timeout={500}
+      >
         <div className="w-full">
           <div className="flex mb-8">
             <div className="font-semibold text-md text-tekno">
-              {this.props.username} adlı kullanıcıyı rapor etmek istediğinize emin misiniz?
+              {this.props.username} adlı kullanıcıyı rapor etmek istediğinize
+              emin misiniz?
             </div>
           </div>
           <div className="flex">
@@ -62,7 +90,7 @@ class ActionModal extends Component {
               <button
                 className="bg-tekno3 hover:bg-tekno4 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline appearance-none"
                 type="submit"
-                onClick={() => this.props.modalShow('', false)}
+                onClick={() => this.props.modalShow("", false)}
               >
                 Hayır
               </button>
@@ -75,7 +103,13 @@ class ActionModal extends Component {
 
   renderCommentReported = () => {
     return (
-      <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={500}>
+      <Slide
+        direction="left"
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        timeout={500}
+      >
         <div className="w-full">
           <div className="flex mb-8">
             <div className="flex items-center justify-between">
@@ -99,7 +133,13 @@ class ActionModal extends Component {
 
   renderCommentNotReported = () => {
     return (
-      <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={500}>
+      <Slide
+        direction="left"
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        timeout={500}
+      >
         <div className="w-full">
           <div className="flex mb-1">
             <div className="font-semibold text-xl text-tekno3">
@@ -116,22 +156,29 @@ class ActionModal extends Component {
               Tekno Deneyim'e destek verdiğiniz için teşekkürler.
             </div>
           </div>
-        </div >
-      </Slide >
+        </div>
+      </Slide>
     );
   };
 
   // Renders the Delete Comment Modal Window
   renderDeleteComment = () => {
     return (
-      <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={500}>
+      <Slide
+        direction="left"
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        timeout={500}
+      >
         <div className="w-full">
           <div className="text-center mb-8">
             <div className="font-semibold text-md text-tekno3">
               {this.props.createdAt}
             </div>
             <div className="font-semibold text-md text-tekno">
-              tarihinde paylaştığınız deneyiminizi silmek istediğinize emin misiniz?
+              tarihinde paylaştığınız deneyiminizi silmek istediğinize emin
+              misiniz?
             </div>
           </div>
           <div className="flex">
@@ -146,7 +193,7 @@ class ActionModal extends Component {
               <button
                 className="bg-tekno3 hover:bg-tekno4 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline appearance-none"
                 type="submit"
-                onClick={() => this.props.modalShow('', false)}
+                onClick={() => this.props.modalShow("", false)}
               >
                 Hayır
               </button>
@@ -159,7 +206,13 @@ class ActionModal extends Component {
 
   renderCannotDeleteComment = () => {
     return (
-      <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={500}>
+      <Slide
+        direction="left"
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        timeout={500}
+      >
         <div className="w-full">
           <div className="flex mb-1">
             <div className="font-semibold text-xl text-tekno3">
@@ -171,14 +224,20 @@ class ActionModal extends Component {
               bir süre beklemeniz gerekmektedir.
             </div>
           </div>
-        </div >
-      </Slide >
+        </div>
+      </Slide>
     );
   };
 
   renderCannotSubmitComment = () => {
     return (
-      <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={500}>
+      <Slide
+        direction="left"
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        timeout={500}
+      >
         <div className="w-full">
           <div className="flex mb-1">
             <div className="font-semibold text-xl text-tekno3">
@@ -190,32 +249,50 @@ class ActionModal extends Component {
               10dk beklemeniz gerekmektedir.
             </div>
           </div>
-        </div >
-      </Slide >
+        </div>
+      </Slide>
     );
   };
 
   render() {
-    if (this.props.modalType === 'report-comment') {
-      return <Paper tabIndex={-1} className="container-prompt">{this.renderReportComment()}</Paper>;
-    }
-    else if (this.props.modalType === 'comment-reported') {
-      return <Paper tabIndex={-1} className="container-prompt">{this.renderCommentReported()}</Paper>;
-    }
-    else if (this.props.modalType === 'comment-not-reported') {
-      return <Paper tabIndex={-1} className="container-prompt">{this.renderCommentNotReported()}</Paper>;
-    }
-    else if (this.props.modalType === 'delete-comment') {
-      return <Paper tabIndex={-1} className="container-prompt">{this.renderDeleteComment()}</Paper>;
-    }
-    else if (this.props.modalType === 'comment-not-deleted') {
-      return <Paper tabIndex={-1} className="container-prompt">{this.renderCannotDeleteComment()}</Paper>;
-    }
-    else if (this.props.modalType === 'comment-not-submitted') {
-      return <Paper tabIndex={-1} className="container-prompt">{this.renderCannotSubmitComment()}</Paper>;
-    }
-    else {
-      return <div>Hi</div>
+    if (this.props.modalType === "report-comment") {
+      return (
+        <Paper tabIndex={-1} className="container-prompt">
+          {this.renderReportComment()}
+        </Paper>
+      );
+    } else if (this.props.modalType === "comment-reported") {
+      return (
+        <Paper tabIndex={-1} className="container-prompt">
+          {this.renderCommentReported()}
+        </Paper>
+      );
+    } else if (this.props.modalType === "comment-not-reported") {
+      return (
+        <Paper tabIndex={-1} className="container-prompt">
+          {this.renderCommentNotReported()}
+        </Paper>
+      );
+    } else if (this.props.modalType === "delete-comment") {
+      return (
+        <Paper tabIndex={-1} className="container-prompt">
+          {this.renderDeleteComment()}
+        </Paper>
+      );
+    } else if (this.props.modalType === "comment-not-deleted") {
+      return (
+        <Paper tabIndex={-1} className="container-prompt">
+          {this.renderCannotDeleteComment()}
+        </Paper>
+      );
+    } else if (this.props.modalType === "comment-not-submitted") {
+      return (
+        <Paper tabIndex={-1} className="container-prompt">
+          {this.renderCannotSubmitComment()}
+        </Paper>
+      );
+    } else {
+      return <div>Hi</div>;
     }
   }
 }

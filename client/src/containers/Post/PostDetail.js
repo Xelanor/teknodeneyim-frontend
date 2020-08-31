@@ -1,28 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import ReactPaginate from 'react-paginate'
-import { withRouter, Link } from 'react-router-dom'
-import { MenuItem, Modal } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles';
-import axios from 'axios'
+import ReactPaginate from "react-paginate";
+import { withRouter, Link } from "react-router-dom";
+import { MenuItem, Modal } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import axios from "axios";
 import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from '@fortawesome/free-solid-svg-icons'
-import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
 
-import Spinner from '../../components/UI/Spinner/Spinner'
-import NewComment from '../../components/Comments/Comment/NewComment'
-import Comments from '../../components/Comments/Comments'
-import ActionsModal from '../Modals/ActionsModal'
+import Spinner from "../../components/UI/Spinner/Spinner";
+import NewComment from "../../components/Comments/Comment/NewComment";
+import Comments from "../../components/Comments/Comments";
+import ActionsModal from "../Modals/ActionsModal";
 // import Tooltip from '../../components/UI/Tooltip/Tooltip'
 
-import { likeComment, savePost } from '../../store/actions/likeAction'
-import { fetchComments, submitComment, fetchSidePosts } from '../../store/actions/fetchActions'
-import { COMMENT_PER_PAGE, MAX_COMMENT_CHARACTHERS, NEXT_COMMENT_TIME, BAD_WORDS } from '../../store/actions/types'
-import timeAgo from '../../utils/timeAgo'
-import Filter from '../../utils/badwords'
+import { likeComment, savePost } from "../../store/actions/likeAction";
+import {
+  fetchComments,
+  submitComment,
+  fetchSidePosts,
+} from "../../store/actions/fetchActions";
+import {
+  COMMENT_PER_PAGE,
+  MAX_COMMENT_CHARACTHERS,
+  NEXT_COMMENT_TIME,
+  BAD_WORDS,
+} from "../../store/actions/types";
+import timeAgo from "../../utils/timeAgo";
+import Filter from "../../utils/badwords";
 
-import './PostDetail.css'
+import "./PostDetail.css";
 
 class PostDetail extends Component {
   state = {
@@ -34,120 +43,136 @@ class PostDetail extends Component {
     numChar: 0,
     ringStyle: {
       stroke: "",
-      strokeDasharray: ""
+      strokeDasharray: "",
     },
     modalVisible: false,
-    starHover: false
+    starHover: false,
     // modalType: "",
     // displayInfo: false
-  }
+  };
 
-  StyledMenuItem = withStyles(theme => ({
+  StyledMenuItem = withStyles((theme) => ({
     root: {
-      minHeight: '10px',
-      fontSize: '0.8rem',
+      minHeight: "10px",
+      fontSize: "0.8rem",
     },
   }))(MenuItem);
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.post !== prevProps.post) {
-      this.setElementsForCurrentPage()
+      this.setElementsForCurrentPage();
     }
     if (prevProps.match.params.slug !== this.props.match.params.slug) {
-      this.props.fetchComments(this.props.match.params.slug)
+      this.props.fetchComments(this.props.match.params.slug);
     }
   }
 
   componentDidMount() {
-    this.props.fetchComments(this.props.match.params.slug)
+    this.props.fetchComments(this.props.match.params.slug);
   }
 
   setElementsForCurrentPage() {
-    let elements = this.props.post.post.comments
-      .slice(this.state.offset, this.state.offset + COMMENT_PER_PAGE)
+    let elements = this.props.post.post.comments.slice(
+      this.state.offset,
+      this.state.offset + COMMENT_PER_PAGE
+    );
     this.setState({ elements: elements });
   }
 
   handlePageClick = (data) => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     const selectedPage = data.selected;
     const offset = selectedPage * COMMENT_PER_PAGE;
     this.setState({ currentPage: selectedPage, offset: offset }, () => {
       this.setElementsForCurrentPage();
     });
-  }
+  };
 
   onSubmitComment = async (e) => {
-    e.preventDefault()
-    this.setState({ loading: true })
-    let userComment = this.state.comment
-    userComment = Filter(BAD_WORDS, userComment)
+    e.preventDefault();
+    this.setState({ loading: true });
+    let userComment = this.state.comment;
+    userComment = Filter(BAD_WORDS, userComment);
     let comment = {
       username: this.props.auth.user.id,
       content: userComment,
-      target: this.props.post.post._id
-    }
-    let lastCommented = ""
-    await axios.get('/users/report/' + this.props.auth.user.id)
-      .then(res => { lastCommented = res.data.lastCommented ? res.data.lastCommented : null })
-      .catch(err => { console.log(err) })
-    lastCommented = new Date(lastCommented).getTime()
-    let now_plus_time = Date.now() - NEXT_COMMENT_TIME * 60000 // Minute to hours
-    if (now_plus_time >= lastCommented || lastCommented == null || this.props.auth.user.role === "admin") {
-      await this.props.submitComment(comment)
-      this.setState({ comment: "" })
-      this.props.fetchComments(this.props.match.params.slug)
-      this.setState({ loading: false })
-      window.scrollTo(0, 0)
-      this.props.fetchSidePosts()
+      target: this.props.post.post._id,
+    };
+    let lastCommented = "";
+    await axios
+      .get(
+        `${process.env.REACT_APP_PROXY}/users/report/${this.props.auth.user.id}`
+      )
+      .then((res) => {
+        lastCommented = res.data.lastCommented ? res.data.lastCommented : null;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    lastCommented = new Date(lastCommented).getTime();
+    let now_plus_time = Date.now() - NEXT_COMMENT_TIME * 60000; // Minute to hours
+    if (
+      now_plus_time >= lastCommented ||
+      lastCommented == null ||
+      this.props.auth.user.role === "admin"
+    ) {
+      await this.props.submitComment(comment);
+      this.setState({ comment: "" });
+      this.props.fetchComments(this.props.match.params.slug);
+      this.setState({ loading: false });
+      window.scrollTo(0, 0);
+      this.props.fetchSidePosts();
     } else {
-      await this.handleModalShow('comment-not-submitted', true)
-      this.setState({ loading: false })
+      await this.handleModalShow("comment-not-submitted", true);
+      this.setState({ loading: false });
     }
-  }
+  };
 
   onCommentChange = (e) => {
-    this.setState({ comment: e.target.value, numChar: e.target.value.length })
-    this.styleRing(e.target.value.length)
-  }
+    this.setState({ comment: e.target.value, numChar: e.target.value.length });
+    this.styleRing(e.target.value.length);
+  };
 
   onCommentLiked = (commentId) => {
     if (this.props.auth.isAuthenticated) {
-      this.props.likeComment(commentId, this.props.auth.user.id)
+      this.props.likeComment(commentId, this.props.auth.user.id);
     } else {
-      this.props.history.push("/login")
+      this.props.history.push("/login");
     }
-  }
+  };
 
   onPostSaved = (postId) => {
     if (this.props.auth.isAuthenticated) {
-      this.props.savePost(postId, this.props.auth.user.id)
+      this.props.savePost(postId, this.props.auth.user.id);
     } else {
-      this.props.history.push("/login")
+      this.props.history.push("/login");
     }
-  }
+  };
 
   handleModalShow = (modalType, show) => {
-    this.setState({ modalType, modalVisible: show })
+    this.setState({ modalType, modalVisible: show });
   };
 
   styleRing = (numChar) => {
     const r = 15;
     const circleLength = 2 * Math.PI * r;
-    const teknoColor = "#F67E7D"
+    const teknoColor = "#F67E7D";
 
     let colored = (circleLength * numChar) / MAX_COMMENT_CHARACTHERS;
-    let gray = circleLength - colored > 0 ? circleLength - colored : 0
+    let gray = circleLength - colored > 0 ? circleLength - colored : 0;
 
     this.setState((state) => ({
       ringStyle: {
-        stroke: (MAX_COMMENT_CHARACTHERS - numChar) <= 0 ? "red" :
-          (MAX_COMMENT_CHARACTHERS - numChar) <= 100 ? "orange" :
-            teknoColor,
-        strokeDasharray: `${colored} ${gray}`
-      }
+        stroke:
+          MAX_COMMENT_CHARACTHERS - numChar <= 0
+            ? "red"
+            : MAX_COMMENT_CHARACTHERS - numChar <= 100
+            ? "orange"
+            : teknoColor,
+        strokeDasharray: `${colored} ${gray}`,
+      },
     }));
-  }
+  };
 
   // hoverOn = () => {
   //   this.setState({ displayInfo: true })
@@ -158,7 +183,7 @@ class PostDetail extends Component {
   // }
 
   render() {
-    let page, paginationElement
+    let page, paginationElement;
     if (this.state.elements) {
       if (this.props.post.pageCount > 1) {
         paginationElement = (
@@ -170,14 +195,23 @@ class PostDetail extends Component {
             onPageChange={this.handlePageClick}
             forcePage={this.state.currentPage}
             containerClassName={"pagination p-2 leading-tight text-tekno"}
-            previousLinkClassName={"block p-2 font-bold leading-tight text-tekno"}
+            previousLinkClassName={
+              "block p-2 font-bold leading-tight text-tekno"
+            }
             nextLinkClassName={"block p-2 font-bold leading-tight text-tekno"}
             disabledClassName={"disabled"}
             activeClassName={"active font-bold"}
           />
         );
       }
-      let { content, createdAt, description, _id, saved, username } = this.props.post.post
+      let {
+        content,
+        createdAt,
+        description,
+        _id,
+        saved,
+        username,
+      } = this.props.post.post;
 
       page = (
         <div className="">
@@ -188,26 +222,26 @@ class PostDetail extends Component {
           </Helmet>
           <div className="mb-12">
             <div className="flex items-center">
-              <div className="font-semibold text-2xl text-tekno">
-                {content}
-              </div>
+              <div className="font-semibold text-2xl text-tekno">{content}</div>
               {/* <Tooltip message={'asdasfasfasfa'} position={'bottom'}><i style={{ color: "#e0245e" }} className="fas fa-star"></i></Tooltip> */}
-              <div onClick={() => this.onPostSaved(_id)} className="LikeBtn Btn items-center cursor-pointer ml-3">
+              <div
+                onClick={() => this.onPostSaved(_id)}
+                className="LikeBtn Btn items-center cursor-pointer ml-3"
+              >
                 <span className="BtnWrapper items-center">
-                  {saved.includes(this.props.auth.user.id) ?
-                    <FontAwesomeIcon
-                      icon={faStar}
-                      className="text-tekno3" /> :
+                  {saved.includes(this.props.auth.user.id) ? (
+                    <FontAwesomeIcon icon={faStar} className="text-tekno3" />
+                  ) : (
                     <FontAwesomeIcon
                       onMouseEnter={() => this.setState({ starHover: true })}
                       onMouseLeave={() => this.setState({ starHover: false })}
                       icon={this.state.starHover ? faStar : farStar}
-                      className="text-tekno3" />}
+                      className="text-tekno3"
+                    />
+                  )}
                 </span>
               </div>
-              <div className="ml-1 text-tekno3">
-                {saved.length}
-              </div>
+              <div className="ml-1 text-tekno3">{saved.length}</div>
             </div>
             <div className="flex mt-2">
               <div className="font-normal text-md text-gray-600">
@@ -233,16 +267,16 @@ class PostDetail extends Component {
               </Link>
             </div>
           </div>
-          <div className="flex-1 mb-2 mt-2 text-right">
-            {paginationElement}
-          </div>
+          <div className="flex-1 mb-2 mt-2 text-right">{paginationElement}</div>
           <Comments
             comments={this.state.elements}
             commentLike={this.onCommentLiked}
             postId={this.props.match.params.slug}
-            user={this.props.auth.isAuthenticated ? this.props.auth.user.id : ""}
+            user={
+              this.props.auth.isAuthenticated ? this.props.auth.user.id : ""
+            }
           />
-          {this.props.auth.isAuthenticated ?
+          {this.props.auth.isAuthenticated ? (
             <NewComment
               onCommentChange={this.onCommentChange}
               submitForm={this.onSubmitComment}
@@ -252,11 +286,11 @@ class PostDetail extends Component {
               ringStyle={this.state.ringStyle}
               maxChar={MAX_COMMENT_CHARACTHERS}
             />
-            : null}
+          ) : null}
         </div>
-      )
+      );
     } else {
-      page = <Spinner />
+      page = <Spinner />;
     }
     return (
       <div className="flex-1 px-4 mb-16 mt-4 items-center">
@@ -281,10 +315,17 @@ class PostDetail extends Component {
   }
 }
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   post: state.posts.post,
 });
 
-export default withRouter(connect(mapStateToProps, { likeComment, savePost, fetchComments, submitComment, fetchSidePosts })(PostDetail));
+export default withRouter(
+  connect(mapStateToProps, {
+    likeComment,
+    savePost,
+    fetchComments,
+    submitComment,
+    fetchSidePosts,
+  })(PostDetail)
+);
